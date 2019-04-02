@@ -1,0 +1,51 @@
+image: node:latest
+
+stages:
+  - build
+  - test
+  - deploy
+  - run
+
+variables:
+  repo: "easymech-frontend"
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq sshpass
+
+build:
+  stage: build
+  script:
+    - pwd
+    - ls
+    - npm install
+    - npm run build
+
+test:
+  stage: test
+  script:
+    - pwd
+    - ls
+    - npm install
+    - npm test
+
+deploy:
+    stage: deploy
+    environment: Staging
+    only:
+      - master
+    script:
+      - ls
+      - pwd
+      - cd ..
+      - sshpass -V
+      - export SSHPASS=$USER_PASS
+      - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch date
+      - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/easymech-frontend-cleanup.sh"
+      - sshpass -e scp -o stricthostkeychecking=no -r $repo/ gitlab@sinv-56057.edu.hsr.ch:/app/deploy_easymech/
+      - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/easymech-frontend-install.sh"
+
+run:
+  stage: run
+  script:
+    - export SSHPASS=$USER_PASS
+    - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sh -c 'sudo /app/scripts/easymech-frontend.sh> /dev/null 2>&1 &'"
