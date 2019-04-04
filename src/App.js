@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import { Menu, Icon } from 'semantic-ui-react'
+import { Grid, Menu, Icon } from 'semantic-ui-react'
 
 import {
   BrowserRouter as Router,
@@ -84,7 +84,7 @@ class App extends React.Component<Props, State> {
         const { activeItem } = this.state
 
         return (
-          <Menu vertical   color="red" className="Main-navigation">
+          <Menu vertical color="red" className="Main-navigation">
             <Menu.Item>
               <img src={logo} alt="EasyMech Logo"/>
             </Menu.Item>
@@ -143,32 +143,37 @@ class App extends React.Component<Props, State> {
 
     return (
       <Router>
-        <div>
-          <MenuBar />
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
-            )}
-          />
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
+          )}
+        />
+        <Grid>
+          <Grid.Column width={4}>
+            <MenuBar />
+          </Grid.Column>
           {/*
             The following are protected routes that are only available for logged-in users. We also pass the user and token so
             these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
           */}
-          <PrivateRoute
-            path="/dashboard"
-            isAuthenticated={isAuthenticated}
-            token={token}
-            component={Dashboard}
-          />
-          <PrivateRoute
-            path="/customer"
-            isAuthenticated={isAuthenticated}
-            token={token}
-            component={Customer}
-          />
-        </div>
+
+          <Grid.Column width={12}>
+            <PrivateRoute
+              path="/dashboard"
+              isAuthenticated={isAuthenticated}
+              token={token}
+              component={Dashboard}
+            />
+            <PrivateRoute
+              path="/customer"
+              isAuthenticated={isAuthenticated}
+              token={token}
+              component={Customer}
+            />
+          </Grid.Column>
+        </Grid>
       </Router>
     );
   }
