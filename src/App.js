@@ -16,7 +16,7 @@ import Customer from "./components/Customer";
 
 import PrivateRoute from "./components/PrivateRoute";
 
-import * as api from "./api/authentication";
+//import * as api from "./api/authentication";
 
 type Props = {};
 type State = {

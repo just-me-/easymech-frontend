@@ -1,19 +1,15 @@
 // @flow
 
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Grid, Header, Message } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Button, Grid, Header } from 'semantic-ui-react'
 
-export type Props = {
-  isAuthenticated: boolean,
-}
-
-const Customer = ({isAuthenticated}: Props) => (
-  <div>
+function Customer() {
+  const [msg, setMsg] = useState("");
+  return (
     <Header as='h1' color='red' textAlign='center'>
       Kunde
     </Header>
-  </div>
-);
+  )
+}
 
 export default Customer
