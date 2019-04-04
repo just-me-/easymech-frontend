@@ -51,52 +51,48 @@ class Login extends React.Component<Props, *> {
       return <Redirect to={from} />;
     }
 
-    return (
-      <div>
+    return (this.props.isAuthenticated) ? <Redirect to={from} /> : (
+      <Grid textAlign='center' verticalAlign='middle'>
+        <Grid.Column style={{ maxWidth: 450 }}>
 
-        <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450 }}>
+         <Header as='h1' color='red' textAlign='center' style={{marginTop: '2rem'}}>
+          Login EasyMech
+         </Header>
 
-           <Header as='h1' color='teal' textAlign='center' style={{marginTop: '2rem'}}>
-            Login EasyMech
-           </Header>
+          <Form size='large'>
+            <Segment stacked>
+              <Form.Input
+                fluid
+                icon='user'
+                iconPosition='left'
+                placeholder='Login'
+                onChange={this.handleLoginChanged}
+                value={this.state.login}
+              />
+              <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='Password'
+                type='password'
+                onChange={this.handlePasswordChanged}
+                value={this.state.password}
+              />
 
-            <Form size='large'>
-              <Segment stacked>
-                <Form.Input
-                  fluid
-                  icon='user'
-                  iconPosition='left'
-                  placeholder='Login'
-                  onChange={this.handleLoginChanged}
-                  value={this.state.login}
-                />
-                <Form.Input
-                  fluid
-                  icon='lock'
-                  iconPosition='left'
-                  placeholder='Password'
-                  type='password'
-                  onChange={this.handlePasswordChanged}
-                  value={this.state.password}
-                />
+              <Button color='red' fluid size='large' onClick={this.handleSubmit}>
+                Login
+              </Button>
 
-                <Button color='teal' fluid size='large' onClick={this.handleSubmit}>
-                  Login
-                </Button>
+              {error && <Message negative>
+                          <Message.Header>Es ist ein Fehler aufgetreten!</Message.Header>
+                          <p>Bitte überprüfen Sie Ihre Eingaben.</p>
+                        </Message>
+              }
 
-                {error && <Message negative>
-                            <Message.Header>Es ist ein Fehler aufgetreten!</Message.Header>
-                            <p>Bitte überprüfen Sie Ihre Eingaben.</p>
-                          </Message>
-                }
-
-              </Segment>
-            </Form>
-          </Grid.Column>
-        </Grid>
-
-      </div>
+            </Segment>
+          </Form>
+        </Grid.Column>
+      </Grid>
     );
   }
 }

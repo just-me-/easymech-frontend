@@ -10,7 +10,7 @@ export type Props = {
 
 const Customer = ({isAuthenticated}: Props) => (
   <div>
-    <Header as='h1' color='teal' textAlign='center'>
+    <Header as='h1' color='red' textAlign='center'>
       Kunde
     </Header>
   </div>

@@ -82,13 +82,13 @@ class App extends React.Component<Props, State> {
         const { activeItem } = this.state
 
         return (
-          <Menu pointing secondary color="teal" inverted>
+          <Menu pointing secondary color="red" inverted>
             <Menu.Item
               name='dashboard'
               active={activeItem === 'dashboard'}
               onClick={this.handleMenuClick}
               as={Link}
-              to="/"
+              to="/dashboard"
               />
             <Menu.Item
               name='customer'
@@ -124,19 +124,19 @@ class App extends React.Component<Props, State> {
             exact
             path="/"
             render={props => (
-              <Dashboard {...props} isAuthenticated={isAuthenticated} />
-            )}
-          />
-          <Route
-            path="/login"
-            render={props => (
-              <Login {...props} authenticate={this.authenticate} />
+              <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
             )}
           />
           {/*
             The following are protected routes that are only available for logged-in users. We also pass the user and token so
             these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
           */}
+          <PrivateRoute
+            path="/dashboard"
+            isAuthenticated={isAuthenticated}
+            token={token}
+            component={Dashboard}
+          />
           <PrivateRoute
             path="/customer"
             isAuthenticated={isAuthenticated}
