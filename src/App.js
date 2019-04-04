@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 
 import {
   BrowserRouter as Router,
@@ -15,6 +15,8 @@ import Dashboard from "./components/Dashboard";
 import Customer from "./components/Customer";
 
 import PrivateRoute from "./components/PrivateRoute";
+
+import logo from "./resources/Logo.png"
 
 //import * as api from "./api/authentication";
 
@@ -82,33 +84,56 @@ class App extends React.Component<Props, State> {
         const { activeItem } = this.state
 
         return (
-          <Menu pointing secondary color="red" inverted>
+          <Menu vertical   color="red" className="Main-navigation">
+            <Menu.Item>
+              <img src={logo} alt="EasyMech Logo"/>
+            </Menu.Item>
+
             <Menu.Item
               name='dashboard'
               active={activeItem === 'dashboard'}
               onClick={this.handleMenuClick}
               as={Link}
               to="/dashboard"
-              />
+              icon="clipboard list"
+            />
+
+            <Menu.Item>
+              <Menu.Header>
+                <Icon name='address book outline' />
+                Kunden
+              </Menu.Header>
+              <Menu.Menu>
+                <Menu.Item
+                  content="Erstellen"
+                  name='add_customer'
+                  active={activeItem === 'add_customer'}
+                  onClick={this.handleMenuClick}
+                  as={Link}
+                  to="/customer"
+                />
+                <Menu.Item
+                  content="Suchen"
+                  name='search_customer'
+                  active={activeItem === 'search_customer'}
+                  onClick={this.handleMenuClick}
+                  as={Link}
+                  to="/customer"
+                />
+              </Menu.Menu>
+            </Menu.Item>
+
             <Menu.Item
-              name='customer'
-              active={activeItem === 'customer'}
-              onClick={this.handleMenuClick}
-              as={Link}
-              to="/customer"
-              />
-            <Menu.Menu position='right'>
-              <Menu.Item
-                name='logout'
-                active={activeItem === 'logout'}
-                content=<span>Logout</span>
-                onClick={event => {
-                  event.preventDefault();
-                  this.signout(() => history.push("/"));
-                }}
-                href="/logout"
-              />
-            </Menu.Menu>
+              name='logout'
+              active={activeItem === 'logout'}
+              content="Abmelden"
+              onClick={event => {
+                event.preventDefault();
+                this.signout(() => history.push("/"));
+              }}
+              href="/logout"
+              icon="sign-out"
+            />
           </Menu>
         );
       } else {
