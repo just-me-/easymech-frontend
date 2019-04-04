@@ -41,7 +41,7 @@ deploy:
       - export SSHPASS=$USER_PASS
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch date
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/easymech-frontend-cleanup.sh"
-      - sshpass -e scp -o stricthostkeychecking=no -r $repo/ gitlab@sinv-56057.edu.hsr.ch:/app/deploy_easymech/
+      - sshpass -e scp -o stricthostkeychecking=no -r $repo/ gitlab@sinv-56057.edu.hsr.ch:/app/deploy_easymech_fe_dev/
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/easymech-frontend-install.sh"
 
 run:
