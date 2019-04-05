@@ -5,7 +5,7 @@ import { Header } from 'semantic-ui-react'
 
 function Dashboard() {
   return (
-    <Header as='h1' color='red' textAlign='center'>
+    <Header as='h1' textAlign='center'>
       Dashboard
     </Header>
   )

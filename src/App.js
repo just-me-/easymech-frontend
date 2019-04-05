@@ -17,6 +17,7 @@ import Customer from "./components/Customer";
 import PrivateRoute from "./components/PrivateRoute";
 
 import logo from "./resources/Logo.png"
+import "./App.css"
 
 //import * as api from "./api/authentication";
 
@@ -85,7 +86,7 @@ class App extends React.Component<Props, State> {
 
         return (
           <Menu vertical color="red" className="Main-navigation">
-            <Menu.Item>
+            <Menu.Item id="Logo">
               <img src={logo} alt="EasyMech Logo"/>
             </Menu.Item>
 
@@ -150,8 +151,8 @@ class App extends React.Component<Props, State> {
             <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
           )}
         />
-        <Grid>
-          <Grid.Column width={4}>
+        <Grid id="App-grid">
+          <Grid.Column id="Menu-grid" width={4}>
             <MenuBar />
           </Grid.Column>
           {/*
@@ -159,7 +160,7 @@ class App extends React.Component<Props, State> {
             these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
           */}
 
-          <Grid.Column width={12}>
+          <Grid.Column id="Content-grid" width={12}>
             <PrivateRoute
               path="/dashboard"
               isAuthenticated={isAuthenticated}

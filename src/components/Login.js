@@ -55,7 +55,7 @@ class Login extends React.Component<Props, *> {
       <Grid textAlign='center' verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
 
-         <Header as='h1' color='red' textAlign='center' style={{marginTop: '2rem'}}>
+         <Header as='h1' textAlign='center' style={{marginTop: '2rem'}}>
           Login EasyMech
          </Header>
 

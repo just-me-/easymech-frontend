@@ -1,0 +1,13 @@
+:root {
+  --main-bg-color: #F16454;
+  --opacity-white: rgba(255, 255, 255, 0.75);
+}
+body {
+  background: var(--main-bg-color);
+}
+.ui.header {
+  color: #ffffff;
+}
+.ui.red.button {
+  background: #F16454;
+}
