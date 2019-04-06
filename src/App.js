@@ -13,6 +13,7 @@ import {
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Customer from "./components/Customer";
+import CustomerSearch from "./components/CustomerSearch";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -119,7 +120,7 @@ class App extends React.Component<Props, State> {
                   active={activeItem === 'search_customer'}
                   onClick={this.handleMenuClick}
                   as={Link}
-                  to="/customer"
+                  to="/customer_search"
                 />
               </Menu.Menu>
             </Menu.Item>
@@ -172,6 +173,12 @@ class App extends React.Component<Props, State> {
               isAuthenticated={isAuthenticated}
               token={token}
               component={Customer}
+            />
+            <PrivateRoute
+              path="/customer_search"
+              isAuthenticated={isAuthenticated}
+              token={token}
+              component={CustomerSearch}
             />
           </Grid.Column>
         </Grid>
