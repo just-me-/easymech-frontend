@@ -14,6 +14,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Customer from "./components/Customer";
 import CustomerSearch from "./components/CustomerSearch";
+import CustomerList from "./components/CustomerList";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -179,6 +180,12 @@ class App extends React.Component<Props, State> {
               isAuthenticated={isAuthenticated}
               token={token}
               component={CustomerSearch}
+            />
+            <PrivateRoute
+              path="/customer_list"
+              isAuthenticated={isAuthenticated}
+              token={token}
+              component={CustomerList}
             />
           </Grid.Column>
         </Grid>
