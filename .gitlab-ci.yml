@@ -41,5 +41,5 @@ deploy:
       - export SSHPASS=$USER_PASS
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch date
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/docker-cleanup.sh 40007 easymech-frontend"
-      - sshpass -e scp -o stricthostkeychecking=no -r $repo/ gitlab@sinv-56057.edu.hsr.ch:/app/docker/
+      - sshpass -e scp -o stricthostkeychecking=no -r $repo/ gitlab@sinv-56057.edu.hsr.ch:/app/docker
       - sshpass -e ssh -o stricthostkeychecking=no gitlab@sinv-56057.edu.hsr.ch "sudo /app/scripts/docker-frontend.sh 40007 easymech-frontend"
