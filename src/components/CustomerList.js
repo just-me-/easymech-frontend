@@ -12,16 +12,18 @@ import * as api from "../api/customer";
 
 function CustomerList(props) {
 
-  function updateListData() {
+  const [customerListData, setCustomerListData] = useState([{}]);
+
+  function getListData() {
   api
     .getCustomers()
     .then((result) => {
-      console.log(result);
-      /* ... */
+      // setCustomerListData(result);
     })
     .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error))
     .finally( () => {
-      props.setSearchData([
+      // TMP Fix data 'til api works...
+      setCustomerListData([
         {"id":1,"firma":"Toms Vergnügungspark","vorname":"Tom","nachname":"K","plz":7000,"ort":"Chur",
         "email":"t-kistler@bluewin.ch","telefon":"081 123 45 68","notiz":"Zahlt immer pünktlich, ist ganz nett.\r\n                    Darf weider mal eine Maschine mieten",
         "isActive":true,"timestamp":null},
@@ -30,17 +32,12 @@ function CustomerList(props) {
         "email":"DJ-Fire (at) geilepartysimbunker (dot) com","telefon":null,"notiz":null,"isActive":true,
         "timestamp":null}
       ]);
-
-      console.log(props.searchData);
     });
   }
 
   useEffect(() => {
-    console.log(props.searchData);
-    updateListData();
+    getListData();
   }, []);
-
-  // <Link to="/customer_list"> </Link>
 
   return (
     <div>
@@ -62,9 +59,16 @@ function CustomerList(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(null, ({ id, name, isComplete }) => (
+          {_.map(customerListData, ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }) => (
             <Table.Row key={id}>
-              <Table.Cell>{name}</Table.Cell>
+              <Table.Cell onClick={() => props.editCustomer(id)}>{firma}</Table.Cell>
+              <Table.Cell>{adresse}</Table.Cell>
+              <Table.Cell>{vorname}</Table.Cell>
+              <Table.Cell>{nachname}</Table.Cell>
+              <Table.Cell>{plz}</Table.Cell>
+              <Table.Cell>{ort}</Table.Cell>
+              <Table.Cell>{email}</Table.Cell>
+              <Table.Cell>{telefon}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
