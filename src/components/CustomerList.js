@@ -2,11 +2,7 @@
 
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
-import { Header, Table, Checkbox, Button, Icon } from 'semantic-ui-react'
-
-import {
-  Link
-} from "react-router-dom";
+import { Header, Table } from 'semantic-ui-react'
 
 import * as api from "../api/customer";
 

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Header, Form } from 'semantic-ui-react'
 
 import CustomerFields from "./CustomerFields";

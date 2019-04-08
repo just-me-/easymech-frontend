@@ -11,7 +11,7 @@ import CustomerFields from "./CustomerFields";
 function CustomerSearch() {
   const [viewState, setViewState] = useState("search");
 
-  const [searchData, setSearchData] = useState({});
+  //const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
 
   function onEditCustomerClick(customerId) {
