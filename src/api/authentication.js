@@ -1,3 +1,5 @@
+/* TMP Example => DEL */
+
 const backend = "http://localhost:3000";
 
 export function login(

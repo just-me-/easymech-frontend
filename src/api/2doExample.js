@@ -1,3 +1,5 @@
+/* TMP Example => DEL */
+
 // @flow
 
 /* Use the exported functions to call the API.

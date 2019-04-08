@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import { Header, Form, Button } from 'semantic-ui-react'
 
+import * as api from "../api/customer";
+
 import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";
 
@@ -13,7 +15,22 @@ function CustomerSearch() {
   const [customerEditData, setCustomerEditData] = useState({});
 
   function onEditCustomerClick(customerId) {
-    setViewState("edit");
+
+    api
+      .getCustomer(customerId)
+      .then((result) => {
+        // setCustomerEditData(result);
+        // setViewState("edit");
+      })
+      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error))
+      .finally( () => {
+        // TMP Fix data 'til api works...
+        setCustomerEditData(
+          {"id":2,"firma":"DJ Fire","vorname":"Dario","nachname":"Fuoco","plz":7500,"ort":"Sargans",
+          "email":"DJ-Fire (at) geilepartysimbunker (dot) com","telefon":null,"notiz":null,"isActive":true,
+          "timestamp":null});
+        setViewState("edit");
+      });
   }
 
   return (

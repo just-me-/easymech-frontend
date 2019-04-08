@@ -1,31 +1,50 @@
 // @flow
 
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
 
-function CustomerFields() {
+function CustomerFields(props) {
+  const [customerData, setCustomerData] = useState(props.data ? props.data : {});
+
+  function handleChange(ele) {
+    setCustomerData({...customerData, [ele.target.id]: ele.target.value});
+  }
+
+  useEffect(() => {
+    console.log(customerData);
+  });
+
   return (
     <div>
+      <Header as='h2'>Firma</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
           <Form.Input
-            id='company_name'
+            id='firma'
             label='Name'
+            value={customerData.firma}
+            onChange={handleChange}
           />
           <Form.Input
-            id='company_address'
+            id='adresse'
             label='Adresse'
+            value={customerData.adresse}
+            onChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
           <Form.Input
-            id='company_zip'
+            id='plz'
             label='PLZ'
+            value={customerData.plz}
+            onChange={handleChange}
           />
           <Form.Input
-            id='company_location'
+            id='ort'
             label='Ort'
+            value={customerData.ort}
+            onChange={handleChange}
           />
         </Form.Group>
       </div>
@@ -34,30 +53,40 @@ function CustomerFields() {
       <div className="Form-section">
         <Form.Group widths='equal'>
           <Form.Input
-            id='contact_firstname'
+            id='vorname'
             label='Vorname'
+            value={customerData.vorname}
+            onChange={handleChange}
           />
           <Form.Input
-            id='contact_lastname'
+            id='nachname'
             label='Nachname'
+            value={customerData.nachname}
+            onChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
           <Form.Input
-            id='contact_mail'
+            id='email'
             label='E-Mail'
+            value={customerData.email}
+            onChange={handleChange}
           />
           <Form.Input
-            id='contact_phone'
+            id='telefon'
             label='Tel.'
+            value={customerData.telefon}
+            onChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
           <Form.Input
-            id='contact_notes'
+            id='notiz'
             label='Notizen'
+            value={customerData.notiz}
+            onChange={handleChange}
           />
         </Form.Group>
       </div>

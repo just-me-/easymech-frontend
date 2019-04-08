@@ -56,7 +56,7 @@ class Login extends React.Component<Props, *> {
         <Grid.Column style={{ maxWidth: 450 }}>
 
          <Header as='h1' textAlign='center' style={{marginTop: '2rem'}}>
-          Login EasyMech - EPJ 2019
+          Login EasyMech
          </Header>
 
           <Form size='large'>
