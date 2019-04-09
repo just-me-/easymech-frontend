@@ -4,7 +4,7 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 
 
-function Machinetyp() {
+function Machinetype() {
   return (
     <div>
       <Header as='h1' textAlign='center'>
@@ -14,4 +14,4 @@ function Machinetyp() {
   )
 }
 
-export default Machinetyp;
+export default Machinetype;

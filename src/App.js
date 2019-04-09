@@ -16,7 +16,7 @@ import Customer from "./components/customer/Customer";
 import CustomerSearch from "./components/customer/CustomerSearch";
 import CustomerList from "./components/customer/CustomerList";
 import Machine from "./components/machine/Machine";
-import Machinetyp from "./components/machine/Machinetyp";
+import Machinetype from "./components/machine/Machinetype";
 import PrivateRoute from "./components/PrivateRoute";
 
 import logo from "./resources/Logo.png"
@@ -129,7 +129,7 @@ class App extends React.Component<Props, State> {
 
               <Menu.Item>
                   <Menu.Header>
-                      <Icon name='address book outline' />
+                      <Icon name='truck' />
                       Maschinen
                   </Menu.Header>
                   <Menu.Menu>
@@ -141,14 +141,6 @@ class App extends React.Component<Props, State> {
                           as={Link}
                           to="/machine"
                       />
-                      <Menu.Item
-                          content="Maschinentyp hinzufügen"
-                          name='add_machinetyp'
-                          active={activeItem === 'add_machinetyp'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machinetyp"
-                      />
 
                       <Menu.Item
                           content="Suchen"
@@ -158,11 +150,78 @@ class App extends React.Component<Props, State> {
                           as={Link}
                           to="/machine_search"
                       />
+
+                      <Menu.Item
+                          content="Maschinentyp hinzufügen"
+                          name='add_machinetyp'
+                          active={activeItem === 'add_machinetyp'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machinetyp"
+                      />
+                      <Menu.Item
+                          content="Maschinentyp suchen"
+                          name='search_machinetyp'
+                          active={activeItem === 'search_machinetyp'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machinetyp_search"
+                      />
                   </Menu.Menu>
               </Menu.Item>
 
+              <Menu.Item>
+                  <Menu.Header>
+                      <Icon name='dollar' />
+                      Dienstleistungen
+                  </Menu.Header>
+                  <Menu.Menu>
+                      <Menu.Item
+                          content="Dienstleistung erfassen"
+                          name='add_action'
+                          active={activeItem === 'add_action'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/action"
+                      />
 
-            <Menu.Item
+                      <Menu.Item
+                          content="Dienstleistungen suchen"
+                          name='search_action'
+                          active={activeItem === 'search_action'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/action_search"
+                      />
+
+                      <Menu.Item
+                          content="Vermietung"
+                          name='add_rental'
+                          active={activeItem === 'add_rental'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/rental"
+                      />
+                      <Menu.Item
+                          content="Verkauf"
+                          name='sell_machine'
+                          active={activeItem === 'sell_machine'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machine_sell"
+                      />
+                      <Menu.Item
+                          content="Ankauf"
+                          name='buy_machine'
+                          active={activeItem === 'buy_machine'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machine_buy"
+                      />
+                  </Menu.Menu>
+              </Menu.Item>
+
+              <Menu.Item
               name='logout'
               active={activeItem === 'logout'}
               content="Abmelden"
@@ -233,7 +292,7 @@ class App extends React.Component<Props, State> {
                   path="/machinetyp"
                   isAuthenticated={isAuthenticated}
                   token={token}
-                  component={Machinetyp}
+                  component={Machinetype}
               />
           </Grid.Column>
         </Grid>
