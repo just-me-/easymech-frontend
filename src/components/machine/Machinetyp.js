@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Button, Header, Form } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 
 
 function Machinetyp() {

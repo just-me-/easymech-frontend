@@ -141,16 +141,6 @@ class App extends React.Component<Props, State> {
                           as={Link}
                           to="/machine"
                       />
-
-                      <Menu.Item
-                          content="Suchen"
-                          name='search_customer'
-                          active={activeItem === 'search_machine'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machine_search"
-                      />
-
                       <Menu.Item
                           content="Maschinentyp hinzufügen"
                           name='add_machinetyp'
@@ -161,12 +151,12 @@ class App extends React.Component<Props, State> {
                       />
 
                       <Menu.Item
-                          content="Maschinentyp suchen"
-                          name='search_machinetyp'
-                          active={activeItem === 'search_machinetyp'}
+                          content="Suchen"
+                          name='search_customer'
+                          active={activeItem === 'search_machine'}
                           onClick={this.handleMenuClick}
                           as={Link}
-                          to="/machinetyp_search"
+                          to="/machine_search"
                       />
                   </Menu.Menu>
               </Menu.Item>
