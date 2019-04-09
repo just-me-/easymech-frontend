@@ -1,0 +1,14 @@
+.ui.segment,
+.ui.segment:last-child,
+.ui.table,
+.ui.table:last-child {
+  min-height: 7rem;
+  margin-bottom: 1rem;
+}
+.Inline-icon {
+  vertical-align: middle;
+  display: inline-block;
+}
+.Hover-effect {
+  cursor: pointer;
+}

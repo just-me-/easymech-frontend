@@ -2,33 +2,24 @@
 
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
-import { Header, Table } from 'semantic-ui-react'
+import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
 
 import * as api from "../api/customer";
+import "./CustomerList.css"
 
 function CustomerList(props) {
 
-  const [customerListData, setCustomerListData] = useState([{}]);
+  const [customerListData, setCustomerListData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   function getListData() {
   api
     .getCustomers()
     .then((result) => {
-      // setCustomerListData(result);
+      setIsLoading(false);
+      setCustomerListData(result);
     })
-    .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error))
-    .finally( () => {
-      // TMP Fix data 'til api works...
-      setCustomerListData([
-        {"id":1,"firma":"Toms Vergnügungspark","vorname":"Tom","nachname":"K","plz":7000,"ort":"Chur",
-        "email":"t-kistler@bluewin.ch","telefon":"081 123 45 68","notiz":"Zahlt immer pünktlich, ist ganz nett.\r\n                    Darf weider mal eine Maschine mieten",
-        "isActive":true,"timestamp":null},
-
-        {"id":2,"firma":"DJ Fire","vorname":"Dario","nachname":"Fuoco","plz":7500,"ort":"Sargans",
-        "email":"DJ-Fire (at) geilepartysimbunker (dot) com","telefon":null,"notiz":null,"isActive":true,
-        "timestamp":null}
-      ]);
-    });
+    .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
   useEffect(() => {
@@ -55,9 +46,11 @@ function CustomerList(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(customerListData, ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }) => (
-            <Table.Row key={id}>
-              <Table.Cell onClick={() => props.editCustomer(id)}>{firma}</Table.Cell>
+          {_.map(customerListData, ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }, index) => (
+            <Table.Row key={index}>
+              <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect">
+                <Icon name='external' size='tiny' className="Inline-icon"/> {firma} 
+              </Table.Cell>
               <Table.Cell>{adresse}</Table.Cell>
               <Table.Cell>{vorname}</Table.Cell>
               <Table.Cell>{nachname}</Table.Cell>
@@ -69,6 +62,14 @@ function CustomerList(props) {
           ))}
         </Table.Body>
       </Table>
+
+      { isLoading &&
+        <Segment>
+          <Dimmer inverted active>
+            <Loader inverted>Kunden werden geladen...</Loader>
+          </Dimmer>
+        </Segment>
+      }
     </div>
   )
 }

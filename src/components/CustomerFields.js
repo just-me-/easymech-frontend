@@ -22,13 +22,13 @@ function CustomerFields(props) {
           <Form.Input
             id='firma'
             label='Name'
-            value={customerData.firma}
+            value={customerData.firma || ""}
             onChange={handleChange}
           />
           <Form.Input
             id='adresse'
             label='Adresse'
-            value={customerData.adresse}
+            value={customerData.adresse || ""}
             onChange={handleChange}
           />
         </Form.Group>
@@ -37,13 +37,13 @@ function CustomerFields(props) {
           <Form.Input
             id='plz'
             label='PLZ'
-            value={customerData.plz}
+            value={customerData.plz || ""}
             onChange={handleChange}
           />
           <Form.Input
             id='ort'
             label='Ort'
-            value={customerData.ort}
+            value={customerData.ort || ""}
             onChange={handleChange}
           />
         </Form.Group>
@@ -55,13 +55,13 @@ function CustomerFields(props) {
           <Form.Input
             id='vorname'
             label='Vorname'
-            value={customerData.vorname}
+            value={customerData.vorname || ""}
             onChange={handleChange}
           />
           <Form.Input
             id='nachname'
             label='Nachname'
-            value={customerData.nachname}
+            value={customerData.nachname || ""}
             onChange={handleChange}
           />
         </Form.Group>
@@ -70,13 +70,13 @@ function CustomerFields(props) {
           <Form.Input
             id='email'
             label='E-Mail'
-            value={customerData.email}
+            value={customerData.email || ""}
             onChange={handleChange}
           />
           <Form.Input
             id='telefon'
             label='Tel.'
-            value={customerData.telefon}
+            value={customerData.telefon || ""}
             onChange={handleChange}
           />
         </Form.Group>
@@ -85,7 +85,7 @@ function CustomerFields(props) {
           <Form.Input
             id='notiz'
             label='Notizen'
-            value={customerData.notiz}
+            value={customerData.notiz || ""}
             onChange={handleChange}
           />
         </Form.Group>

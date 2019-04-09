@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState } from 'react'
-import { Header, Form, Button } from 'semantic-ui-react'
+import { Header, Form, Button, Dimmer, Loader } from 'semantic-ui-react'
 
 import * as api from "../api/customer";
 
@@ -15,22 +15,15 @@ function CustomerSearch() {
   const [customerEditData, setCustomerEditData] = useState({});
 
   function onEditCustomerClick(customerId) {
-
+    setViewState("loader");
     api
       .getCustomer(customerId)
       .then((result) => {
-        // setCustomerEditData(result);
-        // setViewState("edit");
+        setCustomerEditData(result);
+        // 2Do - fancyer mit timeout oder lieber sofort?
+        setTimeout(() => setViewState("edit"), 200);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error))
-      .finally( () => {
-        // TMP Fix data 'til api works...
-        setCustomerEditData(
-          {"id":2,"firma":"DJ Fire","vorname":"Dario","nachname":"Fuoco","plz":7500,"ort":"Sargans",
-          "email":"DJ-Fire (at) geilepartysimbunker (dot) com","telefon":null,"notiz":null,"isActive":true,
-          "timestamp":null});
-        setViewState("edit");
-      });
+      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
   return (
@@ -72,6 +65,14 @@ function CustomerSearch() {
                     onClick={() => setViewState('list')}
             />
           </Form>
+        </div>
+        }
+
+        {viewState === 'loader' && // show this view before ajax calls
+        <div>
+          <Dimmer active inverted>
+             <Loader />
+          </Dimmer>
         </div>
         }
 
