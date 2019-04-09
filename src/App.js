@@ -12,10 +12,11 @@ import {
 
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import Customer from "./components/Customer";
-import CustomerSearch from "./components/CustomerSearch";
-import CustomerList from "./components/CustomerList";
-
+import Customer from "./components/customer/Customer";
+import CustomerSearch from "./components/customer/CustomerSearch";
+import CustomerList from "./components/customer/CustomerList";
+import Machine from "./components/machine/Machine";
+import Machinetyp from "./components/machine/Machinetyp";
 import PrivateRoute from "./components/PrivateRoute";
 
 import logo from "./resources/Logo.png"
@@ -126,6 +127,51 @@ class App extends React.Component<Props, State> {
               </Menu.Menu>
             </Menu.Item>
 
+              <Menu.Item>
+                  <Menu.Header>
+                      <Icon name='address book outline' />
+                      Maschinen
+                  </Menu.Header>
+                  <Menu.Menu>
+                      <Menu.Item
+                          content="Erstellen"
+                          name='add_machine'
+                          active={activeItem === 'add_machine'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machine"
+                      />
+
+                      <Menu.Item
+                          content="Suchen"
+                          name='search_customer'
+                          active={activeItem === 'search_machine'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machine_search"
+                      />
+
+                      <Menu.Item
+                          content="Maschinentyp hinzufügen"
+                          name='add_machinetyp'
+                          active={activeItem === 'add_machinetyp'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machinetyp"
+                      />
+
+                      <Menu.Item
+                          content="Maschinentyp suchen"
+                          name='search_machinetyp'
+                          active={activeItem === 'search_machinetyp'}
+                          onClick={this.handleMenuClick}
+                          as={Link}
+                          to="/machinetyp_search"
+                      />
+                  </Menu.Menu>
+              </Menu.Item>
+
+
             <Menu.Item
               name='logout'
               active={activeItem === 'logout'}
@@ -187,6 +233,18 @@ class App extends React.Component<Props, State> {
               token={token}
               component={CustomerList}
             />
+              <PrivateRoute
+                  path="/machine"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Machine}
+              />
+              <PrivateRoute
+                  path="/machinetyp"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Machinetyp}
+              />
           </Grid.Column>
         </Grid>
       </Router>

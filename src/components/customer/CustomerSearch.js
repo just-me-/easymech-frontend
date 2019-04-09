@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Header, Form, Button, Dimmer, Loader } from 'semantic-ui-react'
 
-import * as api from "../api/customer";
+import * as api from "../../api/customer";
 
 import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";

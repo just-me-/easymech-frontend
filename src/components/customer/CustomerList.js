@@ -4,7 +4,7 @@ import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
 
-import * as api from "../api/customer";
+import * as api from "../../api/customer";
 import "./CustomerList.css"
 
 function CustomerList(props) {
