@@ -21,6 +21,13 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import logo from "./resources/Logo.png"
 import "./App.css"
+import Action from "./components/action/Action";
+import ActionSearch from "./components/action/ActionSearch";
+import Rental from "./components/transaction/Rental";
+import Sell from "./components/transaction/Sell";
+import Buy from "./components/transaction/Buy";
+import MachinetypeSearch from "./components/machine/MachinetypeSearch";
+import MachineSearch from "./components/machine/MachineSearch";
 
 //import * as api from "./api/authentication";
 
@@ -289,11 +296,54 @@ class App extends React.Component<Props, State> {
                   component={Machine}
               />
               <PrivateRoute
+                  path="/machine_search"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={MachineSearch}
+              />
+              <PrivateRoute
                   path="/machinetyp"
                   isAuthenticated={isAuthenticated}
                   token={token}
                   component={Machinetype}
               />
+              <PrivateRoute
+                  path="/machinetyp_search"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={MachinetypeSearch}
+              />
+              <PrivateRoute
+                  path="/action"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Action}
+              />
+              <PrivateRoute
+                  path="/action_search"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={ActionSearch}
+              />
+              <PrivateRoute
+                  path="/rental"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Rental}
+              />
+              <PrivateRoute
+                  path="/machine_buy"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Buy}
+              />
+              <PrivateRoute
+                  path="/machine_sell"
+                  isAuthenticated={isAuthenticated}
+                  token={token}
+                  component={Sell}
+              />
+
           </Grid.Column>
         </Grid>
       </Router>
