@@ -11,7 +11,10 @@ function CustomerFields(props) {
   }
 
   useEffect(() => {
-    console.log(customerData);
+    if(props.setValidState && props.setData) {
+      props.setValidState(customerData.firma && customerData.firma.length>0);
+      props.setData(customerData);
+    }
   });
 
   return (
