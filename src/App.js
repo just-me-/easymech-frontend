@@ -1,12 +1,11 @@
 // @flow
 
 import React from "react";
-import { Grid, Menu, Icon } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   withRouter
 } from "react-router-dom";
 
@@ -17,10 +16,6 @@ import CustomerSearch from "./components/customer/CustomerSearch";
 import CustomerList from "./components/customer/CustomerList";
 import Machine from "./components/machine/Machine";
 import Machinetype from "./components/machine/Machinetype";
-import PrivateRoute from "./components/PrivateRoute";
-
-import logo from "./resources/Logo.png"
-import "./App.css"
 import Action from "./components/action/Action";
 import ActionSearch from "./components/action/ActionSearch";
 import Rental from "./components/transaction/Rental";
@@ -29,7 +24,10 @@ import Buy from "./components/transaction/Buy";
 import MachinetypeSearch from "./components/machine/MachinetypeSearch";
 import MachineSearch from "./components/machine/MachineSearch";
 
-//import * as api from "./api/authentication";
+import AppMenu from "./components/AppMenu";
+import PrivateRoute from "./components/PrivateRoute";
+
+import "./App.css"
 
 type Props = {};
 type State = {
@@ -45,8 +43,7 @@ class App extends React.Component<Props, State> {
     if (token) {
       this.state = {
         isAuthenticated: true,
-        token,
-        activeItem: 'dashboard'
+        token
       };
     } else {
       this.state = {
@@ -85,161 +82,13 @@ class App extends React.Component<Props, State> {
     callback();
   };
 
-  handleMenuClick = (e, { name }) => this.setState({ activeItem: name })
-
   render() {
     const { isAuthenticated, token } = this.state;
 
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
       if (isAuthenticated) {
-        const { activeItem } = this.state
-
         return (
-          <Menu vertical color="red" className="Main-navigation">
-            <Menu.Item id="Logo">
-              <img src={logo} alt="EasyMech Logo"/>
-            </Menu.Item>
-
-            <Menu.Item
-              name='dashboard'
-              active={activeItem === 'dashboard'}
-              onClick={this.handleMenuClick}
-              as={Link}
-              to="/dashboard"
-              icon="clipboard list"
-            />
-
-            <Menu.Item>
-              <Menu.Header>
-                <Icon name='address book outline' />
-                Kunden
-              </Menu.Header>
-              <Menu.Menu>
-                <Menu.Item
-                  content="Erstellen"
-                  name='add_customer'
-                  active={activeItem === 'add_customer'}
-                  onClick={this.handleMenuClick}
-                  as={Link}
-                  to="/customer"
-                />
-                <Menu.Item
-                  content="Suchen"
-                  name='search_customer'
-                  active={activeItem === 'search_customer'}
-                  onClick={this.handleMenuClick}
-                  as={Link}
-                  to="/customer_search"
-                />
-              </Menu.Menu>
-            </Menu.Item>
-
-              <Menu.Item>
-                  <Menu.Header>
-                      <Icon name='truck' />
-                      Maschinen
-                  </Menu.Header>
-                  <Menu.Menu>
-                      <Menu.Item
-                          content="Erstellen"
-                          name='add_machine'
-                          active={activeItem === 'add_machine'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machine"
-                      />
-
-                      <Menu.Item
-                          content="Suchen"
-                          name='search_customer'
-                          active={activeItem === 'search_machine'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machine_search"
-                      />
-
-                      <Menu.Item
-                          content="Maschinentyp hinzufügen"
-                          name='add_machinetyp'
-                          active={activeItem === 'add_machinetyp'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machinetyp"
-                      />
-                      <Menu.Item
-                          content="Maschinentyp suchen"
-                          name='search_machinetyp'
-                          active={activeItem === 'search_machinetyp'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machinetyp_search"
-                      />
-                  </Menu.Menu>
-              </Menu.Item>
-
-              <Menu.Item>
-                  <Menu.Header>
-                      <Icon name='dollar' />
-                      Dienstleistungen
-                  </Menu.Header>
-                  <Menu.Menu>
-                      <Menu.Item
-                          content="Dienstleistung erfassen"
-                          name='add_action'
-                          active={activeItem === 'add_action'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/action"
-                      />
-
-                      <Menu.Item
-                          content="Dienstleistungen suchen"
-                          name='search_action'
-                          active={activeItem === 'search_action'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/action_search"
-                      />
-
-                      <Menu.Item
-                          content="Vermietung"
-                          name='add_rental'
-                          active={activeItem === 'add_rental'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/rental"
-                      />
-                      <Menu.Item
-                          content="Verkauf"
-                          name='sell_machine'
-                          active={activeItem === 'sell_machine'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machine_sell"
-                      />
-                      <Menu.Item
-                          content="Ankauf"
-                          name='buy_machine'
-                          active={activeItem === 'buy_machine'}
-                          onClick={this.handleMenuClick}
-                          as={Link}
-                          to="/machine_buy"
-                      />
-                  </Menu.Menu>
-              </Menu.Item>
-
-              <Menu.Item
-              name='logout'
-              active={activeItem === 'logout'}
-              content="Abmelden"
-              onClick={event => {
-                event.preventDefault();
-                this.signout(() => history.push("/"));
-              }}
-              href="/logout"
-              icon="sign-out"
-            />
-          </Menu>
+          <AppMenu history={history} signout={this.signout} />
         );
       } else {
         return null;

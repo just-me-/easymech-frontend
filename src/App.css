@@ -42,6 +42,8 @@
 .Form-section .field .ui.input input {
   background-color: var(--opacity-white);
 }
+
+/* TMP => zum Designentscheid */
 /* hmm.. naja... zum ausprobieren mal so lassen */
 .Form-section .field>label{
   width: 20%;
