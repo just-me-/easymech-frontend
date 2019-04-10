@@ -48,16 +48,28 @@ function CustomerList(props) {
         <Table.Body>
           {_.map(customerListData, ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }, index) => (
             <Table.Row key={index}>
-              <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect">
+              <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect link">
                 <Icon name='external' size='tiny' className="Inline-icon"/> {firma}
               </Table.Cell>
               <Table.Cell>{adresse}</Table.Cell>
-              <Table.Cell>{vorname}</Table.Cell>
-              <Table.Cell>{nachname}</Table.Cell>
               <Table.Cell>{plz}</Table.Cell>
               <Table.Cell>{ort}</Table.Cell>
-              <Table.Cell>{email}</Table.Cell>
-              <Table.Cell>{telefon}</Table.Cell>
+              <Table.Cell>{vorname}</Table.Cell>
+              <Table.Cell>{nachname}</Table.Cell>
+              <Table.Cell>
+              {email &&
+                <a href={"mailto:"+email}>
+                  <Icon name='mail' size='tiny' className="Inline-icon"/> {email}
+                </a>
+              }
+              </Table.Cell>
+              <Table.Cell>
+              {telefon &&
+                <a href={"tel:"+telefon}>
+                  <Icon name='call' size='tiny' className="Inline-icon"/> {telefon}
+                </a>
+              }
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

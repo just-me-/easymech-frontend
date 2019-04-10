@@ -8,7 +8,6 @@ import Dashboard from "./Dashboard";
 
 import Customer from "./customer/Customer";
 import CustomerSearch from "./customer/CustomerSearch";
-import CustomerList from "./customer/CustomerList";
 
 import Machine from "./machine/Machine";
 import Machinetype from "./machine/Machinetype";

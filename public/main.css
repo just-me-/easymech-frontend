@@ -22,3 +22,12 @@ body {
   background-color: #CF5548;
   color: #fff;
 }
+
+a,
+.link {
+  color: #F16454;
+}
+a:hover,
+.link:hover {
+  color: #DB2828;
+}
