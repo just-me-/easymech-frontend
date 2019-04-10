@@ -3,15 +3,14 @@
 import React from 'react'
 import { Header } from 'semantic-ui-react'
 
-
-function ActionSearch() {
+function Service() {
   return (
     <div>
       <Header as='h1' textAlign='center'>
-        Dienstleistung suchen
+        Dienstleistung erfassen
       </Header>
     </div>
   )
 }
 
-export default ActionSearch;
+export default Service;

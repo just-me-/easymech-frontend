@@ -20,6 +20,7 @@ function AppMenu(props) {
       </Menu.Item>
 
       <Menu.Item
+        content="Übersicht"
         name='dashboard'
         active={activeItem === 'dashboard'}
         onClick={handleMenuClick}
@@ -35,7 +36,7 @@ function AppMenu(props) {
         </Menu.Header>
         <Menu.Menu>
           <Menu.Item
-            content="Erstellen"
+            content="Erfassen"
             name='add_customer'
             active={activeItem === 'add_customer'}
             onClick={handleMenuClick}
@@ -53,101 +54,82 @@ function AppMenu(props) {
         </Menu.Menu>
       </Menu.Item>
 
-        <Menu.Item>
-            <Menu.Header>
-                <Icon name='truck' />
-                Maschinen
-            </Menu.Header>
-            <Menu.Menu>
-                <Menu.Item
-                    content="Erstellen"
-                    name='add_machine'
-                    active={activeItem === 'add_machine'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machine"
-                />
+      <Menu.Item>
+        <Menu.Header>
+          <Icon name='truck' />
+          Maschinen
+        </Menu.Header>
+        <Menu.Menu>
+          <Menu.Item
+            content="Erfassen"
+            name='add_machine'
+            active={activeItem === 'add_machine'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/machine"
+          />
+          <Menu.Item
+            content="Suchen"
+            name='search_machine'
+            active={activeItem === 'search_machine'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/machine_search"
+          />
+          <Menu.Item
+            content="Maschinentypen verwalten"
+            name='machinetype'
+            active={activeItem === 'machinetype'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/machinetype"
+          />
+        </Menu.Menu>
+      </Menu.Item>
 
-                <Menu.Item
-                    content="Suchen"
-                    name='search_customer'
-                    active={activeItem === 'search_machine'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machine_search"
-                />
+      <Menu.Item>
+        <Menu.Header>
+          <Icon name='cogs' />
+          Dienstleistungen
+        </Menu.Header>
+        <Menu.Menu>
+          <Menu.Item
+            content="Reparatur und Service erfassen"
+            name='add_service'
+            active={activeItem === 'add_service'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/service"
+          />
+          <Menu.Item
+            content="Vermietung erfassen"
+            name='add_rental'
+            active={activeItem === 'add_rental'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/rental"
+          />
+          <Menu.Item
+            content="Ver- und Ankauf erfassen"
+            name='sell_machine'
+            active={activeItem === 'sell_machine'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/machine_buy_sell"
+          />
 
-                <Menu.Item
-                    content="Maschinentyp hinzufügen"
-                    name='add_machinetyp'
-                    active={activeItem === 'add_machinetyp'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machinetyp"
-                />
-                <Menu.Item
-                    content="Maschinentyp suchen"
-                    name='search_machinetyp'
-                    active={activeItem === 'search_machinetyp'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machinetyp_search"
-                />
-            </Menu.Menu>
-        </Menu.Item>
+          <Menu.Item
+            content="Suchen"
+            name='search_service'
+            active={activeItem === 'search_service'}
+            onClick={handleMenuClick}
+            as={Link}
+            to="/service_search"
+          />
+        </Menu.Menu>
+      </Menu.Item>
 
-        <Menu.Item>
-            <Menu.Header>
-                <Icon name='dollar' />
-                Dienstleistungen
-            </Menu.Header>
-            <Menu.Menu>
-                <Menu.Item
-                    content="Dienstleistung erfassen"
-                    name='add_action'
-                    active={activeItem === 'add_action'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/action"
-                />
-
-                <Menu.Item
-                    content="Dienstleistungen suchen"
-                    name='search_action'
-                    active={activeItem === 'search_action'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/action_search"
-                />
-
-                <Menu.Item
-                    content="Vermietung"
-                    name='add_rental'
-                    active={activeItem === 'add_rental'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/rental"
-                />
-                <Menu.Item
-                    content="Verkauf"
-                    name='sell_machine'
-                    active={activeItem === 'sell_machine'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machine_sell"
-                />
-                <Menu.Item
-                    content="Ankauf"
-                    name='buy_machine'
-                    active={activeItem === 'buy_machine'}
-                    onClick={handleMenuClick}
-                    as={Link}
-                    to="/machine_buy"
-                />
-            </Menu.Menu>
-        </Menu.Item>
-
-        <Menu.Item
+      <Menu.Item
         name='logout'
         active={activeItem === 'logout'}
         content="Abmelden"

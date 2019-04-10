@@ -4,14 +4,14 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 
 
-function Sell() {
+function ServiceSearch() {
   return (
     <div>
       <Header as='h1' textAlign='center'>
-        Machine verkaufen
+        Dienstleistungen suchen
       </Header>
     </div>
   )
 }
 
-export default Sell;
+export default ServiceSearch;

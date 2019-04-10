@@ -5,23 +5,24 @@ import React from 'react'
 import PrivateRoute from "./PrivateRoute";
 
 import Dashboard from "./Dashboard";
+
 import Customer from "./customer/Customer";
 import CustomerSearch from "./customer/CustomerSearch";
 import CustomerList from "./customer/CustomerList";
+
 import Machine from "./machine/Machine";
 import Machinetype from "./machine/Machinetype";
-import Action from "./action/Action";
-import ActionSearch from "./action/ActionSearch";
-import Rental from "./transaction/Rental";
-import Sell from "./transaction/Sell";
-import Buy from "./transaction/Buy";
-import MachinetypeSearch from "./machine/MachinetypeSearch";
 import MachineSearch from "./machine/MachineSearch";
+
+import BuySell from "./transaction/BuySell";
+import Rental from "./transaction/Rental";
+
+import Service from "./service/Service";
+import ServiceSearch from "./service/ServiceSearch";
 
 function AppPrivateRoutes(props) {
   return (
     <div>
-
       <PrivateRoute
         path="/dashboard"
         isAuthenticated={props.isAuthenticated}
@@ -41,64 +42,46 @@ function AppPrivateRoutes(props) {
         component={CustomerSearch}
       />
       <PrivateRoute
-        path="/customer_list"
+        path="/machine"
         isAuthenticated={props.isAuthenticated}
         token={props.token}
-        component={CustomerList}
+        component={Machine}
       />
       <PrivateRoute
-          path="/machine"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Machine}
+        path="/machine_search"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={MachineSearch}
       />
       <PrivateRoute
-          path="/machine_search"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={MachineSearch}
+        path="/machinetype"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={Machinetype}
       />
       <PrivateRoute
-          path="/machinetyp"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Machinetype}
+        path="/service"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={Service}
       />
       <PrivateRoute
-          path="/machinetyp_search"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={MachinetypeSearch}
+        path="/service_search"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={ServiceSearch}
       />
       <PrivateRoute
-          path="/action"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Action}
+        path="/rental"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={Rental}
       />
       <PrivateRoute
-          path="/action_search"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={ActionSearch}
-      />
-      <PrivateRoute
-          path="/rental"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Rental}
-      />
-      <PrivateRoute
-          path="/machine_buy"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Buy}
-      />
-      <PrivateRoute
-          path="/machine_sell"
-          isAuthenticated={props.isAuthenticated}
-          token={props.token}
-          component={Sell}
+        path="/machine_buy_sell"
+        isAuthenticated={props.isAuthenticated}
+        token={props.token}
+        component={BuySell}
       />
     </div>
   )
