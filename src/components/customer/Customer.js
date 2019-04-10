@@ -14,7 +14,7 @@ function Customer() {
       </Header>
       <Form>
         <CustomerFields/>
-        <Button primary content='Speichern' icon='save' labelPosition='left' />
+        <Button primary content='Speichern' icon='save' labelPosition='left' floated='right' />
       </Form>
     </div>
   )

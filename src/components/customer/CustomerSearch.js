@@ -36,7 +36,7 @@ function CustomerSearch() {
           <Form>
             <CustomerFields data={customerEditData} setData={setCustomerEditData} />
             <Button primary content='Suchen' icon='search' labelPosition='left'
-                    onClick={() => setViewState('list')}
+                    onClick={() => setViewState('list')} floated='right' 
             />
           </Form>
         </div>
@@ -62,7 +62,7 @@ function CustomerSearch() {
                     onClick={() => setViewState('list')}
             />
             <Button primary content='Speichern' icon='save' labelPosition='left'
-                    onClick={() => setViewState('list')}
+                    onClick={() => setViewState('list')} floated='right'
             />
           </Form>
         </div>
