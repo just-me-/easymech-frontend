@@ -24,20 +24,8 @@ export function deleteCustomer(id: string): Promise<SaveResult> {
   .then(parseJSON);
 }
 */
-export function addCustomer(
-  firma: string,
-  adresse: string,
-  plz: string,
-  ort: string,
-  vorname: string,
-  nachname: string,
-  email: string,
-  telefon: string,
-  notiz: string
-): Promise<SaveResult> {
-  return helper.postJson("/kunden",
-    {firma, adresse, plz, ort, vorname, nachname, email, telefon, notiz},
-    "POST").then(helper.parseJSON);
+export function addCustomer(customerObject): Promise<SaveResult> {
+  return helper.postJson("/kunden", customerObject, "POST").then(helper.parseJSON);
 }
 
 export function getCustomer(id: string): Promise<Customer> {
