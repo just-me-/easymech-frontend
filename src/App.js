@@ -255,7 +255,7 @@ class App extends React.Component<Props, State> {
             <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
           )}
         />
-        <Grid id="App-grid">
+        <Grid id="App-grid" stackable>
           <Grid.Column id="Menu-grid" width={4}>
             <MenuBar />
           </Grid.Column>
