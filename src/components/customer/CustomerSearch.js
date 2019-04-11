@@ -16,19 +16,33 @@ function CustomerSearch() {
   const [formIsValid, setFormIsValid] = useState(false);
 
   function saveCustomer() {
-      if(formIsValid) {
-          api
-              .updateCustomer(customerEditData.id,customerEditData)
-              .then((result) => {
-                  console.log("Juhuu..", result);
-              })
-              .catch(error => {
-                console.log(customerEditData)
-                console.log("Ups, ein Fehler ist aufgetreten", error)
-              });
-      } else {
-          console.log("Pflichtfelder nicht ausgefüllt oder sonst ein Fehler... 2Do")
-      }
+    if(formIsValid) {
+      setViewState("loader");
+      api
+        .updateCustomer(customerEditData.id, customerEditData)
+        .then((result) => {
+            setViewState("list");
+            console.log("Kunde wurde gespeichert...", result);
+        })
+        .catch(error => {
+          console.log("Ups, ein Fehler ist aufgetreten", error)
+        });
+    } else {
+        console.log("Pflichtfelder nicht ausgefüllt oder sonst ein Fehler... 2Do")
+    }
+  }
+
+  function deleteCustomer() {
+    setViewState("loader");
+    api
+      .deleteCustomer(customerEditData.id)
+      .then((result) => {
+          setViewState("list");
+          console.log("Kunde wurde gelöscht...", result);
+      })
+      .catch(error => {
+        console.log("Ups, ein Fehler ist aufgetreten", error)
+      });
   }
 
   function onEditCustomerClick(customerId) {
@@ -53,7 +67,7 @@ function CustomerSearch() {
           <Form>
             <CustomerFields data={customerEditData} setData={setCustomerEditData} />
             <Button primary content='Suchen' icon='search' labelPosition='left'
-                    onClick={() => setViewState('list')} floated='right' 
+                    onClick={() => setViewState('list')} floated='right'
             />
           </Form>
         </div>
@@ -78,11 +92,11 @@ function CustomerSearch() {
             <Button content='Abbrechen' icon='arrow left' labelPosition='left'
                     onClick={() => setViewState('list')}
             />
-            <Button primary content='Speichern' icon='save' labelPosition='left'
-                    onClick={() => {
-                      saveCustomer();
-                      setViewState('list')
-                    }} floated='right'
+            <Button content='Löschen' icon='trash' labelPosition='left'
+                    onClick={() => deleteCustomer()}
+            />
+            <Button primary content='Speichern' icon='save' labelPosition='left' floated='right'
+                    onClick={() => saveCustomer()}
             />
           </Form>
         </div>

@@ -33,3 +33,9 @@ export function postJson(endpoint: string, params: Object, method = "POST") {
     body: JSON.stringify(params)
   }).then(checkStatus);
 }
+
+export function deleteJson(endpoint: string) {
+  return fetch(`${backend}${endpoint}`, {
+    method: 'DELETE'
+  }).then(checkStatus);
+}
