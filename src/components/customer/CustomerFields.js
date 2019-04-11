@@ -86,7 +86,7 @@ function CustomerFields(props) {
         </Form.Group>
 
         {props.searchView ||
-          <Form.Group widths='equal'>
+          <Form.Group widths='equal' className="OneField">
             <Form.Input
               id='notiz'
               label='Notizen'

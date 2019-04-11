@@ -53,3 +53,11 @@
 .Form-section .field>.input{
   width: 70% !important;
 }
+@media (min-width: 768px) {
+  .Form-section .OneField .field>label{
+    width: 10%;
+  }
+  .Form-section .OneField .field>.input{
+    width: 85% !important;
+  }
+}
