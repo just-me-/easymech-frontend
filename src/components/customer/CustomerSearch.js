@@ -65,7 +65,7 @@ function CustomerSearch() {
             Kunden suchen
           </Header>
           <Form>
-            <CustomerFields data={customerEditData} setData={setCustomerEditData} />
+            <CustomerFields data={customerEditData} setData={setCustomerEditData} searchView/>
             <Button primary content='Suchen' icon='search' labelPosition='left'
                     onClick={() => setViewState('list')} floated='right'
             />

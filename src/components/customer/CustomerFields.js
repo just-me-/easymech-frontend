@@ -25,6 +25,7 @@ function CustomerFields(props) {
           <Form.Input
             id='firma'
             label='Name'
+            placeholder={props.searchView || 'Pflichtfeld'}
             value={customerData.firma || ""}
             onChange={handleChange}
           />
@@ -84,14 +85,16 @@ function CustomerFields(props) {
           />
         </Form.Group>
 
-        <Form.Group widths='equal'>
-          <Form.Input
-            id='notiz'
-            label='Notizen'
-            value={customerData.notiz || ""}
-            onChange={handleChange}
-          />
-        </Form.Group>
+        {props.searchView ||
+          <Form.Group widths='equal'>
+            <Form.Input
+              id='notiz'
+              label='Notizen'
+              value={customerData.notiz || ""}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        }
       </div>
     </div>
   )
