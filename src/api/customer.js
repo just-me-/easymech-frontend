@@ -2,11 +2,23 @@
 
 import * as helper from "./helper";
 
-export function addCustomer(customerObject): Promise<SaveResult> {
+export type Customer = {
+  firma: string,
+  adresse: string,
+  plz: string,
+  ort: string,
+  vorname: string,
+  nachname: string,
+  email: string,
+  telefon: string,
+  notiz: string
+};
+
+export function addCustomer(customerObject: Customer): Promise<SaveResult> {
   return helper.postJson("/kunden", customerObject, "POST").then(helper.parseJSON);
 }
 
-export function updateCustomer(id: string, customerObject): Promise<SaveResult> {
+export function updateCustomer(id: string, customerObject: Customer): Promise<SaveResult> {
   return helper.postJson("/kunden/"+id, customerObject, "PUT").then(helper.parseJSON);
 }
 

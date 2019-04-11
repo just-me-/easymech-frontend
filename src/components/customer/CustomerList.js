@@ -7,7 +7,11 @@ import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
 import * as api from "../../api/customer";
 import "./CustomerList.css"
 
-function CustomerList(props) {
+export type Props = {
+  editCustomer: (string) => void
+};
+
+function CustomerList(props: Props) {
 
   const [customerListData, setCustomerListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

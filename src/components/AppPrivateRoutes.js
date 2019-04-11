@@ -19,7 +19,12 @@ import Rental from "./transaction/Rental";
 import Service from "./service/Service";
 import ServiceSearch from "./service/ServiceSearch";
 
-function AppPrivateRoutes(props) {
+export type Props = {
+  isAuthenticated: ?boolean,
+  token: ?string
+};
+
+function AppPrivateRoutes(props: Props) {
   return (
     <div>
       <PrivateRoute

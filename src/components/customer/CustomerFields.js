@@ -3,7 +3,16 @@
 import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
 
-function CustomerFields(props) {
+import type { Customer } from "../../api/customer";
+
+export type Props = {
+  data: ?Customer,
+  setData: (Customer) => void,
+  setValidState: (boolean) => void,
+  searchView: ?boolean
+};
+
+function CustomerFields(props: Props) {
   const [customerData, setCustomerData] = useState(props.data ? props.data : {});
 
   function handleChange(ele) {

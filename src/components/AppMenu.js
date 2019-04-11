@@ -6,7 +6,14 @@ import {Link} from "react-router-dom";
 
 import logo from "../resources/Logo.png"
 
-function AppMenu(props) {
+export type Props = {
+  signout: (
+    callback: () => void
+  ) => void,
+  history: { push: (string) => void }
+};
+
+function AppMenu(props: Props) {
   const [activeItem, setActiveItem] = useState("dashboard");
 
   function handleMenuClick(e, { name }) {

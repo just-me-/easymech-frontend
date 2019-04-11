@@ -18,14 +18,16 @@ export type Props = {
     state?: {
       from: string
     }
-  }
+  },
+  isAuthenticated: ?boolean
 };
 
 class Login extends React.Component<Props, *> {
   state = {
     login: "",
     password: "",
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    error: null
   };
 
   handleSubmit = (event: Event) => {
@@ -66,7 +68,6 @@ class Login extends React.Component<Props, *> {
                 icon='user'
                 iconPosition='left'
                 placeholder='Login'
-                onChange={this.handleLoginChanged}
                 value={this.state.login}
               />
               <Form.Input
@@ -75,7 +76,6 @@ class Login extends React.Component<Props, *> {
                 iconPosition='left'
                 placeholder='Password'
                 type='password'
-                onChange={this.handlePasswordChanged}
                 value={this.state.password}
               />
 
