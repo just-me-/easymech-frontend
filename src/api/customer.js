@@ -8,14 +8,11 @@ export function addCustomer(name: string): Promise<SaveResult> {
   return postJson("/kunden", {name}, "POST").then(parseJSON);
 }
 */
-/*
-export function updateCustomer(id: string, name: string, isComplete: bool): Promise<SaveResult> {
-  let task = {
-    id: id, isComplete: isComplete, name: name
-  }
-  return postJson("/kunden/"+id, task, "PUT").then(parseJSON);
+
+export function updateCustomer(id: string,customerObject): Promise<SaveResult> {
+  return helper.postJson("/kunden/"+id, customerObject, "PUT").then(helper.parseJSON);
 }
-*/
+
 /*
 export function deleteCustomer(id: string): Promise<SaveResult> {
   return fetch(backend + '/kunden/' + id, {
@@ -23,6 +20,7 @@ export function deleteCustomer(id: string): Promise<SaveResult> {
   })
   .then(parseJSON);
 }
+
 */
 export function addCustomer(customerObject): Promise<SaveResult> {
   return helper.postJson("/kunden", customerObject, "POST").then(helper.parseJSON);

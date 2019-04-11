@@ -13,6 +13,23 @@ function CustomerSearch() {
 
   //const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
+  const [formIsValid, setFormIsValid] = useState(false);
+
+  function saveCustomer() {
+      if(formIsValid) {
+          api
+              .updateCustomer(customerEditData.id,customerEditData)
+              .then((result) => {
+                  console.log("Juhuu..", result);
+              })
+              .catch(error => {
+                console.log(customerEditData)
+                console.log("Ups, ein Fehler ist aufgetreten", error)
+              });
+      } else {
+          console.log("Pflichtfelder nicht ausgefüllt oder sonst ein Fehler... 2Do")
+      }
+  }
 
   function onEditCustomerClick(customerId) {
     setViewState("loader");
@@ -57,12 +74,15 @@ function CustomerSearch() {
             Kunde bearbeiten
           </Header>
           <Form>
-            <CustomerFields data={customerEditData} setData={setCustomerEditData} />
+            <CustomerFields data={customerEditData} setData={setCustomerEditData} setValidState={setFormIsValid} />
             <Button content='Abbrechen' icon='arrow left' labelPosition='left'
                     onClick={() => setViewState('list')}
             />
             <Button primary content='Speichern' icon='save' labelPosition='left'
-                    onClick={() => setViewState('list')} floated='right'
+                    onClick={() => {
+                      saveCustomer();
+                      setViewState('list')
+                    }} floated='right'
             />
           </Form>
         </div>
