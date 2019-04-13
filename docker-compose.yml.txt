@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+    auth-proxy:
+        image: hackinglab/keycloak-gatekeeper:latest
+        labels:
+            - "traefik.port=3000"
+            - "traefik.frontend.rule=Host:dev-fe.easymech.ch"
+            - "traefik.protocol=http"
+        networks:
+            transit_traefik:
+        external_links:
+                - traefik:idp.easymech.ch
+        volumes:
+            - ./keycloak-gatekeeper.conf:/etc/keycloak-gatekeeper.conf
+        entrypoint:
+            - /opt/keycloak-gatekeeper
+            - --config=/etc/keycloak-gatekeeper.conf
+
+    easymech-frontend-dev:
+        container_name: easymech-frontend-dev
+        build:
+            context: .
+            dockerfile: dockerfile
+        networks:
+            transit_traefik:
+        volumes:
+            - '.:/usr/src/app'
+            - '/usr/src/app/node_modules'
+        environment:
+            - NODE_ENV=development
+        labels:
+            - "traefik.enable=false"
+
+networks:
+   transit_traefik:
+        external: true
