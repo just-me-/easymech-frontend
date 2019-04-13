@@ -1,6 +1,7 @@
 // @flow
 
 import * as helper from "./helper";
+export const checkResponse = helper.checkResponse;
 
 export type Customer = {
   firma: string,
@@ -18,8 +19,8 @@ export function addCustomer(customerObject: Customer): Promise<SaveResult> {
   return helper.postJson("/kunden", customerObject, "POST").then(helper.parseJSON);
 }
 
-export function updateCustomer(id: string, customerObject: Customer): Promise<SaveResult> {
-  return helper.postJson("/kunden/"+id, customerObject, "PUT").then(helper.parseJSON);
+export function updateCustomer(customerObject: Customer): Promise<SaveResult> {
+  return helper.postJson("/kunden/"+customerObject.id, customerObject, "PUT").then(helper.parseJSON);
 }
 
 export function deleteCustomer(id: string): Promise<SaveResult> {
@@ -27,13 +28,13 @@ export function deleteCustomer(id: string): Promise<SaveResult> {
 }
 
 export function getCustomer(id: string): Promise<Customer> {
-  return helper.getJson(
-    `/kunden/`+id
-  ).then(helper.parseJSON);
+  return helper.getJson("/kunden/"+id).then(helper.parseJSON);
 }
 
 export function getCustomers(): Promise<{ result: Array<Customer> }> {
-  return helper.getJson(
-    `/kunden`
-  ).then(helper.parseJSON);
+  return helper.getJson("/kunden/").then(helper.parseJSON);
+}
+
+export function getFilteredCustomers(customerObject: Customer): Promise<{ result: Array<Customer> }> {
+  return helper.postJson("/kunden/suchen", customerObject, "POST").then(helper.parseJSON);
 }

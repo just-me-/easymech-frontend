@@ -11,7 +11,7 @@ import CustomerFields from "./CustomerFields";
 function CustomerSearch() {
   const [viewState, setViewState] = useState("search");
 
-  //const [searchData, setSearchData] = useState({});
+  const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -19,8 +19,9 @@ function CustomerSearch() {
     if(formIsValid) {
       setViewState("loader");
       api
-        .updateCustomer(customerEditData.id, customerEditData)
+        .updateCustomer(customerEditData)
         .then((result) => {
+            result = api.checkResponse(result);
             setViewState("list");
             console.log("Kunde wurde gespeichert...", result);
         })
@@ -37,6 +38,7 @@ function CustomerSearch() {
     api
       .deleteCustomer(customerEditData.id)
       .then((result) => {
+          result = api.checkResponse(result);
           setViewState("list");
           console.log("Kunde wurde gelöscht...", result);
       })
@@ -50,6 +52,7 @@ function CustomerSearch() {
     api
       .getCustomer(customerId)
       .then((result) => {
+        result = api.checkResponse(result);
         setCustomerEditData(result);
         // 2Do - fancyer mit timeout oder lieber sofort?
         setTimeout(() => setViewState("edit"), 200);
@@ -65,7 +68,7 @@ function CustomerSearch() {
             Kunden suchen
           </Header>
           <Form>
-            <CustomerFields data={customerEditData} setData={setCustomerEditData} searchView/>
+            <CustomerFields data={searchData} setData={setSearchData} searchView/>
             <Button primary content='Suchen' icon='search' labelPosition='left'
                     onClick={() => setViewState('list')} floated='right'
             />
@@ -75,7 +78,7 @@ function CustomerSearch() {
 
         {viewState === 'list' &&
         <div>
-          <CustomerList editCustomer={onEditCustomerClick}/>
+          <CustomerList editCustomer={onEditCustomerClick} filterData={searchData}/>
           <Button content='Zurück' icon='arrow left' labelPosition='left'
                   onClick={() => setViewState('search')}
           />

@@ -13,15 +13,30 @@ export type Props = {
 };
 
 function CustomerFields(props: Props) {
-  const [customerData, setCustomerData] = useState(props.data ? props.data : {});
+  const initialData = {
+    id: (props.data && props.data.id) || undefined,
+    firma: (props.data && props.data.firma) || "",
+    adresse: (props.data && props.data.adresse) || "",
+    plz: (props.data && props.data.plz) || "",
+    ort: (props.data && props.data.ort) || "",
+    vorname: (props.data && props.data.vorname) || "",
+    nachname: (props.data && props.data.nachname) || "",
+    email: (props.data && props.data.email) || "",
+    telefon: (props.data && props.data.telefon) || "",
+    notiz: (props.data && props.data.notiz) || ""
+  }
+
+  const [customerData, setCustomerData] = useState(initialData);
 
   function handleChange(ele) {
     setCustomerData({...customerData, [ele.target.id]: ele.target.value});
   }
 
   useEffect(() => {
-    if(props.setValidState && props.setData) {
+    if(props.setValidState) {
       props.setValidState(customerData.firma && customerData.firma.length>0);
+    }
+    if(props.setData) {
       props.setData(customerData);
     }
   });
@@ -34,7 +49,7 @@ function CustomerFields(props: Props) {
           <Form.Input
             id='firma'
             label='Name'
-            placeholder={props.searchView || 'Pflichtfeld'}
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
             value={customerData.firma || ""}
             onChange={handleChange}
           />

@@ -10,6 +10,13 @@ export function checkStatus(response) {
   }
 }
 
+export function checkResponse(response) {
+    if(response.status !== 'ok') {
+      throw new Error("Servermeldung: "+response.message);
+    }
+    return response.data;
+}
+
 export function parseJSON(response) {
   return response.json();
 }

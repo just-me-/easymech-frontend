@@ -16,6 +16,7 @@ function Customer() {
       api
         .addCustomer(customerData)
         .then((result) => {
+          result = api.checkResponse(result);
           console.log("Juhuu..", result);
         })
         .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
@@ -27,7 +28,7 @@ function Customer() {
   return (
     <div>
       <Header as='h1' textAlign='center'>
-        Kunde (erstellen)
+        Kunde erfassen
       </Header>
       <Form>
         <CustomerFields setData={setCustomerData} setValidState={setFormIsValid}/>

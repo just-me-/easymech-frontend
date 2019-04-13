@@ -18,8 +18,9 @@ function CustomerList(props: Props) {
 
   function getListData() {
   api
-    .getCustomers()
+    .getFilteredCustomers(props.filterData)
     .then((result) => {
+      result = api.checkResponse(result);
       setIsLoading(false);
       setCustomerListData(result);
     })
