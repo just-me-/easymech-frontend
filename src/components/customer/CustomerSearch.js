@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react'
 import { Header, Form, Button, Dimmer, Loader } from 'semantic-ui-react'
+import { NotificationManager } from 'react-notifications';
 
 import * as api from "../../api/customer";
 
 import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";
+import Notification from "../Notification";
 
 function CustomerSearch() {
   const [viewState, setViewState] = useState("search");
@@ -23,13 +25,15 @@ function CustomerSearch() {
         .then((result) => {
             result = api.checkResponse(result);
             setViewState("list");
-            console.log("Kunde wurde gespeichert...", result);
+            NotificationManager.success("Der Kunde wurde erfolgreich gespeichert.", result.firma+" aktualisiert");
         })
         .catch(error => {
-          console.log("Ups, ein Fehler ist aufgetreten", error)
+          console.log("Ups, ein Fehler ist aufgetreten", error);
+          setViewState("edit");
+          NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
         });
     } else {
-        console.log("Pflichtfelder nicht ausgefüllt oder sonst ein Fehler... 2Do")
+        NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
     }
   }
 
@@ -40,10 +44,12 @@ function CustomerSearch() {
       .then((result) => {
           result = api.checkResponse(result);
           setViewState("list");
-          console.log("Kunde wurde gelöscht...", result);
+          NotificationManager.success("Der Kunde wurde erfolgreich gelöscht.", customerEditData.firma+" gelöscht");
       })
       .catch(error => {
-        console.log("Ups, ein Fehler ist aufgetreten", error)
+        console.log("Ups, ein Fehler ist aufgetreten", error);
+        setViewState("edit");
+        NotificationManager.error("Beim Löschen ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
       });
   }
 
@@ -54,10 +60,13 @@ function CustomerSearch() {
       .then((result) => {
         result = api.checkResponse(result);
         setCustomerEditData(result);
-        // 2Do - fancyer mit timeout oder lieber sofort?
         setTimeout(() => setViewState("edit"), 200);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .catch(error => {
+        console.log("Ups, ein Fehler ist aufgetreten", error);
+        setViewState("list");
+        NotificationManager.error("Beim Laden des Kundens ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
+      });
   }
 
   return (
@@ -113,6 +122,7 @@ function CustomerSearch() {
         </div>
         }
 
+        <Notification/>
     </div>
   )
 }

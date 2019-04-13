@@ -2,10 +2,12 @@
 
 import React, {useState} from 'react'
 import { Button, Header, Form } from 'semantic-ui-react'
+import { NotificationManager } from 'react-notifications';
 
 import * as api from "../../api/customer";
 
 import CustomerFields from "./CustomerFields";
+import Notification from "../Notification";
 
 function Customer() {
   const [customerData, setCustomerData] = useState({});
@@ -17,11 +19,14 @@ function Customer() {
         .addCustomer(customerData)
         .then((result) => {
           result = api.checkResponse(result);
-          console.log("Juhuu..", result);
+          NotificationManager.success("Der Kunde wurde erfolgreich gespeichert.", result.firma+" erfasst");
         })
-        .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+        .catch(error => {
+          console.log("Ups, ein Fehler ist aufgetreten", error);
+          NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
+        });
     } else {
-      console.log("Pflichtfelder nicht ausgefüllt oder sonst ein Fehler... 2Do")
+      NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
     }
   }
 
@@ -36,6 +41,7 @@ function Customer() {
                 onClick={() => addCustomer()}
         />
       </Form>
+      <Notification/>
     </div>
   )
 }
