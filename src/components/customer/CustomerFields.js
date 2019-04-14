@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
 
 import type { Customer } from "../../api/customer";
+import * as validation from "../validation"
 
 export type Props = {
   data: ?Customer,
@@ -35,11 +36,11 @@ function CustomerFields(props: Props) {
 
   useEffect(() => {
     if(props.setValidState) {
-      props.setValidState(customerData.firma && customerData.firma.length>0 );
+      props.setValidState(validation.checkRequired(customerData.firma));
     }
 
     if(props.setValidMail && customerData.email){
-        props.setValidMail(customerData.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
+      props.setValidMail(validation.checkMail(customerData.email));
     }
 
     if(props.setData) {
