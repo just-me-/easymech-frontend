@@ -9,6 +9,7 @@ export type Props = {
   data: ?Customer,
   setData: (Customer) => void,
   setValidState: (boolean) => void,
+  setValidMail: (boolean) => void,
   searchView: ?boolean
 };
 
@@ -34,8 +35,13 @@ function CustomerFields(props: Props) {
 
   useEffect(() => {
     if(props.setValidState) {
-      props.setValidState(customerData.firma && customerData.firma.length>0);
+      props.setValidState(customerData.firma && customerData.firma.length>0 );
     }
+
+    if(props.setValidMail && customerData.email){
+        props.setValidMail(customerData.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
+    }
+
     if(props.setData) {
       props.setData(customerData);
     }
