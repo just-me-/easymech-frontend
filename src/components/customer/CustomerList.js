@@ -7,8 +7,11 @@ import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
 import * as api from "../../api/customer";
 import "./CustomerList.css"
 
+import type { Customer } from "../../api/customer";
+
 export type Props = {
-  editCustomer: (string) => void
+  editCustomer: (string) => void,
+  filterData: ?Customer
 };
 
 function CustomerList(props: Props) {

@@ -1,18 +1,17 @@
-// @flow
-
 import * as helper from "./helper";
 export const checkResponse = helper.checkResponse;
 
 export type Customer = {
-  firma: string,
-  adresse: string,
-  plz: string,
-  ort: string,
-  vorname: string,
-  nachname: string,
-  email: string,
-  telefon: string,
-  notiz: string
+  id?: string,
+  firma?: string,
+  adresse?: string,
+  plz?: string,
+  ort?: string,
+  vorname?: string,
+  nachname?: string,
+  email?: string,
+  telefon?: string,
+  notiz?: string
 };
 
 export function addCustomer(customerObject: Customer): Promise<SaveResult> {

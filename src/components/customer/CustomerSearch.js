@@ -10,16 +10,25 @@ import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";
 import Notification from "../Notification";
 
-function CustomerSearch(props) {
+export type Props = {
+  location: {
+    state: {
+      listRedirect?: string
+    }
+  }
+};
+
+function CustomerSearch(props: Props) {
   const initState = (props.location.state && props.location.state.listRedirect) ? "list" : "search";
   const [viewState, setViewState] = useState(initState);
 
   const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
+  const [mailIsValid, setMailValid] = useState(true);
 
   function saveCustomer() {
-    if(formIsValid) {
+    if(formIsValid && mailIsValid) {
       setViewState("loader");
       api
         .updateCustomer(customerEditData)
@@ -34,7 +43,12 @@ function CustomerSearch(props) {
           NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
         });
     } else {
-        NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
+        if(!formIsValid){
+            NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
+        }
+        if(!mailIsValid){
+            NotificationManager.info("Bitte geben Sie eine korrekte Mailadresse an!");
+        }
     }
   }
 
@@ -101,7 +115,9 @@ function CustomerSearch(props) {
             Kunde bearbeiten
           </Header>
           <Form>
-            <CustomerFields data={customerEditData} setData={setCustomerEditData} setValidState={setFormIsValid} />
+            <CustomerFields data={customerEditData} setData={setCustomerEditData}
+                            setValidState={setFormIsValid} setValidMail={setMailValid}
+            />
             <Button content='Abbrechen' icon='arrow left' labelPosition='left'
                     onClick={() => setViewState('list')}
             />

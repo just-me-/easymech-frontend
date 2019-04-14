@@ -7,11 +7,11 @@ import type { Customer } from "../../api/customer";
 import * as validation from "../validation"
 
 export type Props = {
-  data: ?Customer,
-  setData: (Customer) => void,
-  setValidState: (boolean) => void,
-  setValidMail: (boolean) => void,
-  searchView: ?boolean
+  data?: Customer,
+  setData?: (Customer) => void,
+  setValidState?: (boolean) => void,
+  setValidMail?: (boolean) => void,
+  searchView?: boolean
 };
 
 function CustomerFields(props: Props) {
@@ -35,12 +35,14 @@ function CustomerFields(props: Props) {
   }
 
   useEffect(() => {
+    const requiredIsValide = validation.checkRequired(customerData.firma);
     if(props.setValidState) {
-      props.setValidState(validation.checkRequired(customerData.firma));
+      props.setValidState(requiredIsValide);
     }
 
+    const mailIsValide = validation.checkMail(customerData.email);
     if(props.setValidMail && customerData.email){
-      props.setValidMail(validation.checkMail(customerData.email));
+      props.setValidMail(mailIsValide);
     }
 
     if(props.setData) {
