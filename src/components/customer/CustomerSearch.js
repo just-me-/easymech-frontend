@@ -10,9 +10,9 @@ import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";
 import Notification from "../Notification";
 
-function CustomerSearch() {
-  const [viewState, setViewState] = useState("search");
-
+function CustomerSearch(props) {
+  const initState = (props.location.state && props.location.state.listRedirect) ? "list" : "search";
+  const [viewState, setViewState] = useState(initState);
 
   const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});

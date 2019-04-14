@@ -37,9 +37,14 @@ function AppMenu(props: Props) {
 
       <Menu.Item>
         <Menu.Header>
-          <Icon name='address book outline' />
-          Kunden
+          <div onClick={((e) => handleMenuClick(e, {name: "search_customer"}))}>
+            <Link to={{pathname: "/customer_search", state: { listRedirect: true }}}>
+              <Icon name='address book outline' />
+              Kunden
+            </Link>
+          </div>
         </Menu.Header>
+
         <Menu.Menu>
           <Menu.Item
             content="Erfassen"
