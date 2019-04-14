@@ -82,9 +82,6 @@ function CustomerSearch() {
             <Button primary content='Suchen' icon='search' labelPosition='left'
                     onClick={() => setViewState('list')} floated='right'
             />
-            <Button primary content='Alle anzeigen' icon='search' labelPosition='left'
-                    onClick={() => setViewState('list')} floated='right'
-            />
           </Form>
         </div>
         }

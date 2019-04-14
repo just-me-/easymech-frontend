@@ -70,8 +70,7 @@ function AppMenu(props: Props) {
             content="Erfassen"
             name='add_machine'
             active={activeItem === 'add_machine'}
-            onClick={event =>
-                handleMenuClick}
+            onClick={handleMenuClick}
             as={Link}
             to="/machine"
           />
