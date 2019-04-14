@@ -13,6 +13,7 @@ import Notification from "../Notification";
 function CustomerSearch() {
   const [viewState, setViewState] = useState("search");
 
+
   const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
@@ -81,6 +82,9 @@ function CustomerSearch() {
             <Button primary content='Suchen' icon='search' labelPosition='left'
                     onClick={() => setViewState('list')} floated='right'
             />
+            <Button primary content='Alle anzeigen' icon='search' labelPosition='left'
+                    onClick={() => setViewState('list')} floated='right'
+            />
           </Form>
         </div>
         }
@@ -121,7 +125,6 @@ function CustomerSearch() {
           </Dimmer>
         </div>
         }
-
         <Notification/>
     </div>
   )

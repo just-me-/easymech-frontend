@@ -24,7 +24,7 @@ function CustomerFields(props: Props) {
     email: (props.data && props.data.email) || "",
     telefon: (props.data && props.data.telefon) || "",
     notiz: (props.data && props.data.notiz) || ""
-  }
+  };
 
   const [customerData, setCustomerData] = useState(initialData);
 

@@ -3,7 +3,6 @@
 import React, {useState} from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import {Link} from "react-router-dom";
-
 import logo from "../resources/Logo.png"
 
 export type Props = {
@@ -71,7 +70,8 @@ function AppMenu(props: Props) {
             content="Erfassen"
             name='add_machine'
             active={activeItem === 'add_machine'}
-            onClick={handleMenuClick}
+            onClick={event =>
+                handleMenuClick}
             as={Link}
             to="/machine"
           />

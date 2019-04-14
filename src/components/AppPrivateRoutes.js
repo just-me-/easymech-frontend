@@ -3,19 +3,14 @@
 import React from 'react'
 
 import PrivateRoute from "./PrivateRoute";
-
 import Dashboard from "./Dashboard";
-
 import Customer from "./customer/Customer";
 import CustomerSearch from "./customer/CustomerSearch";
-
 import Machine from "./machine/Machine";
 import Machinetype from "./machine/Machinetype";
 import MachineSearch from "./machine/MachineSearch";
-
 import BuySell from "./transaction/BuySell";
 import Rental from "./transaction/Rental";
-
 import Service from "./service/Service";
 import ServiceSearch from "./service/ServiceSearch";
 
