@@ -2,9 +2,7 @@
 
 import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
-
-
-import MachineType from "./MachineType";
+import type { MachineType} from "../../api/machinetype";
 import * as validation from "../validation";
 
 export type Props = {
