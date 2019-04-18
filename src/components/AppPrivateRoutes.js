@@ -10,7 +10,7 @@ import Customer from "./customer/Customer";
 import CustomerSearch from "./customer/CustomerSearch";
 
 import Machine from "./machine/Machine";
-import Machinetype from "./machine/Machinetype";
+import MachineType from "./machine/MachineType";
 import MachineSearch from "./machine/MachineSearch";
 
 import BuySell from "./transaction/BuySell";
@@ -61,7 +61,7 @@ function AppPrivateRoutes(props: Props) {
         path="/machinetype"
         isAuthenticated={props.isAuthenticated}
         token={props.token}
-        component={Machinetype}
+        component={MachineType}
       />
       <PrivateRoute
         path="/service"
