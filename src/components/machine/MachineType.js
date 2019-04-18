@@ -2,7 +2,6 @@
 
 import React, {useState} from 'react'
 import {Button, Form, Header} from 'semantic-ui-react'
-import * as api from "../../api/customer";
 import {NotificationManager} from "react-notifications";
 import Notification from "../Notification";
 import MachineTypeFields from "./MachineTypeFields";

@@ -136,7 +136,6 @@ function MachineTypeFields(props: Props) {
                   onChange={handleChange}
               />
           </Form.Group>
-
       </div>
     </div>
   )
