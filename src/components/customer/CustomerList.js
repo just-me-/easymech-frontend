@@ -20,6 +20,7 @@ function CustomerList(props: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
   function getListData() {
+  console.log(props.filterData);
   api
     .getFilteredCustomers(props.filterData)
     .then((result) => {

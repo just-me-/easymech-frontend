@@ -16,7 +16,8 @@ function Customer() {
 
   function addCustomer() {
     if(formIsValid && mailIsValid) {
-      api
+        console.log(customerData);
+        api
         .addCustomer(customerData)
         .then((result) => {
           result = api.checkResponse(result);

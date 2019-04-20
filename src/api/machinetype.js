@@ -9,7 +9,6 @@ export type MachineType = {
   hubkraft?: number,
   hubhoehe?: number,
   eigengewicht?: number,
-  jahrgang?: number,
   fahrzeughoehe?: number,
   fahrzeuglaenge?: number,
   fahrzeugbreite?: number,
@@ -17,25 +16,25 @@ export type MachineType = {
 };
 
 export function addMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
-  return helper.postJson("/maschinentypen", machineTypeObject, "POST").then(helper.parseJSON);
+  return helper.postJson("/fahrzeugtypen/", machineTypeObject, "POST").then(helper.parseJSON);
 }
 
 export function updateMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
-  return helper.postJson("/maschinentypen/"+machineTypeObject.id, machineTypeObject, "PUT").then(helper.parseJSON);
+  return helper.postJson("/fahrzeugtypen/"+machineTypeObject.id, machineTypeObject, "PUT").then(helper.parseJSON);
 }
 
 export function deleteMachineType(id: string): Promise<SaveResult> {
-  return helper.deleteJson("/maschinentypen/"+id).then(helper.parseJSON);
+  return helper.deleteJson("/fahrzeugtypen/"+id).then(helper.parseJSON);
 }
 
 export function getMachineType(id: string): Promise<MachineType> {
-  return helper.getJson("/maschinentypen/"+id).then(helper.parseJSON);
+  return helper.getJson("/fahrzeugtypen/"+id).then(helper.parseJSON);
 }
 
 export function getMachineTypes(): Promise<{ result: Array<MachineType> }> {
-  return helper.getJson("/maschinentypen/").then(helper.parseJSON);
+  return helper.getJson("/fahrzeugtypen/").then(helper.parseJSON);
 }
 
 export function getFilteredMachineTypes(machineTypeObject: MachineType): Promise<{ result: Array<MachineType> }> {
-  return helper.postJson("/maschinentypen/suchen", machineTypeObject, "POST").then(helper.parseJSON);
+  return helper.postJson("/fahrzeugtypen/suchen/", machineTypeObject, "POST").then(helper.parseJSON);
 }

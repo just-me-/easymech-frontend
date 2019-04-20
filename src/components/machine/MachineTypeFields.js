@@ -21,7 +21,6 @@ function MachineTypeFields(props: Props) {
     hubkraft: (props.data && props.data.hubkraft) || "",
     hubhoehe: (props.data && props.data.hubhoehe) || "",
     eigengewicht: (props.data && props.data.eigengewicht) || "",
-    jahrgang: (props.data && props.data.jahrgang) || "",
     fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || "",
     fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || "",
     fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || "",
@@ -73,24 +72,25 @@ function MachineTypeFields(props: Props) {
             value={machineTypeData.eigengewicht || ""}
             onChange={handleChange}
           />
-          <Form.Input
-            id='jahrgang'
-            label='Jahrgang'
-            value={machineTypeData.jahrgang || ""}
-            onChange={handleChange}
-          />
+            <Form.Input
+                id='nutzlast'
+                label='Nutzlast'
+                value={machineTypeData.nutzlast || ""}
+                onChange={handleChange}
+            />
         </Form.Group>
       </div>
 
       <Header as='h2'>Spezifikationen Maschine</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
-          <Form.Input
-            id='nutzlast'
-            label='Nutzlast'
-            value={machineTypeData.nutzlast || ""}
-            onChange={handleChange}
-          />
+            <Form.Input
+                id='hubhoehe'
+                label='Hubhöhe'
+                value={machineTypeData.hubhoehe || ""}
+                onChange={handleChange}
+            />
+
           <Form.Input
             id='hubkraft'
             label='Hubkraft'
@@ -101,26 +101,21 @@ function MachineTypeFields(props: Props) {
 
         <Form.Group widths='equal'>
           <Form.Input
-            id='hubhoehe'
-            label='Hubhöhe'
-            value={machineTypeData.hubhoehe || ""}
-            onChange={handleChange}
-          />
-          <Form.Input
             id='pneugroesse'
             label='Pneugrösse'
             value={machineTypeData.pneugroesse || ""}
             onChange={handleChange}
           />
+            <Form.Input
+                id='fahrzeughoehe'
+                label='Fahrzeughöhe'
+                value={machineTypeData.fahrzeughoehe || ""}
+                onChange={handleChange}
+            />
+
         </Form.Group>
 
           <Form.Group widths='equal'>
-              <Form.Input
-                  id='fahrzeughoehe'
-                  label='Fahrzeughöhe'
-                  value={machineTypeData.fahrzeughoehe || ""}
-                  onChange={handleChange}
-              />
               <Form.Input
                   id='fahrzeuglaenge'
                   label='Fahrzeuglänge'
