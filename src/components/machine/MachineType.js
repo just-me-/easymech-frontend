@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState} from 'react'
-import {Button, Form, Header} from 'semantic-ui-react'
+import {Button, Dimmer, Form, Header, Loader} from 'semantic-ui-react'
 import {NotificationManager} from "react-notifications";
 import Notification from "../Notification";
 import MachineTypeFields from "./MachineTypeFields";
@@ -79,6 +79,15 @@ function MachineType() {
                 <Notification/>
             </div>
             }
+
+            {viewState === 'loader' && // show this view before ajax calls
+            <div>
+                <Dimmer active inverted>
+                    <Loader />
+                </Dimmer>
+            </div>
+            }
+
         </div>
     )
 
