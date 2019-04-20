@@ -1,0 +1,11 @@
+{
+  "realm": "master",
+  "auth-server-url": "https://idp.easymech.ch/auth",
+  "ssl-required": "external",
+  "resource": "easymech-frontend-dev",
+  "verify-token-audience": true,
+  "credentials": {
+    "secret": "0f8af1f8-d6d3-45d0-af73-75e90df7df78"
+  },
+  "confidential-port": 0
+}
