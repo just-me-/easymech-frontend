@@ -2,10 +2,10 @@
 
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
-import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
+import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
 
-import * as api from "../../api/machinetype"
-import type { MachineType } from "../../api/machinetype";
+import * as api from "../../../api/machinetype"
+import type { MachineType } from "../../../api/machinetype";
 
 export type Props = {
   editMachineType: (string) => void,
@@ -35,10 +35,6 @@ function MachineTypeList(props: Props) {
 
   return (
     <div>
-      <Header as='h1' textAlign='center'>
-        Gefundene Fahrzeugtypen
-      </Header>
-
       <Table celled selectable striped>
         <Table.Header>
           <Table.Row>

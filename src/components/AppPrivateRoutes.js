@@ -10,7 +10,7 @@ import Customer from "./customer/Customer";
 import CustomerSearch from "./customer/CustomerSearch";
 
 import Machine from "./machine/Machine";
-import MachineType from "./machine/MachineType";
+import MachineType from "./machine/machinetype/MachineType";
 import MachineSearch from "./machine/MachineSearch";
 
 import BuySell from "./transaction/BuySell";
