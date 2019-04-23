@@ -3,7 +3,6 @@
 import React, {useState} from 'react'
 import {Button, Dimmer, Form, Header, Loader} from 'semantic-ui-react'
 import {NotificationManager} from "react-notifications";
-import Notification from "../../Notification";
 import MachineTypeFields from "./MachineTypeFields";
 import * as api from "../../../api/machinetype";
 import MachineTypeList from "./MachineTypeList";
@@ -144,7 +143,6 @@ function MachineType() {
                             }}
                     />
                 </Form>
-                <Notification/>
             </div>
             }
 
