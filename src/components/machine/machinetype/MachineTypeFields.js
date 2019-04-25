@@ -114,20 +114,20 @@ function MachineTypeFields(props: Props) {
 
         </Form.Group>
 
-          <Form.Group widths='equal'>
-              <Form.Input
-                id='fahrzeuglaenge'
-                label='Fahrzeuglänge'
-                value={machineTypeData.fahrzeuglaenge}
-                onChange={handleChange}
-              />
-              <Form.Input
-                id='fahrzeugbreite'
-                label='Breite'
-                value={machineTypeData.fahrzeugbreite}
-                onChange={handleChange}
-              />
-          </Form.Group>
+        <Form.Group widths='equal'>
+          <Form.Input
+            id='fahrzeuglaenge'
+            label='Fahrzeuglänge'
+            value={machineTypeData.fahrzeuglaenge}
+            onChange={handleChange}
+          />
+          <Form.Input
+            id='fahrzeugbreite'
+            label='Breite'
+            value={machineTypeData.fahrzeugbreite}
+            onChange={handleChange}
+          />
+        </Form.Group>
       </div>
     </div>
   )

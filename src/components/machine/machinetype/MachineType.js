@@ -167,7 +167,6 @@ function MachineType() {
                             onClick={() => editMachineType()}
                     />
                 </Form>
-                <Notification/>
             </div>
             }
 

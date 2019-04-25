@@ -1,15 +1,16 @@
 // @flow
 
+import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 import {Search, Header, Form} from 'semantic-ui-react'
-import _ from 'lodash'
+import {NotificationManager} from "react-notifications";
 
-import type { Machine} from "../../api/machine";
 import * as validation from "../validation"
 import * as apiTypes from "../../api/machinetype";
 import * as apiCustomer from "../../api/customer";
-import {NotificationManager} from "react-notifications";
+
 import type {MachineType} from "../../api/machinetype";
+import type { Machine} from "../../api/machine";
 
 export type Props = {
   data?: Machine,
@@ -147,20 +148,20 @@ function MachineFields(props: Props) {
             onChange={handleChange}
           />
           <Search
-              label='Fahrzeugtyp'
-              loading={isTypeLoading}
-              onResultSelect={handleMachineTypeSelect}
-              onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
-              results={typesResults.map(result => {return {id: result.id, title: result.fabrikat}})}
-              value={machineTypeValue}
+            label='Fahrzeugtyp'
+            loading={isTypeLoading}
+            onResultSelect={handleMachineTypeSelect}
+            onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
+            results={typesResults.map(result => {return {id: result.id, title: result.fabrikat}})}
+            value={machineTypeValue}
           />
           <Search
-              label='Kunden'
-              loading={isCustomerLoading}
-              onResultSelect={handleCustomerSelect}
-              onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
-              results={customerResults.map(result => {return {id: result.id, title: result.firma}})}
-              value={customerValue}
+            label='Kunden'
+            loading={isCustomerLoading}
+            onResultSelect={handleCustomerSelect}
+            onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
+            results={customerResults.map(result => {return {id: result.id, title: result.firma}})}
+            value={customerValue}
           />
         </Form.Group>
         <Form.Group widths='equal'>
