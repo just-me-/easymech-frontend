@@ -3,9 +3,12 @@
 import React, {useState} from 'react'
 import {Button, Dimmer, Form, Header, Loader} from 'semantic-ui-react'
 import {NotificationManager} from "react-notifications";
-import MachineTypeFields from "./MachineTypeFields";
+
 import * as api from "../../../api/machinetype";
+
+import MachineTypeFields from "./MachineTypeFields";
 import MachineTypeList from "./MachineTypeList";
+
 function MachineType() {
 
     const [machineTypeData, setMachineTypeData] = useState({});
@@ -13,7 +16,6 @@ function MachineType() {
     const [formIsValid, setFormIsValid] = useState(false);
     const [viewState, setViewState] = useState('list');
     const [machineTypeEditData, setMachineTypeEditData] = useState({});
-
 
     function addMachineType() {
         if(formIsValid) {
@@ -116,10 +118,10 @@ function MachineType() {
                 </Header>
                 <MachineTypeList editMachineType={onEditMachineTypeClick} filterData={searchData}/>
 
-                <Button content='Neuen Maschinentyp erfassen' icon='add circle' labelPosition='left'
+                <Button content='Typ erfassen' icon='add circle' labelPosition='left'
                         onClick={() => setViewState('add')}
                 />
-                <Button primary content='Suchen' icon='search' labelPosition='left'
+              <Button primary content='Filtern' icon='search' labelPosition='left'
                         onClick={() => setViewState('search')} floated='right'
                 />
             </div>

@@ -51,7 +51,7 @@ function MachineFields(props: Props) {
             id='seriennummer'
             label='Seriennummer'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
-            value={machineData.seriennummer || ""}
+            value={machineData.seriennummer}
             onChange={handleChange}
           />
           <Form.Input
@@ -65,40 +65,41 @@ function MachineFields(props: Props) {
           <Form.Input
             id='mastnummer'
             label='Mastnummer'
-            value={machineData.mastnummer || ""}
+            value={machineData.mastnummer}
             onChange={handleChange}
           />
           <Form.Input
             id='motorennummer'
             label='Motorennummer'
-            value={machineData.motorennummer || ""}
+            value={machineData.motorennummer}
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group widths='equal'>
-           <Form.Input
-               id='betriebsdauer'
-               label='Betriebsdauer'
-               value={machineData.betriebsdauer || ""}
-               onChange={handleChange}
-           />
-           <Form.Input
-               id='jahrgang'
-               label='Jahrgang'
-               value={machineData.jahrgang || ""}
-               onChange={handleChange}
-           />
-        </Form.Group>
-        <Form.Group widths='equal' className="OneField">
-           <Form.Input
-               id='notiz'
-               label='Notizen'
-               value={machineData.notiz || ""}
-               onChange={handleChange}
-           />
-          </Form.Group>
-      </div>
 
+        <Form.Group widths='equal'>
+         <Form.Input
+           id='betriebsdauer'
+           label='Betriebsdauer'
+           value={machineData.betriebsdauer}
+           onChange={handleChange}
+         />
+         <Form.Input
+           id='jahrgang'
+           label='Jahrgang'
+           value={machineData.jahrgang}
+           onChange={handleChange}
+         />
+        </Form.Group>
+
+        <Form.Group widths='equal' className="OneField">
+         <Form.Input
+           id='notiz'
+           label='Notizen'
+           value={machineData.notiz}
+           onChange={handleChange}
+         />
+        </Form.Group>
+      </div>
     </div>
   )
 }

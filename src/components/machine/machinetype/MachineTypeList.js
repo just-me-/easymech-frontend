@@ -20,13 +20,13 @@ function MachineTypeList(props: Props) {
   function getMachineTypeListData() {
     console.log(props.filterData);
     api
-    .getFilteredMachineTypes(props.filterData)
-    .then((result) => {
-      result = api.checkResponse(result);
-      setIsLoading(false);
-      setMachineTypeListData(result);
-    })
-    .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .getFilteredMachineTypes(props.filterData)
+      .then((result) => {
+        result = api.checkResponse(result);
+        setIsLoading(false);
+        setMachineTypeListData(result);
+      })
+      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
   useEffect(() => {

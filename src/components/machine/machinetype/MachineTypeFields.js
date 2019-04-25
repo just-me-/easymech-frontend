@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
+
 import type { MachineType} from "../../../api/machinetype";
 import * as validation from "../../validation";
 
@@ -36,13 +37,12 @@ function MachineTypeFields(props: Props) {
   useEffect(() => {
       const requiredIsValide = validation.checkRequired(machineTypeData.fabrikat);
       if(props.setValidState) {
-          props.setValidState(requiredIsValide);
+        props.setValidState(requiredIsValide);
       }
 
-
       if(props.setData) {
-      props.setData(machineTypeData);
-    }
+        props.setData(machineTypeData);
+      }
   });
 
   return (
@@ -54,13 +54,13 @@ function MachineTypeFields(props: Props) {
             id='fabrikat'
             label='Fabrikat'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
-            value={machineTypeData.fabrikat || ""}
+            value={machineTypeData.fabrikat}
             onChange={handleChange}
           />
           <Form.Input
             id='motortyp'
             label='Motortyp'
-            value={machineTypeData.motortyp || ""}
+            value={machineTypeData.motortyp}
             onChange={handleChange}
           />
         </Form.Group>
@@ -69,32 +69,31 @@ function MachineTypeFields(props: Props) {
           <Form.Input
             id='eigengewicht'
             label='Eigengewicht'
-            value={machineTypeData.eigengewicht || ""}
+            value={machineTypeData.eigengewicht}
             onChange={handleChange}
           />
-            <Form.Input
-                id='nutzlast'
-                label='Nutzlast'
-                value={machineTypeData.nutzlast || ""}
-                onChange={handleChange}
-            />
+          <Form.Input
+            id='nutzlast'
+            label='Nutzlast'
+            value={machineTypeData.nutzlast}
+            onChange={handleChange}
+          />
         </Form.Group>
       </div>
 
       <Header as='h2'>Spezifikationen Maschine</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
-            <Form.Input
-                id='hubhoehe'
-                label='Hubhöhe'
-                value={machineTypeData.hubhoehe || ""}
-                onChange={handleChange}
-            />
-
+          <Form.Input
+            id='hubhoehe'
+            label='Hubhöhe'
+            value={machineTypeData.hubhoehe}
+            onChange={handleChange}
+          />
           <Form.Input
             id='hubkraft'
             label='Hubkraft'
-            value={machineTypeData.hubkraft || ""}
+            value={machineTypeData.hubkraft}
             onChange={handleChange}
           />
         </Form.Group>
@@ -103,30 +102,30 @@ function MachineTypeFields(props: Props) {
           <Form.Input
             id='pneugroesse'
             label='Pneugrösse'
-            value={machineTypeData.pneugroesse || ""}
+            value={machineTypeData.pneugroesse}
             onChange={handleChange}
           />
-            <Form.Input
-                id='fahrzeughoehe'
-                label='Fahrzeughöhe'
-                value={machineTypeData.fahrzeughoehe || ""}
-                onChange={handleChange}
-            />
+          <Form.Input
+            id='fahrzeughoehe'
+            label='Fahrzeughöhe'
+            value={machineTypeData.fahrzeughoehe}
+            onChange={handleChange}
+          />
 
         </Form.Group>
 
           <Form.Group widths='equal'>
               <Form.Input
-                  id='fahrzeuglaenge'
-                  label='Fahrzeuglänge'
-                  value={machineTypeData.fahrzeuglaenge || ""}
-                  onChange={handleChange}
+                id='fahrzeuglaenge'
+                label='Fahrzeuglänge'
+                value={machineTypeData.fahrzeuglaenge}
+                onChange={handleChange}
               />
               <Form.Input
-                  id='fahrzeugbreite'
-                  label='Breite'
-                  value={machineTypeData.fahrzeugbreite || ""}
-                  onChange={handleChange}
+                id='fahrzeugbreite'
+                label='Breite'
+                value={machineTypeData.fahrzeugbreite}
+                onChange={handleChange}
               />
           </Form.Group>
       </div>
