@@ -13,6 +13,7 @@ import {
 import Login from "./components/Login";
 import AppMenu from "./components/AppMenu";
 import AppPrivateRoutes from "./components/AppPrivateRoutes";
+import Notification from "./components/Notification";
 
 import "./App.css"
 
@@ -112,6 +113,7 @@ class App extends React.Component<Props, State> {
             <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token} />
           </Grid.Column>
         </Grid>
+        <Notification/>
       </Router>
     );
   }

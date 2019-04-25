@@ -39,7 +39,8 @@
   margin-bottom: 1rem;
   border-radius: 0.5em;
 }
-.Form-section .field .ui.input input {
+.Form-section .field .ui.input input,
+.Form-section .field textarea {
   background-color: var(--opacity-white);
 }
 
@@ -57,7 +58,8 @@
   .Form-section .OneField .field>label{
     width: 10%;
   }
-  .Form-section .OneField .field>.input{
+  .Form-section .OneField .field>.input,
+  .Form-section .OneField .field>textarea{
     width: 85% !important;
   }
 }

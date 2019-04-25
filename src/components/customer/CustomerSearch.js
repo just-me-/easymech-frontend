@@ -8,7 +8,6 @@ import * as api from "../../api/customer";
 
 import CustomerList from "./CustomerList";
 import CustomerFields from "./CustomerFields";
-import Notification from "../Notification";
 
 export type Props = {
   location: {
@@ -24,11 +23,11 @@ function CustomerSearch(props: Props) {
 
   const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [mailIsValid, setMailValid] = useState(true);
+  const [key, setKey] = useState(Math.random());
+  const [formIsValid, setFormIsValid] = useState(true); //alrdy saved, unchanged entries are valid
 
   function saveCustomer() {
-    if(formIsValid && mailIsValid) {
+    if(formIsValid) {
       setViewState("loader");
       api
         .updateCustomer(customerEditData)
@@ -43,12 +42,7 @@ function CustomerSearch(props: Props) {
           NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
         });
     } else {
-        if(!formIsValid){
-            NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
-        }
-        if(!mailIsValid){
-            NotificationManager.info("Bitte geben Sie eine korrekte Mailadresse an!");
-        }
+      NotificationManager.info("Bitte überprüfen Sie Ihre Eingaben!");
     }
   }
 
@@ -73,6 +67,7 @@ function CustomerSearch(props: Props) {
     api
       .getCustomer(customerId)
       .then((result) => {
+        setKey(Math.random()); // be sure that a fresh form is prepered
         result = api.checkResponse(result);
         setCustomerEditData(result);
         setTimeout(() => setViewState("edit"), 200);
@@ -116,7 +111,7 @@ function CustomerSearch(props: Props) {
           </Header>
           <Form>
             <CustomerFields data={customerEditData} setData={setCustomerEditData}
-                            setValidState={setFormIsValid} setValidMail={setMailValid}
+                            setValidState={setFormIsValid} key={key}
             />
             <Button content='Abbrechen' icon='arrow left' labelPosition='left'
                     onClick={() => setViewState('list')}
@@ -138,7 +133,6 @@ function CustomerSearch(props: Props) {
           </Dimmer>
         </div>
         }
-        <Notification/>
     </div>
   )
 }

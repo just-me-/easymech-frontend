@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from 'react'
 import { Header, Form } from 'semantic-ui-react'
+import TextareaAutosize from "react-textarea-autosize";
 
 import type { Customer } from "../../api/customer";
 import * as validation from "../validation"
@@ -10,7 +11,6 @@ export type Props = {
   data?: Customer,
   setData?: (Customer) => void,
   setValidState?: (boolean) => void,
-  setValidMail?: (boolean) => void,
   searchView?: boolean
 };
 
@@ -29,6 +29,7 @@ function CustomerFields(props: Props) {
   };
 
   const [customerData, setCustomerData] = useState(initialData);
+  const [mailIsValide, setMailIsValide] = useState(true);
 
   function handleChange(ele) {
     setCustomerData({...customerData, [ele.target.id]: ele.target.value});
@@ -36,13 +37,11 @@ function CustomerFields(props: Props) {
 
   useEffect(() => {
     const requiredIsValide = validation.checkRequired(customerData.firma);
-    if(props.setValidState) {
-      props.setValidState(requiredIsValide);
-    }
+    const mailIsValide = customerData.email ? validation.checkMail(customerData.email) : true;
 
-    const mailIsValide = validation.checkMail(customerData.email);
-    if(props.setValidMail && customerData.email){
-      props.setValidMail(mailIsValide);
+    if(props.setValidState) {
+      props.setValidState(requiredIsValide && mailIsValide);
+      setMailIsValide(mailIsValide);
     }
 
     if(props.setData) {
@@ -59,13 +58,13 @@ function CustomerFields(props: Props) {
             id='firma'
             label='Name'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
-            value={customerData.firma || ""}
+            value={customerData.firma}
             onChange={handleChange}
           />
           <Form.Input
             id='adresse'
             label='Adresse'
-            value={customerData.adresse || ""}
+            value={customerData.adresse}
             onChange={handleChange}
           />
         </Form.Group>
@@ -74,13 +73,13 @@ function CustomerFields(props: Props) {
           <Form.Input
             id='plz'
             label='PLZ'
-            value={customerData.plz || ""}
+            value={customerData.plz}
             onChange={handleChange}
           />
           <Form.Input
             id='ort'
             label='Ort'
-            value={customerData.ort || ""}
+            value={customerData.ort}
             onChange={handleChange}
           />
         </Form.Group>
@@ -92,13 +91,13 @@ function CustomerFields(props: Props) {
           <Form.Input
             id='vorname'
             label='Vorname'
-            value={customerData.vorname || ""}
+            value={customerData.vorname}
             onChange={handleChange}
           />
           <Form.Input
             id='nachname'
             label='Nachname'
-            value={customerData.nachname || ""}
+            value={customerData.nachname}
             onChange={handleChange}
           />
         </Form.Group>
@@ -107,24 +106,26 @@ function CustomerFields(props: Props) {
           <Form.Input
             id='email'
             label='E-Mail'
-            value={customerData.email || ""}
+            value={customerData.email}
             onChange={handleChange}
+            error={!mailIsValide}
           />
           <Form.Input
             id='telefon'
             label='Tel.'
-            value={customerData.telefon || ""}
+            value={customerData.telefon}
             onChange={handleChange}
           />
         </Form.Group>
 
         {props.searchView ||
           <Form.Group widths='equal' className="OneField">
-            <Form.Input
+            <Form.Field
+              control={TextareaAutosize}
               id='notiz'
-              label='Notizen'
-              value={customerData.notiz || ""}
+              label="Notizen"
               onChange={handleChange}
+              value={customerData.notiz}
             />
           </Form.Group>
         }

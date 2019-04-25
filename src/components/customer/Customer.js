@@ -7,33 +7,28 @@ import { NotificationManager } from 'react-notifications';
 import * as api from "../../api/customer";
 
 import CustomerFields from "./CustomerFields";
-import Notification from "../Notification";
 
 function Customer() {
   const [customerData, setCustomerData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
-  const [mailIsValid, setMailValid] = useState(true);
+  const [key, setKey] = useState(Math.random());
 
   function addCustomer() {
-    if(formIsValid && mailIsValid) {
-        console.log(customerData);
-        api
-        .addCustomer(customerData)
-        .then((result) => {
-          result = api.checkResponse(result);
-          NotificationManager.success("Der Kunde wurde erfolgreich gespeichert.", result.firma+" erfasst");
-        })
-        .catch(error => {
-          console.log("Ups, ein Fehler ist aufgetreten", error);
-          NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
-        });
+
+    if(formIsValid) {
+      api
+      .addCustomer(customerData)
+      .then((result) => {
+        result = api.checkResponse(result);
+        NotificationManager.success("Der Kunde wurde erfolgreich gespeichert.", result.firma+" erfasst");
+        setKey(Math.random()); // clear data - fresh form for next entry
+      })
+      .catch(error => {
+        console.log("Ups, ein Fehler ist aufgetreten", error);
+        NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
+      });
     } else {
-        if(!formIsValid){
-            NotificationManager.info("Bitte füllen Sie alle Pflichtfelder aus!");
-        }
-        if(!mailIsValid){
-            NotificationManager.info("Bitte geben Sie eine korrekte Mailadresse an!");
-        }
+      NotificationManager.info("Bitte überprüfen Sie Ihre Eingaben!");
     }
   }
 
@@ -43,12 +38,11 @@ function Customer() {
         Kunde erfassen
       </Header>
       <Form>
-        <CustomerFields setData={setCustomerData} setValidState={setFormIsValid} setValidMail={setMailValid} />
+        <CustomerFields key={key} setData={setCustomerData} setValidState={setFormIsValid} />
         <Button primary content='Speichern' icon='save' labelPosition='left' floated='right'
                 onClick={() => addCustomer()}
         />
       </Form>
-      <Notification/>
     </div>
   )
 }

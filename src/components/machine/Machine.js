@@ -5,7 +5,6 @@ import {Button, Form, Header} from 'semantic-ui-react'
 //import * as api from "../../api/machine";
 import {NotificationManager} from "react-notifications";
 import MachineFields from "../machine/MachineFields";
-import Notification from "../Notification";
 
 function Machine() {
     const [machineData, setMachineData] = useState({});
@@ -44,7 +43,6 @@ function Machine() {
                         onClick={() => addMachine()}
                 />
             </Form>
-            <Notification/>
         </div>
     )
 }
