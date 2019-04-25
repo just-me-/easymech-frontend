@@ -11,6 +11,7 @@ function Machine() {
     const [machineData, setMachineData] = useState({});
     const [formIsValid, setFormIsValid] = useState(false);
 
+
     function addMachine() {
         if(formIsValid) {
             console.log(machineData);

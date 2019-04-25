@@ -18,14 +18,14 @@ function MachineTypeFields(props: Props) {
     id: (props.data && props.data.id) || undefined,
     fabrikat: (props.data && props.data.fabrikat) || "",
     motortyp: (props.data && props.data.motortyp) || "",
-    nutzlast: (props.data && props.data.nutzlast) || "",
-    hubkraft: (props.data && props.data.hubkraft) || "",
-    hubhoehe: (props.data && props.data.hubhoehe) || "",
-    eigengewicht: (props.data && props.data.eigengewicht) || "",
-    fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || "",
-    fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || "",
-    fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || "",
-    pneugroesse: (props.data && props.data.pneugroesse) || ""
+    nutzlast: (props.data && props.data.nutzlast) || 0,
+    hubkraft: (props.data && props.data.hubkraft) || 0,
+    hubhoehe: (props.data && props.data.hubhoehe) || 0,
+    eigengewicht: (props.data && props.data.eigengewicht) || 0,
+    fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || 0,
+    fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || 0,
+    fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || 0,
+    pneugroesse: (props.data && props.data.pneugroesse) || 0
   };
 
   const [machineTypeData, setMachineTypeData] = useState(initialData);
