@@ -9,7 +9,9 @@ export type Machine = {
     betriebsdauer?: number,
     jahrgang?: number,
     notiz?: string,
-    isActive?: boolean
+    isActive?: boolean,
+    besitzerId?: number,
+    fahrzeugTypId?: number
 };
 
 export function addMachine(machineObject: Machine): Promise<SaveResult> {

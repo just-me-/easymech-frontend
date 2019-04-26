@@ -12,9 +12,7 @@ export type MachineType = {
   fahrzeughoehe?: number,
   fahrzeuglaenge?: number,
   fahrzeugbreite?: number,
-  pneugroesse?: number,
-  besitzerId?:number,
-  fahrzeugTypId?:number
+  pneugroesse?: number
 };
 
 export function addMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
