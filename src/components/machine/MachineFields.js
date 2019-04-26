@@ -132,6 +132,8 @@ function MachineFields(props: Props) {
       case "date":
         console.log("2Do DATE VALIDATION")
         break;
+      default:
+        
     }
     setMachineData({...machineData, [element.target.id]: value});
   }
