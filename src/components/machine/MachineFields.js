@@ -36,14 +36,17 @@ function MachineFields(props: Props) {
   };
 
   const [machineData, setMachineData] = useState(initialData);
-  const [machineTypes, setMachineTypes] = useState(getMachineTypesName());
-  const [customer, setCustomer] = useState(getCustomersList());
+
+  const [machineTypes, setMachineTypes] = useState([]);
+  const [typesResults, setTypeResults] = useState([]);
+  const [machineTypeValue,setMachineTypeValue] = useState();
+
+  const [customer, setCustomer] = useState([]);
+  const [customerResults, setCustomerResults] = useState([]);
+  const [customerValue,setCustomerValue] = useState();
+
   const [isTypeLoading,setTypeLoading] = useState(false);
   const [isCustomerLoading,setCustomerLoading] = useState(false);
-  const [machineTypeValue,setMachineTypeValue] = useState();
-  const [typesResults, setTypeResults] = useState([]);
-  const [customerValue,setCustomerValue] = useState();
-  const [customerResults, setCustomerResults] = useState([]);
 
     function resetMachineTypeSearchComponent(){
         setTypeLoading(false);
@@ -134,6 +137,11 @@ function MachineFields(props: Props) {
       props.setData(machineData);
     }
   });
+
+  useEffect(() => {
+    setCustomer(getCustomersList());
+    setMachineTypes(getMachineTypesName());
+  }, []);
 
   return (
     <div>
