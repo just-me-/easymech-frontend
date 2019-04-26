@@ -35,14 +35,14 @@ function MachineTypeFields(props: Props) {
   }
 
   useEffect(() => {
-      const requiredIsValide = validation.checkRequired(machineTypeData.fabrikat);
-      if(props.setValidState) {
-        props.setValidState(requiredIsValide);
-      }
+    const requiredIsValide = validation.checkRequired(machineTypeData.fabrikat);
+    if(props.setValidState) {
+      props.setValidState(requiredIsValide);
+    }
 
-      if(props.setData) {
-        props.setData(machineTypeData);
-      }
+    if(props.setData) {
+      props.setData(machineTypeData);
+    }
   });
 
   return (
@@ -111,7 +111,6 @@ function MachineTypeFields(props: Props) {
             value={machineTypeData.fahrzeughoehe}
             onChange={handleChange}
           />
-
         </Form.Group>
 
         <Form.Group widths='equal'>

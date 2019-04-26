@@ -48,83 +48,92 @@ function MachineFields(props: Props) {
   const [isTypeLoading,setTypeLoading] = useState(false);
   const [isCustomerLoading,setCustomerLoading] = useState(false);
 
-    function resetMachineTypeSearchComponent(){
-        setTypeLoading(false);
-        setTypeResults([]);
-        setMachineTypeValue("");
-    }
-    function resetCustomerSearchComponent(){
-        setCustomerLoading(false);
-        setCustomerResults([]);
-        setCustomerValue("");
-    }
-
-    function handleMachineTypeSelect(e, { result }){
-        machineData.fahrzeugTypId = result.id;
-        setMachineTypeValue(result.title);
-    }
-
-    function handleCustomerSelect(e, { result }){
-        machineData.besitzerId = result.id;
-        setCustomerValue(result.title);
-    }
-
-    function handleMachineTypeChange(e, { value }){
-        setTypeLoading(true);
-        setMachineTypeValue(e.target.value);
-        setTimeout(() => {
-            if (value.length < 1) return resetMachineTypeSearchComponent();
-
-            const re = new RegExp(_.escapeRegExp(value), 'i');
-            const isMatch = typesResults => re.test(typesResults.fabrikat);
-
-            setTypeLoading(false);
-            setTypeResults(_.filter(machineTypes, isMatch));
-        }, 300)
-    }
-
-    function handleCustomerChange(e, { value }){
-        setCustomerLoading(true);
-        setCustomerValue(e.target.value);
-        setTimeout(() => {
-            if (value.length < 1) return resetCustomerSearchComponent;
-
-            const re = new RegExp(_.escapeRegExp(value), 'i');
-            const isMatch = customerResults => re.test(customerResults.firma);
-
-            setCustomerLoading(false);
-            setCustomerResults(_.filter(customer, isMatch));
-        }, 300)
-    }
-
-    function getCustomersList(){
-        apiCustomer
-            .getCustomers()
-            .then((result) =>{
-                result = apiCustomer.checkResponse(result);
-                setCustomer(result)
-            })
-            .catch(error => {
-                console.log("Ups, ein Fehler ist aufgetreten", error);
-                NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie ihre Verbindungen!");
-            });
-    }
-
-  function getMachineTypesName(){
-      apiTypes
-          .getMachineTypes()
-          .then((result) => {
-              result = apiTypes.checkResponse(result);
-              setMachineTypes(result);
-          })
-          .catch(error => {
-              console.log("Ups, ein Fehler ist aufgetreten", error);
-              NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie ihre Verbindungen!");
-          });
+  function resetMachineTypeSearchComponent(){
+    setTypeLoading(false);
+    setTypeResults([]);
+    setMachineTypeValue("");
+  }
+  function resetCustomerSearchComponent(){
+    setCustomerLoading(false);
+    setCustomerResults([]);
+    setCustomerValue("");
   }
 
-  function handleChange(element) {
-    setMachineData({...machineData, [element.target.id]: element.target.value});
+  function handleMachineTypeSelect(e, { result }){
+    machineData.fahrzeugTypId = result.id;
+    setMachineTypeValue(result.title);
+  }
+
+  function handleCustomerSelect(e, { result }){
+    machineData.besitzerId = result.id;
+    setCustomerValue(result.title);
+  }
+
+  function handleMachineTypeChange(e, { value }){
+    setTypeLoading(true);
+    setMachineTypeValue(e.target.value);
+    setTimeout(() => {
+      if (value.length < 1) return resetMachineTypeSearchComponent();
+
+      const re = new RegExp(_.escapeRegExp(value), 'i');
+      const isMatch = typesResults => re.test(typesResults.fabrikat);
+
+      setTypeLoading(false);
+      setTypeResults(_.filter(machineTypes, isMatch));
+    }, 300)
+  }
+
+  function handleCustomerChange(e, { value }){
+    setCustomerLoading(true);
+    setCustomerValue(e.target.value);
+    setTimeout(() => {
+      if (value.length < 1) return resetCustomerSearchComponent;
+
+      const re = new RegExp(_.escapeRegExp(value), 'i');
+      const isMatch = customerResults => re.test(customerResults.firma);
+
+      setCustomerLoading(false);
+      setCustomerResults(_.filter(customer, isMatch));
+    }, 300)
+  }
+
+  function getCustomersList(){
+    apiCustomer
+      .getCustomers()
+      .then((result) => {
+        result = apiCustomer.checkResponse(result);
+        setCustomer(result)
+      })
+      .catch(error => {
+        console.log("Ups, ein Fehler ist aufgetreten", error);
+        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+      });
+  }
+
+  function getMachineTypesName(){
+    apiTypes
+      .getMachineTypes()
+      .then((result) => {
+        result = apiTypes.checkResponse(result);
+        setMachineTypes(result);
+      })
+      .catch(error => {
+        console.log("Ups, ein Fehler ist aufgetreten", error);
+        NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+      });
+  }
+
+  function handleChange(element, { validate }) {
+    let value = element.target.value;
+    switch(validate) {
+      case "number":
+        console.log("2Do NUMBER VALIDATION");
+        break;
+      case "date":
+        console.log("2Do DATE VALIDATION")
+        break;
+    }
+    setMachineData({...machineData, [element.target.id]: value});
   }
 
   useEffect(() => {
@@ -172,17 +181,18 @@ function MachineFields(props: Props) {
             value={customerValue}
           />
         </Form.Group>
+
         <Form.Group widths='equal'>
           <Form.Input
             id='mastnummer'
-            label='Mastnummer'
-            value={machineData.mastnummer}
+            label='Mastnr.'
+            value={machineData.mastnummer} validate="number"
             onChange={handleChange}
           />
           <Form.Input
             id='motorennummer'
-            label='Motorennummer'
-            value={machineData.motorennummer}
+            label='Motorenr.'
+            value={machineData.motorennummer} validate="number"
             onChange={handleChange}
           />
         </Form.Group>
@@ -191,13 +201,13 @@ function MachineFields(props: Props) {
          <Form.Input
            id='betriebsdauer'
            label='Betriebsdauer'
-           value={machineData.betriebsdauer}
+           value={machineData.betriebsdauer} validate="number"
            onChange={handleChange}
          />
          <Form.Input
            id='jahrgang'
            label='Jahrgang'
-           value={machineData.jahrgang}
+           value={machineData.jahrgang} validate="date"
            onChange={handleChange}
          />
         </Form.Group>
