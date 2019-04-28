@@ -40,14 +40,14 @@ function MachineTypeList(props: Props) {
           <Table.Row>
             <Table.HeaderCell>Fabrikat</Table.HeaderCell>
             <Table.HeaderCell>Motortyp</Table.HeaderCell>
-            <Table.HeaderCell>Höhe</Table.HeaderCell>
-            <Table.HeaderCell>Länge</Table.HeaderCell>
-            <Table.HeaderCell>Breite</Table.HeaderCell>
-            <Table.HeaderCell>Pneugrösse</Table.HeaderCell>
-            <Table.HeaderCell>Nutzlast</Table.HeaderCell>
-            <Table.HeaderCell>Gewicht</Table.HeaderCell>
-            <Table.HeaderCell>Hubkraft</Table.HeaderCell>
-            <Table.HeaderCell>Hubhöhe</Table.HeaderCell>
+            <Table.HeaderCell>Höhe [cm]</Table.HeaderCell>
+            <Table.HeaderCell>Länge [cm]</Table.HeaderCell>
+            <Table.HeaderCell>Breite [cm]</Table.HeaderCell>
+            <Table.HeaderCell>Pneugrösse [cm]</Table.HeaderCell>
+            <Table.HeaderCell>Nutzlast [kg]</Table.HeaderCell>
+            <Table.HeaderCell>Gewicht [kg]</Table.HeaderCell>
+            <Table.HeaderCell>Hubkraft [kg]</Table.HeaderCell>
+            <Table.HeaderCell>Hubhöhe [cm]</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

@@ -3,8 +3,10 @@
 import React, {useState, useEffect} from 'react'
 import { Header, Form, Label, Input } from 'semantic-ui-react'
 
-import type { MachineType} from "../../../api/machinetype";
+import NumberInput from "../../NumberInput"
 import * as validation from "../../validation";
+
+import type { MachineType} from "../../../api/machinetype";
 
 export type Props = {
   data?: MachineType,
@@ -73,17 +75,17 @@ function MachineTypeFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Input
+          <NumberInput
             id='eigengewicht'
-            label='Gewicht'
+            label='Gewicht' innerLabel='kg'
             value={machineTypeData.eigengewicht} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
-          <Form.Input
+          <NumberInput
             id='nutzlast'
-            label='Nutzlast'
+            label='Nutzlast' innerLabel='kg'
             value={machineTypeData.nutzlast} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
         </Form.Group>
       </div>
@@ -91,57 +93,48 @@ function MachineTypeFields(props: Props) {
       <Header as='h2'>Spezifikationen</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
-          <Form.Input
+          <NumberInput
             id='hubhoehe'
-            label='Hubhöhe'
+            label='Hubhöhe' innerLabel='cm'
             value={machineTypeData.hubhoehe} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
-          <Form.Input
+          <NumberInput
             id='hubkraft'
-            label='Hubkraft'
+            label='Hubkraft' innerLabel='kg'
             value={machineTypeData.hubkraft} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Input
+          <NumberInput
             id='pneugroesse'
-            label='Pneugrösse'
+            label='Pneugrösse' innerLabel='cm'
             value={machineTypeData.pneugroesse} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
-          <Form.Input
+          <NumberInput
             id='fahrzeughoehe'
-            label='Höhe'
+            label='Höhe' innerLabel='cm'
             value={machineTypeData.fahrzeughoehe} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Field>
-            <label for='fahrzeuglaenge'>Länge</label>
-            <Input
-              id='fahrzeuglaenge'
-              label={{ basic: true, content: 'm' }}
-              labelPosition='right'
-              value={machineTypeData.fahrzeuglaenge} validate='number'
-              onChange={handleChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label for='fahrzeugbreite'>Breite</label>
-            <Input
-              id='fahrzeugbreite'
-              label={{ basic: true, content: 'm' }}
-              labelPosition='right'
-              value={machineTypeData.fahrzeugbreite} validate='number'
-              onChange={handleChange}
-            />
-          </Form.Field>
-
+          <NumberInput
+            id='fahrzeuglaenge'
+            label='Länge' innerLabel='cm'
+            value={machineTypeData.fahrzeuglaenge} validate='number'
+            handleChange={handleChange}
+          />
+          <NumberInput
+            id='fahrzeugbreite'
+            label='Breite' innerLabel='cm'
+            value={machineTypeData.fahrzeugbreite} validate='number'
+            handleChange={handleChange}
+          />
         </Form.Group>
       </div>
     </div>
