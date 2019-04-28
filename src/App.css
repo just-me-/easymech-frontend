@@ -56,6 +56,9 @@
   margin-top: 0.5em;
   opacity: var(--opacity);
 }
+.Form-section .ui.search>.results {
+  left: 20%;
+}
 .Form-section .field .input{
   width: 70% !important;
 }

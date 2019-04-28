@@ -32,8 +32,8 @@ function MachineFields(props: Props) {
     jahrgang: (props.data && props.data.jahrgang) || "",
     notiz: (props.data && props.data.notiz) || "",
     fahrzeugTypId: (props.data && props.data.fahrzeugTypId) || "",
-    isActive: (props.data && props.data.isActive) || "",
-    besitzerId: (props.data && props.data.besitzerId) || ""
+    besitzerId: (props.data && props.data.besitzerId) || "",
+    isActive: (props.data && props.data.isActive) || ""
   };
 
   const [machineData, setMachineData] = useState(initialData);
@@ -140,7 +140,10 @@ function MachineFields(props: Props) {
   }
 
   useEffect(() => {
-    const requiredIsValide = validation.checkRequired(machineData.seriennummer);
+    const requiredIsValide =
+      validation.checkRequired(machineData.seriennummer) &&
+      validation.checkRequired(machineData.fahrzeugTypId) &&
+      validation.checkRequired(machineData.besitzerId);
     if(props.setValidState) {
       props.setValidState(requiredIsValide);
     }
@@ -184,6 +187,7 @@ function MachineFields(props: Props) {
             results={typesResults.map(result => {return {id: result.id, title: result.fabrikat}})}
             value={machineTypeValue}
             noResultsMessage='Keine Maschienentypen gefunden'
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
           />
           <Form.Field
             control={Search}
@@ -194,6 +198,7 @@ function MachineFields(props: Props) {
             results={customerResults.map(result => {return {id: result.id, title: result.firma}})}
             value={customerValue}
             noResultsMessage='Keine Kunden gefunden'
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
           />
         </Form.Group>
 
@@ -213,11 +218,11 @@ function MachineFields(props: Props) {
         </Form.Group>
 
         {props.searchView ||
-          <Form.Group widths='equal' className="OneField">
+          <Form.Group widths='equal' className='OneField'>
             <Form.Field
               control={TextareaAutosize}
               id='notiz'
-              label="Notizen"
+              label='Notizen'
               onChange={handleChange}
               value={machineData.notiz}
             />

@@ -101,7 +101,6 @@ function MachineTypeFields(props: Props) {
             placeholder='Dummy Placeholder for equal dividing'
           />
         </Form.Group>
-
       </div>
 
       <Header as='h2'>Spezifikationen</Header>
