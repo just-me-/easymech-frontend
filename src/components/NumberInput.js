@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Form, Label, Input } from 'semantic-ui-react'
+import { Form, Input } from 'semantic-ui-react'
 
 export type Props = {
   id: string,
@@ -12,7 +12,7 @@ export type Props = {
   handleChange?: (
     { target: {value: string, id: string}},
     { validate: string}
-    ) => void 
+    ) => void
 };
 
 function NumberInput(props: Props) {

@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState, useEffect} from 'react'
-import { Header, Form, Label, Input } from 'semantic-ui-react'
+import { Header, Form } from 'semantic-ui-react'
 
 import NumberInput from "../../NumberInput"
 import * as validation from "../../validation";

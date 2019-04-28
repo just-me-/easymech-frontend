@@ -2,7 +2,7 @@
 
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
-import {Search, Header, Form} from 'semantic-ui-react'
+import {Search, Form} from 'semantic-ui-react'
 import TextareaAutosize from "react-textarea-autosize";
 import {NotificationManager} from "react-notifications";
 
