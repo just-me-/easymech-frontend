@@ -103,19 +103,21 @@ function CustomerFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Field> {/* diese Verschachtelung ist noch nicht iO */}
-            <Form.Input
-              id='email'
-              label='E-Mail'
-              value={customerData.email}
-              onChange={handleChange}
-              error={!mailIsValide}
-            />
-            {mailIsValide ||
-              <Label basic color='red' pointing>
-                Bitte eine gültige Mailadresse eingeben.
-              </Label>
-            }
+          <Form.Field>
+            <div>
+              <Form.Input
+                id='email'
+                label='E-Mail'
+                value={customerData.email}
+                onChange={handleChange}
+                error={!mailIsValide}
+              />
+              {mailIsValide ||
+                <Label basic color='red' pointing>
+                  Bitte eine gültige Mailadresse eingeben.
+                </Label>
+              }
+            </div>
           </Form.Field>
 
           <Form.Input
