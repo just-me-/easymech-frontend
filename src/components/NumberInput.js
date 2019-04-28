@@ -9,7 +9,10 @@ export type Props = {
   innerLabel: string,
   value: ?string,
   validate?: string,
-  handleChange?: (?object, ?object) => void // phuuu... was will der von mir... 2Do
+  handleChange?: (
+    { target: {value: string, id: string}},
+    { validate: string}
+    ) => void 
 };
 
 function NumberInput(props: Props) {
