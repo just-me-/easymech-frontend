@@ -6,6 +6,8 @@ import {Search, Form} from 'semantic-ui-react'
 import TextareaAutosize from "react-textarea-autosize";
 import {NotificationManager} from "react-notifications";
 
+import NumberInput from "../NumberInput"
+
 import * as validation from "../validation"
 import * as apiTypes from "../../api/machinetype";
 import * as apiCustomer from "../../api/customer";
@@ -169,11 +171,11 @@ function MachineFields(props: Props) {
             value={machineData.seriennummer}
             onChange={handleChange}
           />
-          <Form.Input
+          <NumberInput
             id='betriebsdauer'
-            label='Betriebsdauer'
+            label='Betriebsdauer' innerLabel='Stunden'
             value={machineData.betriebsdauer} validate='number'
-            onChange={handleChange}
+            handleChange={handleChange}
           />
         </Form.Group>
 
@@ -218,11 +220,11 @@ function MachineFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Input
+          <NumberInput
             id='jahrgang'
-            label='Jahrgang'
-            value={machineData.jahrgang} validate='date'
-            onChange={handleChange}
+            label='Jahrgang' innerLabel='YYYY'
+            value={machineData.jahrgang} validate='number' realValidation={'date'}
+            handleChange={handleChange}
           />
           <Form.Input
             label='Dummy'

@@ -18,7 +18,7 @@ export type Props = {
 function NumberInput(props: Props) {
   return (
     <Form.Field>
-      <label for={props.id}>{props.label}</label>
+      <label htmlFor={props.id}>{props.label}</label>
       <Input
         id={props.id}
         label={{ basic: true, content: props.innerLabel }}
