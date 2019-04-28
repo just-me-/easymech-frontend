@@ -3,6 +3,7 @@
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 import {Search, Header, Form} from 'semantic-ui-react'
+import TextareaAutosize from "react-textarea-autosize";
 import {NotificationManager} from "react-notifications";
 
 import * as validation from "../validation"
@@ -10,7 +11,7 @@ import * as apiTypes from "../../api/machinetype";
 import * as apiCustomer from "../../api/customer";
 
 import type {MachineType} from "../../api/machinetype";
-import type { Machine} from "../../api/machine";
+import type {Machine} from "../../api/machine";
 
 export type Props = {
   data?: Machine,
@@ -133,7 +134,7 @@ function MachineFields(props: Props) {
         console.log("2Do DATE VALIDATION")
         break;
       default:
-        
+        break;
     }
     setMachineData({...machineData, [element.target.id]: value});
   }
@@ -156,31 +157,43 @@ function MachineFields(props: Props) {
 
   return (
     <div>
-      <Header as='h2'>Details Maschine</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
           <Form.Input
             id='seriennummer'
-            label='Seriennummer'
+            label='Seriennr.'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
             value={machineData.seriennummer}
             onChange={handleChange}
           />
-          <Search
-            label='Fahrzeugtyp'
+          <Form.Input
+            id='betriebsdauer'
+            label='Betriebsdauer'
+            value={machineData.betriebsdauer} validate='number'
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group widths='equal'>
+          <Form.Field
+            control={Search}
+            label='Maschienentyp'
             loading={isTypeLoading}
             onResultSelect={handleMachineTypeSelect}
             onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
             results={typesResults.map(result => {return {id: result.id, title: result.fabrikat}})}
             value={machineTypeValue}
+            noResultsMessage='Keine Maschienentypen gefunden'
           />
-          <Search
-            label='Kunden'
+          <Form.Field
+            control={Search}
+            label='Besitzer'
             loading={isCustomerLoading}
             onResultSelect={handleCustomerSelect}
             onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
             results={customerResults.map(result => {return {id: result.id, title: result.firma}})}
             value={customerValue}
+            noResultsMessage='Keine Kunden gefunden'
           />
         </Form.Group>
 
@@ -188,40 +201,28 @@ function MachineFields(props: Props) {
           <Form.Input
             id='mastnummer'
             label='Mastnr.'
-            value={machineData.mastnummer} validate="number"
+            value={machineData.mastnummer}
             onChange={handleChange}
           />
           <Form.Input
             id='motorennummer'
             label='Motorenr.'
-            value={machineData.motorennummer} validate="number"
+            value={machineData.motorennummer}
             onChange={handleChange}
           />
         </Form.Group>
 
-        <Form.Group widths='equal'>
-         <Form.Input
-           id='betriebsdauer'
-           label='Betriebsdauer'
-           value={machineData.betriebsdauer} validate="number"
-           onChange={handleChange}
-         />
-         <Form.Input
-           id='jahrgang'
-           label='Jahrgang'
-           value={machineData.jahrgang} validate="date"
-           onChange={handleChange}
-         />
-        </Form.Group>
-
-        <Form.Group widths='equal' className="OneField">
-         <Form.Input
-           id='notiz'
-           label='Notizen'
-           value={machineData.notiz}
-           onChange={handleChange}
-         />
-        </Form.Group>
+        {props.searchView ||
+          <Form.Group widths='equal' className="OneField">
+            <Form.Field
+              control={TextareaAutosize}
+              id='notiz'
+              label="Notizen"
+              onChange={handleChange}
+              value={machineData.notiz}
+            />
+          </Form.Group>
+        }
       </div>
     </div>
   )

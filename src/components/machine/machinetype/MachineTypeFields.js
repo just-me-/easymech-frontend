@@ -18,20 +18,29 @@ function MachineTypeFields(props: Props) {
     id: (props.data && props.data.id) || undefined,
     fabrikat: (props.data && props.data.fabrikat) || "",
     motortyp: (props.data && props.data.motortyp) || "",
-    nutzlast: (props.data && props.data.nutzlast) || 0,
-    hubkraft: (props.data && props.data.hubkraft) || 0,
-    hubhoehe: (props.data && props.data.hubhoehe) || 0,
-    eigengewicht: (props.data && props.data.eigengewicht) || 0,
-    fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || 0,
-    fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || 0,
-    fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || 0,
-    pneugroesse: (props.data && props.data.pneugroesse) || 0
+    jahrgang: (props.data && props.data.jahrgang) || "",
+    nutzlast: (props.data && props.data.nutzlast) || "",
+    hubkraft: (props.data && props.data.hubkraft) || "",
+    hubhoehe: (props.data && props.data.hubhoehe) || "",
+    eigengewicht: (props.data && props.data.eigengewicht) || "",
+    fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || "",
+    fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || "",
+    fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || "",
+    pneugroesse: (props.data && props.data.pneugroesse) || ""
   };
 
   const [machineTypeData, setMachineTypeData] = useState(initialData);
 
-  function handleChange(element) {
-    setMachineTypeData({...machineTypeData, [element.target.id]: element.target.value});
+  function handleChange(element, { validate }) {
+    let value = element.target.value;
+    switch(validate) {
+      case "number":
+        console.log("2Do NUMBER VALIDATION");
+        break;
+      default:
+        break;
+    }
+    setMachineTypeData({...machineTypeData, [element.target.id]: value});
   }
 
   useEffect(() => {
@@ -47,7 +56,6 @@ function MachineTypeFields(props: Props) {
 
   return (
     <div>
-      <Header as='h2'>Maschine</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
           <Form.Input
@@ -68,32 +76,47 @@ function MachineTypeFields(props: Props) {
         <Form.Group widths='equal'>
           <Form.Input
             id='eigengewicht'
-            label='Eigengewicht'
-            value={machineTypeData.eigengewicht}
+            label='Gewicht'
+            value={machineTypeData.eigengewicht} validate='number'
             onChange={handleChange}
           />
           <Form.Input
             id='nutzlast'
             label='Nutzlast'
-            value={machineTypeData.nutzlast}
+            value={machineTypeData.nutzlast} validate='number'
             onChange={handleChange}
           />
         </Form.Group>
+
+        <Form.Group widths='equal'>
+          <Form.Input
+            id='jahrgang'
+            label='Jahrgang'
+            value={machineTypeData.jahrgang} validate='date'
+            onChange={handleChange}
+          />
+          <Form.Input
+            label='Dummy'
+            className='dummyObject'
+            placeholder='Dummy Placeholder for equal dividing'
+          />
+        </Form.Group>
+
       </div>
 
-      <Header as='h2'>Spezifikationen Maschine</Header>
+      <Header as='h2'>Spezifikationen</Header>
       <div className="Form-section">
         <Form.Group widths='equal'>
           <Form.Input
             id='hubhoehe'
             label='Hubhöhe'
-            value={machineTypeData.hubhoehe}
+            value={machineTypeData.hubhoehe} validate='number'
             onChange={handleChange}
           />
           <Form.Input
             id='hubkraft'
             label='Hubkraft'
-            value={machineTypeData.hubkraft}
+            value={machineTypeData.hubkraft} validate='number'
             onChange={handleChange}
           />
         </Form.Group>
@@ -102,13 +125,13 @@ function MachineTypeFields(props: Props) {
           <Form.Input
             id='pneugroesse'
             label='Pneugrösse'
-            value={machineTypeData.pneugroesse}
+            value={machineTypeData.pneugroesse} validate='number'
             onChange={handleChange}
           />
           <Form.Input
             id='fahrzeughoehe'
-            label='Fahrzeughöhe'
-            value={machineTypeData.fahrzeughoehe}
+            label='Höhe'
+            value={machineTypeData.fahrzeughoehe} validate='number'
             onChange={handleChange}
           />
         </Form.Group>
@@ -116,14 +139,14 @@ function MachineTypeFields(props: Props) {
         <Form.Group widths='equal'>
           <Form.Input
             id='fahrzeuglaenge'
-            label='Fahrzeuglänge'
-            value={machineTypeData.fahrzeuglaenge}
+            label='Länge'
+            value={machineTypeData.fahrzeuglaenge} validate='number'
             onChange={handleChange}
           />
           <Form.Input
             id='fahrzeugbreite'
             label='Breite'
-            value={machineTypeData.fahrzeugbreite}
+            value={machineTypeData.fahrzeugbreite} validate='number'
             onChange={handleChange}
           />
         </Form.Group>

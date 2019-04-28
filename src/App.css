@@ -40,7 +40,7 @@
   border-radius: 0.5em;
 }
 .Form-section .field .ui.input input,
-.Form-section .field textarea {
+.ui.form .Form-section .field  textarea {
   background-color: var(--opacity-white);
 }
 
@@ -53,10 +53,10 @@
 }
 .Form-section .ui.basic.red.label {
   margin-left: 20%;
-  margin-top: 0.5em; 
+  margin-top: 0.5em;
   opacity: var(--opacity);
 }
-.Form-section .field>.input{
+.Form-section .field .input{
   width: 70% !important;
 }
 @media (min-width: 768px) {
@@ -67,4 +67,9 @@
   .Form-section .OneField .field>textarea {
     width: 85% !important;
   }
+}
+
+/* rly dirty fix... */
+.dummyObject {
+  visibility: hidden;
 }

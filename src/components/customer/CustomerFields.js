@@ -103,7 +103,7 @@ function CustomerFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Field>
+          <Form.Field> {/* diese Verschachtelung ist noch nicht iO */}
             <Form.Input
               id='email'
               label='E-Mail'
@@ -117,7 +117,7 @@ function CustomerFields(props: Props) {
               </Label>
             }
           </Form.Field>
-          
+
           <Form.Input
             id='telefon'
             label='Tel.'

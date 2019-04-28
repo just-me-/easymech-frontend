@@ -40,11 +40,11 @@ function MachineTypeList(props: Props) {
           <Table.Row>
             <Table.HeaderCell>Fabrikat</Table.HeaderCell>
             <Table.HeaderCell>Motortyp</Table.HeaderCell>
-            <Table.HeaderCell>Fahrzeughöhe</Table.HeaderCell>
-            <Table.HeaderCell>Fahrzeuglänge</Table.HeaderCell>
-            <Table.HeaderCell>Fahrzeugbreite</Table.HeaderCell>
+            <Table.HeaderCell>Höhe</Table.HeaderCell>
+            <Table.HeaderCell>Länge</Table.HeaderCell>
+            <Table.HeaderCell>Breite</Table.HeaderCell>
             <Table.HeaderCell>Nutzlast</Table.HeaderCell>
-            <Table.HeaderCell>Eigengewicht</Table.HeaderCell>
+            <Table.HeaderCell>Gewicht</Table.HeaderCell>
             <Table.HeaderCell>Hubkraft</Table.HeaderCell>
             <Table.HeaderCell>Hubhöhe</Table.HeaderCell>
           </Table.Row>
@@ -63,7 +63,7 @@ function MachineTypeList(props: Props) {
               <Table.Cell>{nutzlast}</Table.Cell>
               <Table.Cell>{eigengewicht}</Table.Cell>
               <Table.Cell>{hubkraft}</Table.Cell>
-                <Table.Cell>{hubhoehe}</Table.Cell>
+              <Table.Cell>{hubhoehe}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -72,7 +72,7 @@ function MachineTypeList(props: Props) {
       { isLoading &&
         <Segment>
           <Dimmer inverted active>
-            <Loader inverted>Fahrzeugtypen werden geladen...</Loader>
+            <Loader inverted>Maschienentypen werden geladen...</Loader>
           </Dimmer>
         </Segment>
       }
