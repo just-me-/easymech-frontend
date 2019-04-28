@@ -217,6 +217,20 @@ function MachineFields(props: Props) {
           />
         </Form.Group>
 
+        <Form.Group widths='equal'>
+          <Form.Input
+            id='jahrgang'
+            label='Jahrgang'
+            value={machineData.jahrgang} validate='date'
+            onChange={handleChange}
+          />
+          <Form.Input
+            label='Dummy'
+            className='dummyObject'
+            placeholder='Dummy Placeholder for equal dividing'
+          />
+        </Form.Group>
+
         {props.searchView ||
           <Form.Group widths='equal' className='OneField'>
             <Form.Field

@@ -19,11 +19,11 @@ function MachineType() {
 
   function addMachineType() {
     if(formIsValid) {
-      console.log(machineTypeData);
       api
         .addMachineType(machineTypeData)
         .then((result) => {
           result = api.checkResponse(result);
+          setViewState("list");
           NotificationManager.success("Der Fahrzeugtyp wurde erfolgreich gespeichert.", machineTypeData.fabrikat +" erfasst");
         })
         .catch(error => {

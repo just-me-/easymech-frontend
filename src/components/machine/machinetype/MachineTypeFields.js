@@ -18,7 +18,6 @@ function MachineTypeFields(props: Props) {
     id: (props.data && props.data.id) || undefined,
     fabrikat: (props.data && props.data.fabrikat) || "",
     motortyp: (props.data && props.data.motortyp) || "",
-    jahrgang: (props.data && props.data.jahrgang) || "",
     nutzlast: (props.data && props.data.nutzlast) || "",
     hubkraft: (props.data && props.data.hubkraft) || "",
     hubhoehe: (props.data && props.data.hubhoehe) || "",
@@ -85,20 +84,6 @@ function MachineTypeFields(props: Props) {
             label='Nutzlast'
             value={machineTypeData.nutzlast} validate='number'
             onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group widths='equal'>
-          <Form.Input
-            id='jahrgang'
-            label='Jahrgang'
-            value={machineTypeData.jahrgang} validate='date'
-            onChange={handleChange}
-          />
-          <Form.Input
-            label='Dummy'
-            className='dummyObject'
-            placeholder='Dummy Placeholder for equal dividing'
           />
         </Form.Group>
       </div>

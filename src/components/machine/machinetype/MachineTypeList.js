@@ -40,7 +40,6 @@ function MachineTypeList(props: Props) {
           <Table.Row>
             <Table.HeaderCell>Fabrikat</Table.HeaderCell>
             <Table.HeaderCell>Motortyp</Table.HeaderCell>
-            <Table.HeaderCell>Jahrgang</Table.HeaderCell>
             <Table.HeaderCell>Höhe</Table.HeaderCell>
             <Table.HeaderCell>Länge</Table.HeaderCell>
             <Table.HeaderCell>Breite</Table.HeaderCell>
@@ -53,13 +52,12 @@ function MachineTypeList(props: Props) {
         </Table.Header>
         <Table.Body>
           {_.map(machineTypeListData, ({ id, fabrikat, motortyp, fahrzeughoehe, fahrzeuglaenge, fahrzeugbreite,
-                                           nutzlast, eigengewicht, hubkraft,hubhoehe, pneugroesse, jahrgang }, index) => (
+                                           nutzlast, eigengewicht, hubkraft,hubhoehe, pneugroesse }, index) => (
             <Table.Row key={index}>
               <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
                 <Icon name='external' size='tiny' className="Inline-icon"/> {fabrikat}
               </Table.Cell>
               <Table.Cell>{motortyp}</Table.Cell>
-              <Table.Cell>{jahrgang}</Table.Cell>
               <Table.Cell>{fahrzeughoehe}</Table.Cell>
               <Table.Cell>{fahrzeuglaenge}</Table.Cell>
               <Table.Cell>{fahrzeugbreite}</Table.Cell>
