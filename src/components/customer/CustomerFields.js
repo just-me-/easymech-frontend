@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState, useEffect} from 'react'
-import { Header, Form } from 'semantic-ui-react'
+import { Header, Form, Label } from 'semantic-ui-react'
 import TextareaAutosize from "react-textarea-autosize";
 
 import type { Customer } from "../../api/customer";
@@ -103,13 +103,21 @@ function CustomerFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Input
-            id='email'
-            label='E-Mail'
-            value={customerData.email}
-            onChange={handleChange}
-            error={!mailIsValide}
-          />
+          <Form.Field>
+            <Form.Input
+              id='email'
+              label='E-Mail'
+              value={customerData.email}
+              onChange={handleChange}
+              error={!mailIsValide}
+            />
+            {mailIsValide ||
+              <Label basic color='red' pointing>
+                Bitte eine gültige Mailadresse eingeben.
+              </Label>
+            }
+          </Form.Field>
+          
           <Form.Input
             id='telefon'
             label='Tel.'
