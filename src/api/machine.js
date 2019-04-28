@@ -15,15 +15,8 @@ export type Machine = {
 };
 
 function prepareDto(machineObject: Machine) {
-  let dto = machineObject;
   const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'fahrzeugTypId'];
-  for (const key in numbertypes) {
-    let convertedNumber = parseInt(dto[numbertypes[key]], 10);
-    if (isNaN(convertedNumber))
-      convertedNumber = 0;
-    dto[numbertypes[key]] = convertedNumber;
-  }
-  return dto;
+  return helper.convertToNumbers(machineObject, numbertypes);
 }
 
 export function addMachine(machineObject: Machine): Promise<SaveResult> {

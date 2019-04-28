@@ -16,16 +16,9 @@ export type MachineType = {
 };
 
 function prepareDto(machineTypeObject: MachineType) {
-  let dto = machineTypeObject;
   const numbertypes = ['nutzlast', 'hubkraft', 'hubhoehe', 'eigengewicht', 'fahrzeughoehe',
                        'fahrzeuglaenge', 'fahrzeugbreite', 'pneugroesse'];
-  for (const key in numbertypes) {
-    let convertedNumber = parseInt(dto[numbertypes[key]], 10);
-    if (isNaN(convertedNumber))
-      convertedNumber = 0;
-    dto[numbertypes[key]] = convertedNumber;
-  }
-  return dto;
+  return helper.convertToNumbers(machineTypeObject, numbertypes);
 }
 
 export function addMachineType(machineTypeObject: MachineType): Promise<SaveResult> {

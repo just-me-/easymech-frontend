@@ -17,6 +17,17 @@ export function checkResponse(response) {
     return response.data;
 }
 
+export function convertToNumbers(dto, fieldsToConvert) {
+  let convertedDto = dto;
+  for (const key in fieldsToConvert) {
+    let convertedNumber = parseInt(dto[fieldsToConvert[key]], 10);
+    if (isNaN(convertedNumber))
+      convertedNumber = 0;
+    convertedDto[fieldsToConvert[key]] = convertedNumber;
+  }
+  return convertedDto;
+}
+
 export function parseJSON(response) {
   return response.json();
 }
