@@ -40,20 +40,22 @@ function MachineFields(props: Props) {
 
   const [machineData, setMachineData] = useState(initialData);
 
+  // ich glaub sollten wir doch auslagern - ging
+  // beim NumberInput sehr einfach abgesehen von Flow
+  // => aber erst wenn die Maschiene grundsätzlich läuft xD
   const [machineTypes, setMachineTypes] = useState([]);
-  const [typesResults, setTypeResults] = useState([]);
+  const [machineTypeResults, setMachineTypeResults] = useState([]);
+  const [isMachineTypeLoading,setMachineTypeLoading] = useState(false);
   const [machineTypeValue,setMachineTypeValue] = useState();
 
   const [customer, setCustomer] = useState([]);
   const [customerResults, setCustomerResults] = useState([]);
   const [customerValue,setCustomerValue] = useState();
-
-  const [isTypeLoading,setTypeLoading] = useState(false);
   const [isCustomerLoading,setCustomerLoading] = useState(false);
 
   function resetMachineTypeSearchComponent(){
-    setTypeLoading(false);
-    setTypeResults([]);
+    setMachineTypeLoading(false);
+    setMachineTypeResults([]);
     setMachineTypeValue("");
   }
   function resetCustomerSearchComponent(){
@@ -63,26 +65,28 @@ function MachineFields(props: Props) {
   }
 
   function handleMachineTypeSelect(e, { result }){
+    // uhh das ist verboten :D
     machineData.fahrzeugTypId = result.id;
     setMachineTypeValue(result.title);
   }
 
   function handleCustomerSelect(e, { result }){
+    // uhh das ist verboten :D
     machineData.besitzerId = result.id;
     setCustomerValue(result.title);
   }
 
   function handleMachineTypeChange(e, { value }){
-    setTypeLoading(true);
+    setMachineTypeLoading(true);
     setMachineTypeValue(e.target.value);
     setTimeout(() => {
       if (value.length < 1) return resetMachineTypeSearchComponent();
 
       const re = new RegExp(_.escapeRegExp(value), 'i');
-      const isMatch = typesResults => re.test(typesResults.fabrikat);
+      const isMatch = machineTypeResults => re.test(machineTypeResults.fabrikat);
 
-      setTypeLoading(false);
-      setTypeResults(_.filter(machineTypes, isMatch));
+      setMachineTypeLoading(false);
+      setMachineTypeResults(_.filter(machineTypes, isMatch));
     }, 300)
   }
 
@@ -105,6 +109,7 @@ function MachineFields(props: Props) {
       .getCustomers()
       .then((result) => {
         result = apiCustomer.checkResponse(result);
+        // 2Do nicht unnütze Customer Daten im Browser speichern
         setCustomer(result)
       })
       .catch(error => {
@@ -118,6 +123,7 @@ function MachineFields(props: Props) {
       .getMachineTypes()
       .then((result) => {
         result = apiTypes.checkResponse(result);
+        // 2Do nicht unnütze Machine Daten im Browser speichern
         setMachineTypes(result);
       })
       .catch(error => {
@@ -133,6 +139,7 @@ function MachineFields(props: Props) {
         value = validation.toNumber(value);
         break;
       case "date":
+        // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
         console.log("2Do DATE VALIDATION")
         break;
       default:
@@ -183,10 +190,10 @@ function MachineFields(props: Props) {
           <Form.Field
             control={Search}
             label='Maschienentyp'
-            loading={isTypeLoading}
+            loading={isMachineTypeLoading}
             onResultSelect={handleMachineTypeSelect}
             onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
-            results={typesResults.map(result => {return {id: result.id, title: result.fabrikat}})}
+            results={machineTypeResults.map(result => {return {id: result.id, title: result.fabrikat}})}
             value={machineTypeValue}
             noResultsMessage='Keine Maschienentypen gefunden'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
