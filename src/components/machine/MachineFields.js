@@ -48,7 +48,7 @@ function MachineFields(props: Props) {
   const [isMachineTypeLoading,setMachineTypeLoading] = useState(false);
   const [machineTypeValue,setMachineTypeValue] = useState();
 
-  const [customer, setCustomer] = useState([]);
+  const [customer, setCustomer] = useState([]); // 2Do - plural oder?
   const [customerResults, setCustomerResults] = useState([]);
   const [customerValue,setCustomerValue] = useState();
   const [isCustomerLoading,setCustomerLoading] = useState(false);
@@ -164,6 +164,24 @@ function MachineFields(props: Props) {
     setCustomer(getCustomersList());
     setMachineTypes(getMachineTypesName());
   }, []);
+
+  useEffect(() => {
+    if(customer && customer.length > 0) {
+      if(props.data && props.data.id) {
+        if(props.data.besitzerId)
+          setCustomerValue(customer.find(x => x.id === props.data.besitzerId).firma || "");
+      }
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    if(machineTypes && machineTypes.length > 0) {
+      if(props.data && props.data.id) {
+        if(props.data.fahrzeugTypId)
+          setMachineTypeValue(machineTypes.find(x => x.id === props.data.fahrzeugTypId).fabrikat || "");
+      }
+    }
+  }, [machineTypes]);
 
   return (
     <div>
