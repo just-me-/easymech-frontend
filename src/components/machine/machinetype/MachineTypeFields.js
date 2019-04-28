@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState, useEffect} from 'react'
-import { Header, Form } from 'semantic-ui-react'
+import { Header, Form, Label, Input } from 'semantic-ui-react'
 
 import type { MachineType} from "../../../api/machinetype";
 import * as validation from "../../validation";
@@ -121,18 +121,27 @@ function MachineTypeFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths='equal'>
-          <Form.Input
-            id='fahrzeuglaenge'
-            label='Länge'
-            value={machineTypeData.fahrzeuglaenge} validate='number'
-            onChange={handleChange}
-          />
-          <Form.Input
-            id='fahrzeugbreite'
-            label='Breite'
-            value={machineTypeData.fahrzeugbreite} validate='number'
-            onChange={handleChange}
-          />
+          <Form.Field>
+            <label for='fahrzeuglaenge'>Länge</label>
+            <Input
+              id='fahrzeuglaenge'
+              label={{ basic: true, content: 'm' }}
+              labelPosition='right'
+              value={machineTypeData.fahrzeuglaenge} validate='number'
+              onChange={handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label for='fahrzeugbreite'>Breite</label>
+            <Input
+              id='fahrzeugbreite'
+              label={{ basic: true, content: 'm' }}
+              labelPosition='right'
+              value={machineTypeData.fahrzeugbreite} validate='number'
+              onChange={handleChange}
+            />
+          </Form.Field>
+
         </Form.Group>
       </div>
     </div>
