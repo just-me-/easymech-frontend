@@ -128,7 +128,7 @@ function MachineFields(props: Props) {
     let value = element.target.value;
     switch(validate) {
       case "number":
-        console.log("2Do NUMBER VALIDATION");
+        value = validation.toNumber(value);
         break;
       case "date":
         console.log("2Do DATE VALIDATION")

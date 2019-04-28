@@ -25,3 +25,16 @@ test('Required string empty', () => {
 test('Required string exists', () => {
   expect(validation.checkRequired("b")).toBe(true);
 })
+
+test('Delete to empty string', () => {
+  expect(validation.toNumber("bjnejkr")).toBe("");
+})
+test('Convert to number', () => {
+  expect(validation.toNumber("m!vf3efv12efv3M?l")).toBe("3123");
+})
+test('Dont change number', () => {
+  expect(validation.toNumber("1234")).toBe("1234");
+})
+test('Dont change empty string', () => {
+  expect(validation.toNumber("")).toBe("");
+})

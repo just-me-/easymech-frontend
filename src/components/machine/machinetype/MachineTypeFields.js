@@ -34,7 +34,7 @@ function MachineTypeFields(props: Props) {
     let value = element.target.value;
     switch(validate) {
       case "number":
-        console.log("2Do NUMBER VALIDATION");
+        value = validation.toNumber(value);
         break;
       default:
         break;

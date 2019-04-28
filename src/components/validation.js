@@ -4,3 +4,6 @@ export function checkMail(mail) {
 export function checkRequired(str) {
   return !!str && str.length>0;
 }
+export function toNumber(str) {
+  return str.replace(/\D/g,'');
+}
