@@ -65,14 +65,12 @@ function MachineFields(props: Props) {
   }
 
   function handleMachineTypeSelect(e, { result }){
-    // uhh das ist verboten :D
-    machineData.fahrzeugTypId = result.id;
+    setMachineData({...machineData, 'fahrzeugTypId': result.id});
     setMachineTypeValue(result.title);
   }
 
   function handleCustomerSelect(e, { result }){
-    // uhh das ist verboten :D
-    machineData.besitzerId = result.id;
+    setMachineData({...machineData, 'besitzerId': result.id});
     setCustomerValue(result.title);
   }
 
@@ -193,7 +191,7 @@ function MachineFields(props: Props) {
             loading={isMachineTypeLoading}
             onResultSelect={handleMachineTypeSelect}
             onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
-            results={machineTypeResults.map(result => {return {id: result.id, title: result.fabrikat}})}
+            results={machineTypeResults.map((result, index) => {return {key: index, id: result.id, title: result.fabrikat}})}
             value={machineTypeValue}
             noResultsMessage='Keine Maschienentypen gefunden'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
@@ -204,7 +202,7 @@ function MachineFields(props: Props) {
             loading={isCustomerLoading}
             onResultSelect={handleCustomerSelect}
             onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
-            results={customerResults.map(result => {return {id: result.id, title: result.firma}})}
+            results={customerResults.map((result, index) => {return {key: index, id: result.id, title: result.firma}})}
             value={customerValue}
             noResultsMessage='Keine Kunden gefunden'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
