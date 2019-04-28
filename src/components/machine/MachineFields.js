@@ -149,8 +149,8 @@ function MachineFields(props: Props) {
   useEffect(() => {
     const requiredIsValide =
       validation.checkRequired(machineData.seriennummer) &&
-      machineData.fahrzeugTypId > 0 &&
-      machineData.besitzerId > 0;
+      parseInt(machineData.fahrzeugTypId, 10) > 0 &&
+      parseInt(machineData.besitzerId, 10) > 0;
     if(props.setValidState) {
       props.setValidState(requiredIsValide);
     }
