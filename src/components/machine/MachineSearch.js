@@ -6,8 +6,8 @@ import { NotificationManager } from 'react-notifications';
 
 import * as api from "../../api/machine";
 
-import CustomerList from "./MachineList";
-import CustomerFields from "./MachineFields";
+import MachineList from "./MachineList";
+import MachineFields from "./MachineFields";
 
 export type Props = {
   location: {
@@ -34,7 +34,7 @@ function MachineSearch(props: Props) {
         .then((result) => {
             result = api.checkResponse(result);
             setViewState("list");
-            NotificationManager.success("Die Maschiene wurde erfolgreich gespeichert.", result.firma+" aktualisiert");
+            NotificationManager.success("Die Maschiene wurde erfolgreich gespeichert.", result.seriennummer+" aktualisiert");
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -53,7 +53,7 @@ function MachineSearch(props: Props) {
       .then((result) => {
           result = api.checkResponse(result);
           setViewState("list");
-          NotificationManager.success("Die Maschine wurde erfolgreich gelöscht.", machineEditData.firma+" gelöscht");
+          NotificationManager.success("Die Maschine wurde erfolgreich gelöscht.", machineEditData.seriennummer+" gelöscht");
       })
       .catch(error => {
         console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -87,7 +87,7 @@ function MachineSearch(props: Props) {
             Maschine suchen
           </Header>
           <Form>
-            <CustomerFields data={searchData} setData={setSearchData} searchView/>
+            <MachineFields data={searchData} setData={setSearchData} searchView/>
             <Button primary content='Suchen' icon='search' labelPosition='left'
                     onClick={() => setViewState('list')} floated='right'
             />
@@ -97,7 +97,7 @@ function MachineSearch(props: Props) {
 
         {viewState === 'list' &&
         <div>
-          <CustomerList editCustomer={onEditMachineClick} filterData={searchData}/>
+          <MachineList editMachine={onEditMachineClick} filterData={searchData}/>
           <Button content='Zurück' icon='arrow left' labelPosition='left'
                   onClick={() => setViewState('search')}
           />
@@ -110,7 +110,7 @@ function MachineSearch(props: Props) {
             Maschiene bearbeiten
           </Header>
           <Form>
-            <CustomerFields data={machineEditData} setData={setMachineEditData}
+            <MachineFields data={machineEditData} setData={setMachineEditData}
                             setValidState={setFormIsValid} key={key}
             />
             <Button content='Abbrechen' icon='arrow left' labelPosition='left'
