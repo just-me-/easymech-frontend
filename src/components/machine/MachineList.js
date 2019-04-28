@@ -3,8 +3,11 @@
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
+import { NotificationManager } from "react-notifications";
 
 import * as api from "../../api/machine";
+import * as apiTypes from "../../api/machinetype";
+import * as apiCustomer from "../../api/customer";
 
 import type { Machine } from "../../api/machine";
 
@@ -18,6 +21,9 @@ function MachineList(props: Props) {
   const [machineListData, setMachineListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [machineTypeData, setMachineTypeData] = useState([]);
+  const [customerData, setCustomerData] = useState([]);
+
   function getListData() {
   api
     .getFilteredMachines(props.filterData)
@@ -29,8 +35,56 @@ function MachineList(props: Props) {
     .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
+  function getCustomers() {
+    apiCustomer
+      .getCustomers()
+      .then((result) => {
+        result = apiCustomer.checkResponse(result);
+        setCustomerData(result)
+      })
+      .catch(error => {
+        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+      });
+  }
+
+  function getCustomerText(id) {
+    if(id) {
+      const customer = customerData.find(x => x.id === id);
+      if(customer) {
+        return customer.firma;
+      }
+      return "Nicht gefunden";
+    }
+    return "Kein Besitzer hinterlegt";
+  }
+  
+  function getMachineTypeText(id) {
+    if(id) {
+      const machineType = machineTypeData.find(x => x.id === id);
+      if(machineType) {
+        return machineType.fabrikat;
+      }
+      return "Nicht gefunden";
+    }
+    return "Kein Typ hinterlegt";
+  }
+
+  function getMachineTypes() {
+    apiTypes
+      .getMachineTypes()
+      .then((result) => {
+        result = apiTypes.checkResponse(result);
+        setMachineTypeData(result);
+      })
+      .catch(error => {
+        NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+      });
+  }
+
   useEffect(() => {
     getListData();
+    getMachineTypes();
+    getCustomers();
   }, []);
 
   return (
@@ -62,8 +116,8 @@ function MachineList(props: Props) {
               <Table.Cell>{motorennummer}</Table.Cell>
               <Table.Cell>{betriebsdauer}</Table.Cell>
               <Table.Cell>{jahrgang}</Table.Cell>
-              <Table.Cell>{besitzerId}</Table.Cell>
-              <Table.Cell>{fahrzeugTypId}</Table.Cell>
+              <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
+              <Table.Cell>{getMachineTypeText(fahrzeugTypId)}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
