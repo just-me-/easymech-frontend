@@ -21,6 +21,9 @@ type Props = {};
 type State = {
   isAuthenticated: boolean,
   token: ?string,
+  name: string,
+  email: string,
+  id:string
 };
 
 class App extends React.Component<Props, State> {
@@ -39,7 +42,14 @@ class App extends React.Component<Props, State> {
                 token: undefined
             };
         }
-        this.state = { keycloak: null, authenticated: false };
+
+        this.state = {
+            keycloak: null,
+            authenticated: false,
+            name: "",
+            email: "",
+            id: "",
+        };
     }
 
     authenticate = (
@@ -118,15 +128,20 @@ class App extends React.Component<Props, State> {
         );
     }
 
-    componentDidMount = () => {
-        const keycloak = Keycloak("./public/keycloak.json");
-        keycloak.init({onLoad: 'login-required'}).success(authenticated => {
-            this.setState({keycloak: keycloak, authenticated: authenticated});
-            console.log(authenticated);
-            console.log(keycloak);
-        }).error(err => {
-            alert(err);
+    componentDidMount() {
+        const keycloak = Keycloak('/keycloak.json');
+        keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
+            this.setState({ keycloak: keycloak, authenticated: authenticated })
         });
+        if(this.state.keycloak) {
+            if(this.state.authenticated){
+                this.props.keycloak.loadUserInfo().then(userInfo => {
+                    this.setState({name: userInfo.name, email: userInfo.email, id: userInfo.sub});
+                    console.log(userInfo.name + userInfo.email + userInfo.sub);
+                });
+
+            }
+        }
     }
 
 }
