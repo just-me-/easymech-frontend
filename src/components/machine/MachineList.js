@@ -57,7 +57,7 @@ function MachineList(props: Props) {
     }
     return "Kein Besitzer hinterlegt";
   }
-  
+
   function getMachineTypeText(id) {
     if(id) {
       const machineType = machineTypeData.find(x => x.id === id);
@@ -99,7 +99,7 @@ function MachineList(props: Props) {
             <Table.HeaderCell>Seriennr.</Table.HeaderCell>
             <Table.HeaderCell>Mastnr.</Table.HeaderCell>
             <Table.HeaderCell>Motorennr.</Table.HeaderCell>
-            <Table.HeaderCell>Betriebsdauer</Table.HeaderCell>
+            <Table.HeaderCell>Betriebsdauer [Stunden]</Table.HeaderCell>
             <Table.HeaderCell>Jahrgang</Table.HeaderCell>
             <Table.HeaderCell>Besitzer</Table.HeaderCell>
             <Table.HeaderCell>Maschienentyp</Table.HeaderCell>
@@ -114,8 +114,8 @@ function MachineList(props: Props) {
               </Table.Cell>
               <Table.Cell>{mastnummer}</Table.Cell>
               <Table.Cell>{motorennummer}</Table.Cell>
-              <Table.Cell>{betriebsdauer}</Table.Cell>
-              <Table.Cell>{jahrgang}</Table.Cell>
+              <Table.Cell>{betriebsdauer || ""}</Table.Cell>
+              <Table.Cell>{jahrgang || ""}</Table.Cell>
               <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
               <Table.Cell>{getMachineTypeText(fahrzeugTypId)}</Table.Cell>
             </Table.Row>
