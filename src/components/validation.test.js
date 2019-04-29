@@ -38,3 +38,9 @@ test('Dont change number', () => {
 test('Dont change empty string', () => {
   expect(validation.toNumber("")).toBe("");
 })
+test('Can handle numbers', () => {
+  expect(validation.toNumber(123)).toBe("123");
+})
+test('Can handle 0 (as number)', () => {
+  expect(validation.toNumber(0)).toBe("0");
+})
