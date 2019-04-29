@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Grid } from 'semantic-ui-react'
-//import Keycloak from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 
 import {
   BrowserRouter as Router,
@@ -20,113 +20,114 @@ import "./App.css"
 type Props = {};
 type State = {
   isAuthenticated: boolean,
-  token: ?string
+  token: ?string,
 };
 
 class App extends React.Component<Props, State> {
-  constructor(props: any) {
-    super(props);
-    const token = sessionStorage.getItem("token");
+    constructor(props: any) {
+        super(props);
+        const token = sessionStorage.getItem("token");
 
-    if (token) {
-      this.state = {
-        isAuthenticated: true,
-        token
-      };
-    } else {
-      this.state = {
-        isAuthenticated: false,
-        token: undefined
-      };
+        if (token) {
+            this.state = {
+                isAuthenticated: true,
+                token
+            };
+        } else {
+            this.state = {
+                isAuthenticated: false,
+                token: undefined
+            };
+        }
+        this.state = { keycloak: null, authenticated: false };
     }
-  }
 
-  authenticate = (
-    login: string,
-    password: string,
-    callback: (error: ?Error) => void
-  ) => {
-    this.setState({ isAuthenticated: true, token: "myToken" });
-    sessionStorage.setItem("token", "myToken");
-    callback(null);
-    /*
-    api
-      .login(login, password)
-      .then(({ token }) => {
-        this.setState({ isAuthenticated: true, token });
-        sessionStorage.setItem("token", token);
+    authenticate = (
+        login: string,
+        password: string,
+        callback: (error: ?Error) => void
+    ) => {
+        this.setState({isAuthenticated: true, token: "myToken"});
+        sessionStorage.setItem("token", "myToken");
         callback(null);
-      })
-      .catch(error => callback(error));
-    */
-  };
+        /*
+        api
+          .login(login, password)
+          .then(({ token }) => {
+            this.setState({ isAuthenticated: true, token });
+            sessionStorage.setItem("token", token);
+            callback(null);
+          })
+          .catch(error => callback(error));
+        */
+    };
 
-  signout = (callback: () => void) => {
-    this.setState({
-      isAuthenticated: false,
-      token: undefined
-    });
-    sessionStorage.removeItem("token");
-    callback();
-  };
+    signout = (callback: () => void) => {
+        this.setState({
+            isAuthenticated: false,
+            token: undefined
+        });
+        sessionStorage.removeItem("token");
+        callback();
+    };
 
 
-  /*
-  decodeJWT = (token) => {
+    decodeJWT = (token) => {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace('-', '+').replace('_', '/');
         return JSON.stringify(JSON.parse(window.atob(base64)), null, 4);
-  };*/
+    };
 
-  render() {
-    const { isAuthenticated, token } = this.state;
+    render() {
+        const {isAuthenticated, token} = this.state;
 
-    const MenuBar = withRouter(({ history, location: { pathname } }) => {
-      if (isAuthenticated) {
+        const MenuBar = withRouter(({history, location: {pathname}}) => {
+            if (isAuthenticated) {
+                return (
+                    <AppMenu history={history} signout={this.signout}/>
+                );
+            } else {
+                return null;
+            }
+        });
+
         return (
-          <AppMenu history={history} signout={this.signout} />
-        );
-      } else {
-        return null;
-      }
-    });
-
-    return (
-      <Router>
-        <Route
-          exact
-          path="/"
-          render={props => (
-            <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
-          )}
-        />
-        <Grid id="App-grid" stackable>
-          <Grid.Column id="Menu-grid" width={4}>
-            <MenuBar />
-          </Grid.Column>
-          {/*
+            <Router>
+                <Route
+                    exact
+                    path="/"
+                    render={props => (
+                        <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated}/>
+                    )}
+                />
+                <Grid id="App-grid" stackable>
+                    <Grid.Column id="Menu-grid" width={4}>
+                        <MenuBar/>
+                    </Grid.Column>
+                    {/*
             The following are protected routes that are only available for logged-in users. We also pass the user and token so
             these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
           */}
 
-          <Grid.Column id="Content-grid" width={12}>
-            <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token} />
-          </Grid.Column>
-        </Grid>
-        <Notification/>
-      </Router>
-    );
-  }
+                    <Grid.Column id="Content-grid" width={12}>
+                        <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token}/>
+                    </Grid.Column>
+                </Grid>
+                <Notification/>
+            </Router>
+        );
+    }
 
-  /*
     componentDidMount = () => {
         const keycloak = Keycloak("./public/keycloak.json");
-        keycloak.init({ onLoad: 'login-required' }).success(authenticated => {
-            this.setState({ keycloak: keycloak, authenticated: authenticated });
+        keycloak.init({onLoad: 'login-required'}).success(authenticated => {
+            this.setState({keycloak: keycloak, authenticated: authenticated});
+            console.log(authenticated);
+            console.log(keycloak);
         }).error(err => {
             alert(err);
         });
-    }*/
-}
+    }
 
+}
 export default App;
