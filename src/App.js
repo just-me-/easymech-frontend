@@ -39,6 +39,7 @@ class App extends React.Component<Props, State> {
                 token: undefined
             };
         }
+
         this.state = { keycloak: null, authenticated: false };
     }
 
@@ -118,15 +119,18 @@ class App extends React.Component<Props, State> {
         );
     }
 
-    componentDidMount = () => {
-        const keycloak = Keycloak("./public/keycloak.json");
-        keycloak.init({onLoad: 'login-required'}).success(authenticated => {
-            this.setState({keycloak: keycloak, authenticated: authenticated});
-            console.log(authenticated);
-            console.log(keycloak);
-        }).error(err => {
-            alert(err);
+    componentDidMount() {
+        const keycloak = Keycloak('/keycloak.json');
+        keycloak.init({onLoad: 'login-required'}).then(authenticated => {
+            this.setState({ keycloak: keycloak, authenticated: authenticated })
         });
+        if(this.state.keycloak) {
+            if(this.state.authenticated){
+                console.log(this.state.keycloak);
+            }
+        } else {
+            console.log("no good...")
+        }
     }
 
 }
