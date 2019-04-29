@@ -14,7 +14,6 @@ function Customer() {
   const [key, setKey] = useState(Math.random());
 
   function addCustomer() {
-
     if(formIsValid) {
       api
       .addCustomer(customerData)

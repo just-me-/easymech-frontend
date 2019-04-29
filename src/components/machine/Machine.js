@@ -10,15 +10,16 @@ import MachineFields from "../machine/MachineFields";
 function Machine() {
   const [machineData, setMachineData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
+  const [key, setKey] = useState(Math.random());
 
   function addMachine() {
     if(formIsValid) {
-      console.log(machineData);
       api
         .addMachine(machineData)
         .then((result) => {
           result = api.checkResponse(result);
           NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", result.seriennummer +" erfasst");
+          setKey(Math.random()); // clear data - fresh form for next entry
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -37,7 +38,7 @@ function Machine() {
         Maschine erfassen
       </Header>
       <Form>
-        <MachineFields setData={setMachineData} setValidState={setFormIsValid} />
+        <MachineFields key={key} setData={setMachineData} setValidState={setFormIsValid} />
         <Button primary content='Speichern' icon='save' labelPosition='left' floated='right'
                 onClick={() => addMachine()}
         />
