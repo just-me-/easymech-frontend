@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Grid } from 'semantic-ui-react'
-import Keycloak from 'keycloak-js';
+/*import Keycloak from 'keycloak-js';*/
 
 import {
   BrowserRouter as Router,
