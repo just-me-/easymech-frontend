@@ -90,7 +90,7 @@ function MachineList(props: Props) {
   return (
     <div>
       <Header as='h1' textAlign='center'>
-        Gefundene Maschienen
+        Gefundene Maschinen
       </Header>
 
       <Table celled selectable striped>
