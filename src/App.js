@@ -121,7 +121,7 @@ class App extends React.Component<Props, State> {
 
     componentDidMount() {
         const keycloak = Keycloak('/keycloak.json');
-        keycloak.init({onLoad: 'login-required'}).then(authenticated => {
+        keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
             this.setState({ keycloak: keycloak, authenticated: authenticated })
         });
         if(this.state.keycloak) {
