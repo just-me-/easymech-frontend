@@ -168,8 +168,11 @@ function MachineFields(props: Props) {
   useEffect(() => {
     if(customer && customer.length > 0) {
       if(props.data && props.data.id) {
-        if(props.data.besitzerId)
-          setCustomerValue(customer.find(x => x.id === props.data.besitzerId).firma || "");
+        const besitzerId = props.data.besitzerId;
+        if(besitzerId) {
+          const owner = customer.find(x => x.id === besitzerId);
+          setCustomerValue(owner ? owner.firma : "");
+        }
       }
     }
   }, [customer]);
@@ -177,8 +180,11 @@ function MachineFields(props: Props) {
   useEffect(() => {
     if(machineTypes && machineTypes.length > 0) {
       if(props.data && props.data.id) {
-        if(props.data.fahrzeugTypId)
-          setMachineTypeValue(machineTypes.find(x => x.id === props.data.fahrzeugTypId).fabrikat || "");
+        const fahrzeugTypId = props.data.fahrzeugTypId;
+        if(fahrzeugTypId) {
+          const fahrzeugTyp = machineTypes.find(x => x.id === fahrzeugTypId);
+          setMachineTypeValue(fahrzeugTyp ? fahrzeugTyp.fabrikat : "");
+        }
       }
     }
   }, [machineTypes]);
