@@ -21,6 +21,9 @@ type Props = {};
 type State = {
   isAuthenticated: boolean,
   token: ?string,
+  name: string,
+  email: string,
+  id:string
 };
 
 class App extends React.Component<Props, State> {
@@ -40,7 +43,13 @@ class App extends React.Component<Props, State> {
             };
         }
 
-        this.state = { keycloak: null, authenticated: false };
+        this.state = {
+            keycloak: null,
+            authenticated: false,
+            name: "",
+            email: "",
+            id: "",
+        };
     }
 
     authenticate = (
@@ -126,10 +135,12 @@ class App extends React.Component<Props, State> {
         });
         if(this.state.keycloak) {
             if(this.state.authenticated){
-                console.log(this.state.keycloak);
+                this.props.keycloak.loadUserInfo().then(userInfo => {
+                    this.setState({name: userInfo.name, email: userInfo.email, id: userInfo.sub});
+                    console.log(userInfo.name + userInfo.email + userInfo.sub);
+                });
+
             }
-        } else {
-            console.log("no good...")
         }
     }
 
