@@ -46,9 +46,9 @@ class App extends React.Component<Props, State> {
         this.state = {
             keycloak: null,
             authenticated: false,
-            name: "",
+            /*name: "",
             email: "",
-            id: "",
+            id: "",*/
         };
     }
 
@@ -81,12 +81,6 @@ class App extends React.Component<Props, State> {
         callback();
     };
 
-
-    decodeJWT = (token) => {
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.stringify(JSON.parse(window.atob(base64)), null, 4);
-    };
 
     render() {
         const {isAuthenticated, token} = this.state;
@@ -128,7 +122,7 @@ class App extends React.Component<Props, State> {
         );
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         const keycloak = Keycloak('/keycloak.json');
         keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
             this.setState({ keycloak: keycloak, authenticated: authenticated })
@@ -142,7 +136,7 @@ class App extends React.Component<Props, State> {
 
             }
         }
-    }
+    }*/
 
 }
 export default App;
