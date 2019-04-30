@@ -42,7 +42,7 @@ function MachineFields(props: Props) {
 
   // ich glaub sollten wir doch auslagern - ging
   // beim NumberInput sehr einfach abgesehen von Flow
-  // => aber erst wenn die Maschiene grundsätzlich läuft xD
+  // => aber erst wenn die Maschine grundsätzlich läuft xD
   const [machineTypes, setMachineTypes] = useState([]);
   const [machineTypeResults, setMachineTypeResults] = useState([]);
   const [isMachineTypeLoading,setMachineTypeLoading] = useState(false);
@@ -211,13 +211,13 @@ function MachineFields(props: Props) {
         <Form.Group widths='equal'>
           <Form.Field
             control={Search}
-            label='Maschienentyp'
+            label='Maschinentyp'
             loading={isMachineTypeLoading}
             onResultSelect={handleMachineTypeSelect}
             onSearchChange={_.debounce(handleMachineTypeChange, 500, { leading: true })}
             results={machineTypeResults.map((result, index) => {return {key: index, id: result.id, title: result.fabrikat}})}
             value={machineTypeValue}
-            noResultsMessage='Keine Maschienentypen gefunden'
+            noResultsMessage='Keine Maschinentypen gefunden'
             placeholder={props.searchView ? '' : 'Pflichtfeld'}
           />
           <Form.Field

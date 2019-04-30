@@ -90,7 +90,7 @@ function MachineList(props: Props) {
   return (
     <div>
       <Header as='h1' textAlign='center'>
-        Gefundene Maschienen
+        Gefundene Maschinen
       </Header>
 
       <Table celled selectable striped>
@@ -102,7 +102,7 @@ function MachineList(props: Props) {
             <Table.HeaderCell>Betriebsdauer [Stunden]</Table.HeaderCell>
             <Table.HeaderCell>Jahrgang</Table.HeaderCell>
             <Table.HeaderCell>Besitzer</Table.HeaderCell>
-            <Table.HeaderCell>Maschienentyp</Table.HeaderCell>
+            <Table.HeaderCell>Maschinentyp</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -126,7 +126,7 @@ function MachineList(props: Props) {
       { isLoading &&
         <Segment>
           <Dimmer inverted active>
-            <Loader inverted>Maschienen werden geladen...</Loader>
+            <Loader inverted>Maschinen werden geladen...</Loader>
           </Dimmer>
         </Segment>
       }

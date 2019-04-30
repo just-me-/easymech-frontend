@@ -34,7 +34,7 @@ function MachineSearch(props: Props) {
         .then((result) => {
             result = api.checkResponse(result);
             setViewState("list");
-            NotificationManager.success("Die Maschiene wurde erfolgreich gespeichert.", result.seriennummer+" aktualisiert");
+            NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", result.seriennummer+" aktualisiert");
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -75,7 +75,7 @@ function MachineSearch(props: Props) {
       .catch(error => {
         console.log("Ups, ein Fehler ist aufgetreten", error);
         setViewState("list");
-        NotificationManager.error("Beim Laden der Maschiene ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
+        NotificationManager.error("Beim Laden der Maschine ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
       });
   }
 
@@ -107,7 +107,7 @@ function MachineSearch(props: Props) {
         {viewState === 'edit' &&
         <div>
           <Header as='h1' textAlign='center'>
-            Maschiene bearbeiten
+            Maschine bearbeiten
           </Header>
           <Form>
             <MachineFields data={machineEditData} setData={setMachineEditData}

@@ -74,7 +74,7 @@ function MachineTypeList(props: Props) {
       { isLoading &&
         <Segment>
           <Dimmer inverted active>
-            <Loader inverted>Maschienentypen werden geladen...</Loader>
+            <Loader inverted>Maschinentypen werden geladen...</Loader>
           </Dimmer>
         </Segment>
       }
