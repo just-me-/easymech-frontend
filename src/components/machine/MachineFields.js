@@ -33,7 +33,7 @@ function MachineFields(props: Props) {
     betriebsdauer: (props.data && props.data.betriebsdauer) || "",
     jahrgang: (props.data && props.data.jahrgang) || "",
     notiz: (props.data && props.data.notiz) || "",
-    maschinenTypId: (props.data && props.data.maschinenTypId) || "",
+    maschinentypId: (props.data && props.data.maschinentypId) || "",
     besitzerId: (props.data && props.data.besitzerId) || "",
     isActive: (props.data && props.data.isActive) || ""
   };
@@ -65,7 +65,7 @@ function MachineFields(props: Props) {
   }
 
   function handleMachineTypeSelect(e, { result }){
-    setMachineData({...machineData, 'maschinenTypId': result.id});
+    setMachineData({...machineData, 'maschinentypId': result.id});
     setMachineTypeValue(result.title);
   }
 
@@ -149,7 +149,7 @@ function MachineFields(props: Props) {
   useEffect(() => {
     const requiredIsValide =
       validation.checkRequired(machineData.seriennummer) &&
-      parseInt(machineData.maschinenTypId, 10) > 0 &&
+      parseInt(machineData.maschinentypId, 10) > 0 &&
       parseInt(machineData.besitzerId, 10) > 0;
     if(props.setValidState) {
       props.setValidState(requiredIsValide);
@@ -180,10 +180,10 @@ function MachineFields(props: Props) {
   useEffect(() => {
     if(machineTypes && machineTypes.length > 0) {
       if(props.data && props.data.id) {
-        const maschinenTypId = props.data.maschinenTypId;
-        if(maschinenTypId) {
-          const maschinenTyp = machineTypes.find(x => x.id === maschinenTypId);
-          setMachineTypeValue(maschinenTyp ? maschinenTyp.fabrikat : "");
+        const maschinentypId = props.data.maschinentypId;
+        if(maschinentypId) {
+          const maschinentyp = machineTypes.find(x => x.id === maschinentypId);
+          setMachineTypeValue(maschinentyp ? maschinentyp.fabrikat : "");
         }
       }
     }

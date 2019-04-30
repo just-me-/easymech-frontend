@@ -30,8 +30,8 @@ export function getCustomer(id: string): Promise<Customer> {
   return helper.getJson("/kunden/"+id).then(helper.parseJSON);
 }
 
-export function getCustomers(): Promise<{ result: Array<Customer> }> {
-  return helper.getJson("/kunden/").then(helper.parseJSON);
+export function getCustomers(deletedToo: boolean = false): Promise<{ result: Array<Customer> }> {
+  return helper.getJson("/kunden/"+(deletedToo ? "all" :"")).then(helper.parseJSON);
 }
 
 export function getFilteredCustomers(customerObject: Customer): Promise<{ result: Array<Customer> }> {
