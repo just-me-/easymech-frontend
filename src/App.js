@@ -123,7 +123,7 @@ class App extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-      console.log(process.env.NODE_ENV);
+      console.log(process.env.NODE_ENV); 
       if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
         const keycloak = Keycloak('/keycloak.json');
         keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
