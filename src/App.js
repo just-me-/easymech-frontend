@@ -123,9 +123,8 @@ class App extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-      console.log("Env vari:", process.env.NODE_ENV); 
-
-      if (!process.env.NODE_ENV && process.env.NODE_ENV !== 'development') { // production mode
+      console.log(process.env.NODE_ENV);
+      if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
         const keycloak = Keycloak('/keycloak.json');
         keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
             this.setState({ keycloak: keycloak, authenticated: authenticated })
