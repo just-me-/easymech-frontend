@@ -11,11 +11,11 @@ export type Machine = {
     jahrgang?: number,
     isActive?: boolean,
     besitzerId?: number,
-    fahrzeugTypId?: number
+    maschinenTypId?: number
 };
 
 function prepareDto(machineObject: Machine) {
-  const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'fahrzeugTypId'];
+  const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'maschinenTypId'];
   return helper.convertToNumbers(machineObject, numbertypes);
 }
 

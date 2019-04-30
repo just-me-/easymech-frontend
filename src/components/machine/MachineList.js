@@ -107,7 +107,7 @@ function MachineList(props: Props) {
         </Table.Header>
         <Table.Body>
           {_.map(machineListData, ({ id, seriennummer, mastnummer, motorennummer, betriebsdauer,
-                                     jahrgang, besitzerId, fahrzeugTypId }, index) => (
+                                     jahrgang, besitzerId, maschinenTypId }, index) => (
             <Table.Row key={index}>
               <Table.Cell onClick={() => props.editMachine(id)} className="Hover-effect link">
                 <Icon name='external' size='tiny' className="Inline-icon"/> {seriennummer}
@@ -117,7 +117,7 @@ function MachineList(props: Props) {
               <Table.Cell>{betriebsdauer || ""}</Table.Cell>
               <Table.Cell>{jahrgang || ""}</Table.Cell>
               <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
-              <Table.Cell>{getMachineTypeText(fahrzeugTypId)}</Table.Cell>
+              <Table.Cell>{getMachineTypeText(maschinenTypId)}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

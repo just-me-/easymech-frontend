@@ -68,7 +68,9 @@ function AppMenu(props: Props) {
       <Menu.Item>
         <Menu.Header>
           <Icon name='truck' />
-          Maschinen
+            <Link to={{pathname: "/machine_search", state: { listRedirect: true }}}>
+            Maschinen
+            </Link>
         </Menu.Header>
         <Menu.Menu>
           <Menu.Item
