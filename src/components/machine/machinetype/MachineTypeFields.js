@@ -24,9 +24,9 @@ function MachineTypeFields(props: Props) {
     hubkraft: (props.data && props.data.hubkraft) || "",
     hubhoehe: (props.data && props.data.hubhoehe) || "",
     eigengewicht: (props.data && props.data.eigengewicht) || "",
-    fahrzeughoehe: (props.data && props.data.fahrzeughoehe) || "",
-    fahrzeuglaenge: (props.data && props.data.fahrzeuglaenge) || "",
-    fahrzeugbreite: (props.data && props.data.fahrzeugbreite) || "",
+    fahrzeughoehe: (props.data && props.data.maschinenhoehe) || "",
+    fahrzeuglaenge: (props.data && props.data.maschinenlaenge) || "",
+    fahrzeugbreite: (props.data && props.data.maschinenbreite) || "",
     pneugroesse: (props.data && props.data.pneugroesse) || ""
   };
 
@@ -115,25 +115,25 @@ function MachineTypeFields(props: Props) {
             handleChange={handleChange}
           />
           <NumberInput
-            id='fahrzeughoehe'
-            label='Höhe' innerLabel='cm'
-            value={machineTypeData.fahrzeughoehe} validate='number'
-            handleChange={handleChange}
+              id='fahrzeughoehe'
+              label='Höhe' innerLabel='cm'
+              value={machineTypeData.maschinenhoehe} validate='number'
+              handleChange={handleChange}
           />
         </Form.Group>
 
         <Form.Group widths='equal'>
           <NumberInput
-            id='fahrzeuglaenge'
-            label='Länge' innerLabel='cm'
-            value={machineTypeData.fahrzeuglaenge} validate='number'
-            handleChange={handleChange}
+              id='fahrzeuglaenge'
+              label='Länge' innerLabel='cm'
+              value={machineTypeData.maschinenlaenge} validate='number'
+              handleChange={handleChange}
           />
           <NumberInput
-            id='fahrzeugbreite'
-            label='Breite' innerLabel='cm'
-            value={machineTypeData.fahrzeugbreite} validate='number'
-            handleChange={handleChange}
+              id='fahrzeugbreite'
+              label='Breite' innerLabel='cm'
+              value={machineTypeData.maschinenbreite} validate='number'
+              handleChange={handleChange}
           />
         </Form.Group>
       </div>

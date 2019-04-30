@@ -24,7 +24,7 @@ function MachineType() {
         .then((result) => {
           result = api.checkResponse(result);
           setViewState("list");
-          NotificationManager.success("Der Fahrzeugtyp wurde erfolgreich gespeichert.", machineTypeData.fabrikat +" erfasst");
+          NotificationManager.success("Der Maschinentyp wurde erfolgreich gespeichert.", machineTypeData.fabrikat +" erfasst");
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -60,7 +60,7 @@ function MachineType() {
       .then((result) => {
         result = api.checkResponse(result);
         setViewState("list");
-        NotificationManager.success("Der Fahrzeugtyp wurde erfolgreich gelöscht.", machineTypeEditData.fabrikat +" gelöscht");
+        NotificationManager.success("Der Maschinentyp wurde erfolgreich gelöscht.", machineTypeEditData.fabrikat +" gelöscht");
       })
       .catch(error => {
         console.log("Ups, ein Fehler ist aufgetreten", error);
@@ -77,7 +77,7 @@ function MachineType() {
         .then((result) => {
           result = api.checkResponse(result);
           setViewState("list");
-          NotificationManager.success("Der Fahrzeugtyp wurde erfolgreich gespeichert.", machineTypeEditData.fabrikat +" aktualisiert");
+          NotificationManager.success("Der Maschinentyp wurde erfolgreich gespeichert.", machineTypeEditData.fabrikat +" aktualisiert");
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);

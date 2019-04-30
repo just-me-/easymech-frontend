@@ -33,7 +33,7 @@ function MachineFields(props: Props) {
     betriebsdauer: (props.data && props.data.betriebsdauer) || "",
     jahrgang: (props.data && props.data.jahrgang) || "",
     notiz: (props.data && props.data.notiz) || "",
-    fahrzeugTypId: (props.data && props.data.fahrzeugTypId) || "",
+    fahrzeugTypId: (props.data && props.data.maschinenTypId) || "",
     besitzerId: (props.data && props.data.besitzerId) || "",
     isActive: (props.data && props.data.isActive) || ""
   };
@@ -149,7 +149,7 @@ function MachineFields(props: Props) {
   useEffect(() => {
     const requiredIsValide =
       validation.checkRequired(machineData.seriennummer) &&
-      parseInt(machineData.fahrzeugTypId, 10) > 0 &&
+      parseInt(machineData.maschinenTypId, 10) > 0 &&
       parseInt(machineData.besitzerId, 10) > 0;
     if(props.setValidState) {
       props.setValidState(requiredIsValide);
@@ -180,7 +180,7 @@ function MachineFields(props: Props) {
   useEffect(() => {
     if(machineTypes && machineTypes.length > 0) {
       if(props.data && props.data.id) {
-        const fahrzeugTypId = props.data.fahrzeugTypId;
+        const fahrzeugTypId = props.data.maschinenTypId;
         if(fahrzeugTypId) {
           const fahrzeugTyp = machineTypes.find(x => x.id === fahrzeugTypId);
           setMachineTypeValue(fahrzeugTyp ? fahrzeugTyp.fabrikat : "");
