@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Grid } from 'semantic-ui-react'
-/*import Keycloak from 'keycloak-js';*/
+import Keycloak from 'keycloak-js';
 
 import {
   BrowserRouter as Router,
@@ -46,9 +46,9 @@ class App extends React.Component<Props, State> {
         this.state = {
             keycloak: null,
             authenticated: false,
-            /*name: "",
+            name: "",
             email: "",
-            id: "",*/
+            id: ""
         };
     }
 
@@ -122,7 +122,7 @@ class App extends React.Component<Props, State> {
         );
     }
 
-    /*componentDidMount() {
+    componentDidMount() {
         const keycloak = Keycloak('/keycloak.json');
         keycloak.init({onLoad: 'login-required', promiseType: 'native'}).then(authenticated => {
             this.setState({ keycloak: keycloak, authenticated: authenticated })
@@ -136,7 +136,7 @@ class App extends React.Component<Props, State> {
 
             }
         }
-    }*/
+    }
 
 }
 export default App;

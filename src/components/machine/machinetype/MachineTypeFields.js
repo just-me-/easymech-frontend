@@ -24,9 +24,9 @@ function MachineTypeFields(props: Props) {
     hubkraft: (props.data && props.data.hubkraft) || "",
     hubhoehe: (props.data && props.data.hubhoehe) || "",
     eigengewicht: (props.data && props.data.eigengewicht) || "",
-    fahrzeughoehe: (props.data && props.data.maschinenhoehe) || "",
-    fahrzeuglaenge: (props.data && props.data.maschinenlaenge) || "",
-    fahrzeugbreite: (props.data && props.data.maschinenbreite) || "",
+    maschinenhoehe: (props.data && props.data.maschinenhoehe) || "",
+    maschinenlaenge: (props.data && props.data.maschinenlaenge) || "",
+    maschinenbreite: (props.data && props.data.maschinenbreite) || "",
     pneugroesse: (props.data && props.data.pneugroesse) || ""
   };
 
@@ -115,7 +115,7 @@ function MachineTypeFields(props: Props) {
             handleChange={handleChange}
           />
           <NumberInput
-              id='fahrzeughoehe'
+              id='maschinenhoehe'
               label='Höhe' innerLabel='cm'
               value={machineTypeData.maschinenhoehe} validate='number'
               handleChange={handleChange}
@@ -124,13 +124,13 @@ function MachineTypeFields(props: Props) {
 
         <Form.Group widths='equal'>
           <NumberInput
-              id='fahrzeuglaenge'
+              id='maschinenlaenge'
               label='Länge' innerLabel='cm'
               value={machineTypeData.maschinenlaenge} validate='number'
               handleChange={handleChange}
           />
           <NumberInput
-              id='fahrzeugbreite'
+              id='maschinenbreite'
               label='Breite' innerLabel='cm'
               value={machineTypeData.maschinenbreite} validate='number'
               handleChange={handleChange}
