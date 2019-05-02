@@ -1,33 +1,39 @@
 // @flow
 
-import _ from 'lodash'
-import React, {useState, useEffect} from 'react'
-import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
+import _ from "lodash";
+import React, { useState, useEffect } from "react";
+import {
+  Header,
+  Table,
+  Loader,
+  Dimmer,
+  Segment,
+  Icon
+} from "semantic-ui-react";
 
 import * as api from "../../api/customer";
-import "./CustomerList.css"
+import "./CustomerList.css";
 
 import type { Customer } from "../../api/customer";
 
 export type Props = {
-  editCustomer: (string) => void,
+  editCustomer: string => void,
   filterData: ?Customer
 };
 
 function CustomerList(props: Props) {
-
   const [customerListData, setCustomerListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   function getListData() {
-  api
-    .getFilteredCustomers(props.filterData)
-    .then((result) => {
-      result = api.checkResponse(result);
-      setIsLoading(false);
-      setCustomerListData(result);
-    })
-    .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+    api
+      .getFilteredCustomers(props.filterData)
+      .then(result => {
+        result = api.checkResponse(result);
+        setIsLoading(false);
+        setCustomerListData(result);
+      })
+      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
   useEffect(() => {
@@ -36,7 +42,7 @@ function CustomerList(props: Props) {
 
   return (
     <div>
-      <Header as='h1' textAlign='center'>
+      <Header as="h1" textAlign="center">
         Gefundene Kunden
       </Header>
 
@@ -54,44 +60,66 @@ function CustomerList(props: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(customerListData, ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }, index) => (
-            <Table.Row key={index}>
-              <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect link">
-                <Icon name='external' size='tiny' className="Inline-icon"/> {firma}
-              </Table.Cell>
-              <Table.Cell>{adresse}</Table.Cell>
-              <Table.Cell>{plz}</Table.Cell>
-              <Table.Cell>{ort}</Table.Cell>
-              <Table.Cell>{vorname}</Table.Cell>
-              <Table.Cell>{nachname}</Table.Cell>
-              <Table.Cell>
-              {email &&
-                <a href={"mailto:"+email}>
-                  <Icon name='mail' size='tiny' className="Inline-icon"/> {email}
-                </a>
-              }
-              </Table.Cell>
-              <Table.Cell>
-              {telefon &&
-                <a href={"tel:"+telefon}>
-                  <Icon name='call' size='tiny' className="Inline-icon"/> {telefon}
-                </a>
-              }
-              </Table.Cell>
-            </Table.Row>
-          ))}
+          {_.map(
+            customerListData,
+            (
+              {
+                id,
+                firma,
+                adresse,
+                vorname,
+                nachname,
+                plz,
+                ort,
+                email,
+                telefon
+              },
+              index
+            ) => (
+              <Table.Row key={index}>
+                <Table.Cell
+                  onClick={() => props.editCustomer(id)}
+                  className="Hover-effect link"
+                >
+                  <Icon name="external" size="tiny" className="Inline-icon" />{" "}
+                  {firma}
+                </Table.Cell>
+                <Table.Cell>{adresse}</Table.Cell>
+                <Table.Cell>{plz}</Table.Cell>
+                <Table.Cell>{ort}</Table.Cell>
+                <Table.Cell>{vorname}</Table.Cell>
+                <Table.Cell>{nachname}</Table.Cell>
+                <Table.Cell>
+                  {email && (
+                    <a href={"mailto:" + email}>
+                      <Icon name="mail" size="tiny" className="Inline-icon" />{" "}
+                      {email}
+                    </a>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {telefon && (
+                    <a href={"tel:" + telefon}>
+                      <Icon name="call" size="tiny" className="Inline-icon" />{" "}
+                      {telefon}
+                    </a>
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            )
+          )}
         </Table.Body>
       </Table>
 
-      { isLoading &&
+      {isLoading && (
         <Segment>
           <Dimmer inverted active>
             <Loader inverted>Kunden werden geladen...</Loader>
           </Dimmer>
         </Segment>
-      }
+      )}
     </div>
-  )
+  );
 }
 
-export default CustomerList
+export default CustomerList;

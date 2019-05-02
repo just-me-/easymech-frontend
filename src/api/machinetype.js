@@ -16,31 +16,55 @@ export type MachineType = {
 };
 
 function prepareDto(machineTypeObject: MachineType) {
-  const numbertypes = ['nutzlast', 'hubkraft', 'hubhoehe', 'eigengewicht', 'maschinenhoehe',
-                       'maschinenlaenge', 'maschinenbreite', 'pneugroesse'];
+  const numbertypes = [
+    "nutzlast",
+    "hubkraft",
+    "hubhoehe",
+    "eigengewicht",
+    "maschinenhoehe",
+    "maschinenlaenge",
+    "maschinenbreite",
+    "pneugroesse"
+  ];
   return helper.convertToNumbers(machineTypeObject, numbertypes);
 }
 
-export function addMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
-  return helper.postJson("/maschinentypen/", prepareDto(machineTypeObject), "POST").then(helper.parseJSON);
+export function addMachineType(
+  machineTypeObject: MachineType
+): Promise<SaveResult> {
+  return helper
+    .postJson("/maschinentypen/", prepareDto(machineTypeObject), "POST")
+    .then(helper.parseJSON);
 }
 
-export function updateMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
-  return helper.postJson("/maschinentypen/"+machineTypeObject.id, prepareDto(machineTypeObject), "PUT").then(helper.parseJSON);
+export function updateMachineType(
+  machineTypeObject: MachineType
+): Promise<SaveResult> {
+  return helper
+    .postJson(
+      "/maschinentypen/" + machineTypeObject.id,
+      prepareDto(machineTypeObject),
+      "PUT"
+    )
+    .then(helper.parseJSON);
 }
 
 export function deleteMachineType(id: string): Promise<SaveResult> {
-  return helper.deleteJson("/maschinentypen/"+id).then(helper.parseJSON);
+  return helper.deleteJson("/maschinentypen/" + id).then(helper.parseJSON);
 }
 
 export function getMachineType(id: string): Promise<MachineType> {
-  return helper.getJson("/maschinentypen/"+id).then(helper.parseJSON);
+  return helper.getJson("/maschinentypen/" + id).then(helper.parseJSON);
 }
 
 export function getMachineTypes(): Promise<{ result: Array<MachineType> }> {
   return helper.getJson("/maschinentypen/").then(helper.parseJSON);
 }
 
-export function getFilteredMachineTypes(machineTypeObject: MachineType): Promise<{ result: Array<MachineType> }> {
-  return helper.postJson("/maschinentypen/suchen/", prepareDto(machineTypeObject), "POST").then(helper.parseJSON);
+export function getFilteredMachineTypes(
+  machineTypeObject: MachineType
+): Promise<{ result: Array<MachineType> }> {
+  return helper
+    .postJson("/maschinentypen/suchen/", prepareDto(machineTypeObject), "POST")
+    .then(helper.parseJSON);
 }

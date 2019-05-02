@@ -11,18 +11,17 @@ export function checkStatus(response) {
 }
 
 export function checkResponse(response) {
-    if(response.status !== 'ok') {
-      throw new Error("Servermeldung: "+response.message);
-    }
-    return response.data;
+  if (response.status !== "ok") {
+    throw new Error("Servermeldung: " + response.message);
+  }
+  return response.data;
 }
 
 export function convertToNumbers(dto, fieldsToConvert) {
   let convertedDto = dto;
   for (const key in fieldsToConvert) {
     let convertedNumber = parseInt(dto[fieldsToConvert[key]], 10);
-    if (isNaN(convertedNumber))
-      convertedNumber = 0;
+    if (isNaN(convertedNumber)) convertedNumber = 0;
     convertedDto[fieldsToConvert[key]] = convertedNumber;
   }
   return convertedDto;
@@ -54,6 +53,6 @@ export function postJson(endpoint: string, params: Object, method = "POST") {
 
 export function deleteJson(endpoint: string) {
   return fetch(`${backend}${endpoint}`, {
-    method: 'DELETE'
+    method: "DELETE"
   }).then(checkStatus);
 }

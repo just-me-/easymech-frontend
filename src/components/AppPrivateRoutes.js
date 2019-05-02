@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React from "react";
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -88,7 +88,7 @@ function AppPrivateRoutes(props: Props) {
         component={BuySell}
       />
     </div>
-  )
+  );
 }
 
-export default AppPrivateRoutes
+export default AppPrivateRoutes;

@@ -1,8 +1,15 @@
 // @flow
 
-import _ from 'lodash'
-import React, {useState, useEffect} from 'react'
-import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
+import _ from "lodash";
+import React, { useState, useEffect } from "react";
+import {
+  Header,
+  Table,
+  Loader,
+  Dimmer,
+  Segment,
+  Icon
+} from "semantic-ui-react";
 import { NotificationManager } from "react-notifications";
 
 import * as api from "../../api/machine";
@@ -12,12 +19,11 @@ import * as apiCustomer from "../../api/customer";
 import type { Machine } from "../../api/machine";
 
 export type Props = {
-  editMachine: (string) => void,
+  editMachine: string => void,
   filterData: ?Machine
 };
 
 function MachineList(props: Props) {
-
   const [machineListData, setMachineListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,32 +31,35 @@ function MachineList(props: Props) {
   const [customerData, setCustomerData] = useState([]);
 
   function getListData() {
-  api
-    .getFilteredMachines(props.filterData)
-    .then((result) => {
-      result = api.checkResponse(result);
-      setIsLoading(false);
-      setMachineListData(result);
-    })
-    .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+    api
+      .getFilteredMachines(props.filterData)
+      .then(result => {
+        result = api.checkResponse(result);
+        setIsLoading(false);
+        setMachineListData(result);
+      })
+      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
   }
 
   function getCustomers() {
     apiCustomer
       .getCustomers(true)
-      .then((result) => {
+      .then(result => {
         result = apiCustomer.checkResponse(result);
-        setCustomerData(result)
+        setCustomerData(result);
       })
       .catch(error => {
-        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+        NotificationManager.error(
+          "Kunden konnten nicht geladen werden",
+          "Bitte überprüfen Sie Ihre Verbindung!"
+        );
       });
   }
 
   function getCustomerText(id) {
-    if(id) {
+    if (id) {
       const customer = customerData.find(x => x.id === id);
-      if(customer) {
+      if (customer) {
         return customer.firma;
       }
       return "Nicht gefunden";
@@ -59,9 +68,9 @@ function MachineList(props: Props) {
   }
 
   function getMachineTypeText(id) {
-    if(id) {
+    if (id) {
       const machineType = machineTypeData.find(x => x.id === id);
-      if(machineType) {
+      if (machineType) {
         return machineType.fabrikat;
       }
       return "Nicht gefunden";
@@ -72,12 +81,15 @@ function MachineList(props: Props) {
   function getMachineTypes() {
     apiTypes
       .getMachineTypes()
-      .then((result) => {
+      .then(result => {
         result = apiTypes.checkResponse(result);
         setMachineTypeData(result);
       })
       .catch(error => {
-        NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+        NotificationManager.error(
+          "Maschinentypen konnten nicht geladen werden",
+          "Bitte überprüfen Sie Ihre Verbindung!"
+        );
       });
   }
 
@@ -89,7 +101,7 @@ function MachineList(props: Props) {
 
   return (
     <div>
-      <Header as='h1' textAlign='center'>
+      <Header as="h1" textAlign="center">
         Gefundene Maschinen
       </Header>
 
@@ -106,32 +118,50 @@ function MachineList(props: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(machineListData, ({ id, seriennummer, mastnummer, motorennummer, betriebsdauer,
-                                     jahrgang, besitzerId, maschinentypId }, index) => (
-            <Table.Row key={index}>
-              <Table.Cell onClick={() => props.editMachine(id)} className="Hover-effect link">
-                <Icon name='external' size='tiny' className="Inline-icon"/> {seriennummer}
-              </Table.Cell>
-              <Table.Cell>{mastnummer}</Table.Cell>
-              <Table.Cell>{motorennummer}</Table.Cell>
-              <Table.Cell>{betriebsdauer || ""}</Table.Cell>
-              <Table.Cell>{jahrgang || ""}</Table.Cell>
-              <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
-              <Table.Cell>{getMachineTypeText(maschinentypId)}</Table.Cell>
-            </Table.Row>
-          ))}
+          {_.map(
+            machineListData,
+            (
+              {
+                id,
+                seriennummer,
+                mastnummer,
+                motorennummer,
+                betriebsdauer,
+                jahrgang,
+                besitzerId,
+                maschinentypId
+              },
+              index
+            ) => (
+              <Table.Row key={index}>
+                <Table.Cell
+                  onClick={() => props.editMachine(id)}
+                  className="Hover-effect link"
+                >
+                  <Icon name="external" size="tiny" className="Inline-icon" />{" "}
+                  {seriennummer}
+                </Table.Cell>
+                <Table.Cell>{mastnummer}</Table.Cell>
+                <Table.Cell>{motorennummer}</Table.Cell>
+                <Table.Cell>{betriebsdauer || ""}</Table.Cell>
+                <Table.Cell>{jahrgang || ""}</Table.Cell>
+                <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
+                <Table.Cell>{getMachineTypeText(maschinentypId)}</Table.Cell>
+              </Table.Row>
+            )
+          )}
         </Table.Body>
       </Table>
 
-      { isLoading &&
+      {isLoading && (
         <Segment>
           <Dimmer inverted active>
             <Loader inverted>Maschinen werden geladen...</Loader>
           </Dimmer>
         </Segment>
-      }
+      )}
     </div>
-  )
+  );
 }
 
-export default MachineList
+export default MachineList;
