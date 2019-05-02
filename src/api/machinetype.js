@@ -1,6 +1,8 @@
 import * as helper from './helper';
+
 export const checkResponse = helper.checkResponse;
 
+/* @noflow */
 export type MachineType = {
   id?: string,
   fabrikat?: string,
@@ -37,16 +39,16 @@ export function addMachineType(machineTypeObject: MachineType): Promise<SaveResu
 
 export function updateMachineType(machineTypeObject: MachineType): Promise<SaveResult> {
   return helper
-    .postJson('/maschinentypen/' + machineTypeObject.id, prepareDto(machineTypeObject), 'PUT')
+    .postJson(`/maschinentypen/${machineTypeObject.id}`, prepareDto(machineTypeObject), 'PUT')
     .then(helper.parseJSON);
 }
 
 export function deleteMachineType(id: string): Promise<SaveResult> {
-  return helper.deleteJson('/maschinentypen/' + id).then(helper.parseJSON);
+  return helper.deleteJson(`/maschinentypen/${id}`).then(helper.parseJSON);
 }
 
 export function getMachineType(id: string): Promise<MachineType> {
-  return helper.getJson('/maschinentypen/' + id).then(helper.parseJSON);
+  return helper.getJson(`/maschinentypen/${id}`).then(helper.parseJSON);
 }
 
 export function getMachineTypes(): Promise<{ result: Array<MachineType> }> {

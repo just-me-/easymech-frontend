@@ -1,4 +1,5 @@
 import * as helper from './helper';
+
 export const checkResponse = helper.checkResponse;
 
 export type Machine = {
@@ -25,16 +26,16 @@ export function addMachine(machineObject: Machine): Promise<SaveResult> {
 
 export function updateMachine(machineObject: Machine): Promise<SaveResult> {
   return helper
-    .postJson('/maschinen/' + machineObject.id, prepareDto(machineObject), 'PUT')
+    .postJson(`/maschinen/${machineObject.id}`, prepareDto(machineObject), 'PUT')
     .then(helper.parseJSON);
 }
 
 export function deleteMachine(id: string): Promise<SaveResult> {
-  return helper.deleteJson('/maschinen/' + id).then(helper.parseJSON);
+  return helper.deleteJson(`/maschinen/${id}`).then(helper.parseJSON);
 }
 
 export function getMachine(id: string): Promise<Machine> {
-  return helper.getJson('/maschinen/' + id).then(helper.parseJSON);
+  return helper.getJson(`/maschinen/${id}`).then(helper.parseJSON);
 }
 
 export function getMachines(): Promise<{ result: Array<Machine> }> {

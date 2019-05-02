@@ -3,22 +3,21 @@ const backend = 'http://sinv-56057.edu.hsr.ch:40006';
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
-  } else {
-    const error: Object = new Error(response.statusText);
-    error.response = response;
-    throw error;
   }
+  const error: Object = new Error(response.statusText);
+  error.response = response;
+  throw error;
 }
 
 export function checkResponse(response) {
   if (response.status !== 'ok') {
-    throw new Error('Servermeldung: ' + response.message);
+    throw new Error(`Servermeldung: ${response.message}`);
   }
   return response.data;
 }
 
 export function convertToNumbers(dto, fieldsToConvert) {
-  let convertedDto = dto;
+  const convertedDto = dto;
   for (const key in fieldsToConvert) {
     let convertedNumber = parseInt(dto[fieldsToConvert[key]], 10);
     if (isNaN(convertedNumber)) convertedNumber = 0;
@@ -42,7 +41,7 @@ export function getJson(endpoint: string) {
 
 export function postJson(endpoint: string, params: Object, method = 'POST') {
   return fetch(`${backend}${endpoint}`, {
-    method: method,
+    method,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
