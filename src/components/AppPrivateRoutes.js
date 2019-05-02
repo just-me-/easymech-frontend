@@ -1,27 +1,27 @@
 // @flow
 
-import React from 'react'
+import React from 'react';
 
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from './PrivateRoute';
 
-import Dashboard from "./Dashboard";
+import Dashboard from './Dashboard';
 
-import Customer from "./customer/Customer";
-import CustomerSearch from "./customer/CustomerSearch";
+import Customer from './customer/Customer';
+import CustomerSearch from './customer/CustomerSearch';
 
-import Machine from "./machine/Machine";
-import MachineType from "./machine/machinetype/MachineType";
-import MachineSearch from "./machine/MachineSearch";
+import Machine from './machine/Machine';
+import MachineType from './machine/machinetype/MachineType';
+import MachineSearch from './machine/MachineSearch';
 
-import BuySell from "./transaction/BuySell";
-import Rental from "./transaction/Rental";
+import BuySell from './transaction/BuySell';
+import Rental from './transaction/Rental';
 
-import Service from "./service/Service";
-import ServiceSearch from "./service/ServiceSearch";
+import Service from './service/Service';
+import ServiceSearch from './service/ServiceSearch';
 
 export type Props = {
   isAuthenticated: ?boolean,
-  token: ?string
+  token: ?string,
 };
 
 function AppPrivateRoutes(props: Props) {
@@ -88,7 +88,7 @@ function AppPrivateRoutes(props: Props) {
         component={BuySell}
       />
     </div>
-  )
+  );
 }
 
-export default AppPrivateRoutes
+export default AppPrivateRoutes;

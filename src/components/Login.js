@@ -1,33 +1,29 @@
 // @flow
 
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 
 export type Props = {
   /* Callback to submit an authentication request to the server */
-  authenticate: (
-    login: string,
-    password: string,
-    callback: (error: ?Error) => void
-  ) => void,
+  authenticate: (login: string, password: string, callback: (error: ?Error) => void) => void,
   /* We need to know what page the user tried to access so we can
      redirect after logging in */
   location: {
     state?: {
-      from: string
-    }
+      from: string,
+    },
   },
-  isAuthenticated: ?boolean
+  isAuthenticated: ?boolean,
 };
 
 class Login extends React.Component<Props, *> {
   state = {
-    login: "",
-    password: "",
+    login: '',
+    password: '',
     redirectToReferrer: false,
-    error: null
+    error: null,
   };
 
   handleSubmit = (event: Event) => {
@@ -45,7 +41,7 @@ class Login extends React.Component<Props, *> {
 
   render() {
     const { from } = this.props.location.state || {
-      from: { pathname: "/dashboard" }
+      from: { pathname: '/dashboard' },
     };
     const { redirectToReferrer, error } = this.state;
 
@@ -53,42 +49,43 @@ class Login extends React.Component<Props, *> {
       return <Redirect to={from} />;
     }
 
-    return (this.props.isAuthenticated) ? <Redirect to={from} /> : (
-      <Grid textAlign='center' verticalAlign='middle'>
+    return this.props.isAuthenticated ? (
+      <Redirect to={from} />
+    ) : (
+      <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h1" textAlign="center" style={{ marginTop: '2rem' }}>
+            Login EasyMech
+          </Header>
 
-         <Header as='h1' textAlign='center' style={{marginTop: '2rem'}}>
-          Login EasyMech
-         </Header>
-
-          <Form size='large'>
+          <Form size="large">
             <Segment stacked>
               <Form.Input
                 fluid
-                icon='user'
-                iconPosition='left'
-                placeholder='Login'
+                icon="user"
+                iconPosition="left"
+                placeholder="Login"
                 value={this.state.login}
               />
               <Form.Input
                 fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                type="password"
                 value={this.state.password}
               />
 
-              <Button color='red' fluid size='large' onClick={this.handleSubmit}>
+              <Button color="red" fluid size="large" onClick={this.handleSubmit}>
                 Login
               </Button>
 
-              {error && <Message negative>
-                          <Message.Header>Es ist ein Fehler aufgetreten!</Message.Header>
-                          <p>Bitte überprüfen Sie Ihre Eingaben.</p>
-                        </Message>
-              }
-
+              {error && (
+                <Message negative>
+                  <Message.Header>Es ist ein Fehler aufgetreten!</Message.Header>
+                  <p>Bitte überprüfen Sie Ihre Eingaben.</p>
+                </Message>
+              )}
             </Segment>
           </Form>
         </Grid.Column>
