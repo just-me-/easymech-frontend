@@ -1,8 +1,7 @@
 // @flow
 
-import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Search, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NotificationManager } from 'react-notifications';
 
@@ -142,8 +141,9 @@ function MachineFields(props: Props) {
         <Form.Group widths="equal">
           <SmartInput
             label="Maschinentyp"
-            onResultSelect={handleMachineTypeSelect}
             matchingKey="fabrikat"
+            onResultSelect={handleMachineTypeSelect}
+            elements={machinetypeData}
             setElementId={props.data ? props.data.maschinentypId : 0}
             noResultsMessage="Keine Maschinentypen gefunden"
             isRequired={!props.searchView}
@@ -151,8 +151,9 @@ function MachineFields(props: Props) {
 
           <SmartInput
             label="Besitzer"
-            onResultSelect={handleCustomerSelect}
             matchingKey="firma"
+            onResultSelect={handleCustomerSelect}
+            elements={customerData}
             setElementId={props.data ? props.data.besitzerId : 0}
             noResultsMessage="Keine Maschinentypen gefunden"
             isRequired={!props.searchView}

@@ -64,8 +64,9 @@ function SmartInput(props: Props) {
         return { key: index, id: result.id, title: result[props.matchingKey] };
       })}
       value={value}
+      loading={isLoading}
       noResultsMessage={props.noResultsMessage}
-      placeholder={props.isRequired ? '' : 'Pflichtfeld'}
+      placeholder={props.isRequired ? 'Pflichtfeld' : ''}
     />
   );
 }
