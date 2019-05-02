@@ -46,7 +46,7 @@ function SmartInput(props: Props) {
   }
 
   useEffect(() => {
-    if (props.elements && props.elements > 0 && props.setElementId) {
+    if (props.elements && props.elements.length > 0 && props.setElementId) {
       const owner = props.elements.find(x => x.id === props.setElementId);
       setValue(owner ? owner[props.matchingKey] : '');
     }
