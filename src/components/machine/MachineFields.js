@@ -42,15 +42,23 @@ function MachineFields(props: Props) {
   const [customerData, setCustomerData] = useState();
   const [machinetypeData, setMachinetypeData] = useState();
 
+  function handleMachineTypeSelect(result) {
+    setMachineData({ ...machineData, maschinentypId: result.id });
+  }
+
+  function handleCustomerSelect(result) {
+    setMachineData({ ...machineData, besitzerId: result.id });
+  }
+
   function getCustomersList() {
     apiCustomer
       .getCustomers()
-      .then(result => {
+      .then((result) => {
         result = apiCustomer.checkResponse(result);
         // 2Do nicht unnütze Customer Daten im Browser speichern
         setCustomerData(result);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         NotificationManager.error(
           'Kunden konnten nicht geladen werden',
@@ -62,12 +70,12 @@ function MachineFields(props: Props) {
   function getMachineTypesName() {
     apiTypes
       .getMachineTypes()
-      .then(result => {
+      .then((result) => {
         result = apiTypes.checkResponse(result);
         // 2Do nicht unnütze Machine Daten im Browser speichern
         setMachinetypeData(result);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         NotificationManager.error(
           'Maschinentypen konnten nicht geladen werden',
@@ -93,10 +101,9 @@ function MachineFields(props: Props) {
   }
 
   useEffect(() => {
-    const requiredIsValide =
-      validation.checkRequired(machineData.seriennummer) &&
-      parseInt(machineData.maschinentypId, 10) > 0 &&
-      parseInt(machineData.besitzerId, 10) > 0;
+    const requiredIsValide = validation.checkRequired(machineData.seriennummer)
+      && parseInt(machineData.maschinentypId, 10) > 0
+      && parseInt(machineData.besitzerId, 10) > 0;
     if (props.setValidState) {
       props.setValidState(requiredIsValide);
     }
@@ -107,39 +114,9 @@ function MachineFields(props: Props) {
   });
 
   useEffect(() => {
-    setCustomer(getCustomersList());
-    setMachineTypes(getMachineTypesName());
+    setCustomerData(getCustomersList());
+    setMachinetypeData(getMachineTypesName());
   }, []);
-
-  useEffect(
-    () => {
-      if (customer && customer.length > 0) {
-        if (props.data && props.data.id) {
-          const besitzerId = props.data.besitzerId;
-          if (besitzerId) {
-            const owner = customer.find(x => x.id === besitzerId);
-            setCustomerValue(owner ? owner.firma : '');
-          }
-        }
-      }
-    },
-    [customer],
-  );
-
-  useEffect(
-    () => {
-      if (machineTypes && machineTypes.length > 0) {
-        if (props.data && props.data.id) {
-          const maschinentypId = props.data.maschinentypId;
-          if (maschinentypId) {
-            const maschinentyp = machineTypes.find(x => x.id === maschinentypId);
-            setMachineTypeValue(maschinentyp ? maschinentyp.fabrikat : '');
-          }
-        }
-      }
-    },
-    [machineTypes],
-  );
 
   return (
     <div>
@@ -163,35 +140,22 @@ function MachineFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths="equal">
-          <Form.Field
-            control={Search}
+          <SmartInput
             label="Maschinentyp"
-            loading={isMachineTypeLoading}
             onResultSelect={handleMachineTypeSelect}
-            onSearchChange={_.debounce(handleMachineTypeChange, 500, {
-              leading: true,
-            })}
-            results={machineTypeResults.map((result, index) => {
-              return { key: index, id: result.id, title: result.fabrikat };
-            })}
-            value={machineTypeValue}
+            matchingKey="fabrikat"
+            setElementId={props.data ? props.data.maschinentypId : 0}
             noResultsMessage="Keine Maschinentypen gefunden"
-            placeholder={props.searchView ? '' : 'Pflichtfeld'}
+            isRequired={!props.searchView}
           />
-          <Form.Field
-            control={Search}
+
+          <SmartInput
             label="Besitzer"
-            loading={isCustomerLoading}
             onResultSelect={handleCustomerSelect}
-            onSearchChange={_.debounce(handleCustomerChange, 500, {
-              leading: true,
-            })}
-            results={customerResults.map((result, index) => {
-              return { key: index, id: result.id, title: result.firma };
-            })}
-            value={customerValue}
-            noResultsMessage="Keine Kunden gefunden"
-            placeholder={props.searchView ? '' : 'Pflichtfeld'}
+            matchingKey="firma"
+            setElementId={props.data ? props.data.besitzerId : 0}
+            noResultsMessage="Keine Maschinentypen gefunden"
+            isRequired={!props.searchView}
           />
         </Form.Group>
 
@@ -217,7 +181,7 @@ function MachineFields(props: Props) {
             innerLabel="YYYY"
             value={machineData.jahrgang}
             validate="number"
-            realValidation={'date'}
+            realValidation="date"
             handleChange={handleChange}
           />
           <Form.Input
