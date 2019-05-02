@@ -2,7 +2,6 @@ import * as helper from './helper';
 
 export const checkResponse = helper.checkResponse;
 
-/* @noflow */
 export type MachineType = {
   id?: string,
   fabrikat?: string,
