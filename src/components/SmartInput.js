@@ -5,14 +5,13 @@ import React, { useState, useEffect } from 'react';
 import { Form, Search } from 'semantic-ui-react';
 
 export type Props = {
-  elements: {},
   label: string,
-
-  id: string,
-  innerLabel: string,
-  value: ?string,
-  validate?: string,
-  handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
+  matchingKey: string,
+  noResultsMessage: string,
+  setElementId: ?number,
+  isRequired?: boolean,
+  elements: ?[],
+  onResultSelect: (result: {id: string})  => void
 };
 
 function SmartInput(props: Props) {
