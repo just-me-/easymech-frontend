@@ -63,58 +63,6 @@ class App extends React.Component<Props, State> {
           })
           .catch(error => callback(error));
         */
-<<<<<<< HEAD
-    };
-
-    signout = (callback: () => void) => {
-        this.setState({
-            isAuthenticated: false,
-            token: undefined
-        });
-        sessionStorage.removeItem("token");
-        callback();
-    };
-
-
-    render() {
-        const {isAuthenticated, token} = this.state;
-
-        const MenuBar = withRouter(({history}) => {
-            if (isAuthenticated) {
-                return (
-                    <AppMenu history={history} signout={this.signout}/>
-                );
-            } else {
-                return null;
-            }
-        });
-
-        return (
-            <Router>
-                <Route
-                    exact
-                    path="/"
-                    render={props => (
-                        <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated}/>
-                    )}
-                />
-                <Grid id="App-grid" stackable>
-                    <Grid.Column id="Menu-grid" width={4}>
-                        <MenuBar/>
-                    </Grid.Column>
-                    {/*
-            The following are protected routes that are only available for logged-in users. We also pass the user and token so
-            these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
-          */}
-
-                    <Grid.Column id="Content-grid" width={12}>
-                        <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token}/>
-                    </Grid.Column>
-                </Grid>
-                <Notification/>
-            </Router>
-        );
-=======
   };
 
   signout = (callback: () => void) => {
@@ -144,7 +92,6 @@ class App extends React.Component<Props, State> {
           });
         }
       }
->>>>>>> refactoring_mh
     }
   }
 

@@ -42,15 +42,10 @@ function MachineList(props: Props) {
         setCustomerData(result);
       })
       .catch(error => {
-<<<<<<< HEAD
-        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!" );
-        console.log(error);
-=======
         NotificationManager.error(
           'Kunden konnten nicht geladen werden',
           'Bitte überprüfen Sie Ihre Verbindung!',
         );
->>>>>>> refactoring_mh
       });
   }
 
@@ -84,15 +79,10 @@ function MachineList(props: Props) {
         setMachineTypeData(result);
       })
       .catch(error => {
-<<<<<<< HEAD
-        NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
-        console.log(error);
-=======
         NotificationManager.error(
           'Maschinentypen konnten nicht geladen werden',
           'Bitte überprüfen Sie Ihre Verbindung!',
         );
->>>>>>> refactoring_mh
       });
   }
 

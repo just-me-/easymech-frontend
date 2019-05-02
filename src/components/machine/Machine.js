@@ -18,14 +18,10 @@ function Machine() {
         .addMachine(machineData)
         .then((result) => {
           result = api.checkResponse(result);
-<<<<<<< HEAD
-          NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", machineData.seriennummer +" erfasst");
-=======
           NotificationManager.success(
             'Die Maschine wurde erfolgreich gespeichert.',
             `${result.seriennummer} erfasst`,
           );
->>>>>>> refactoring_mh
           setKey(Math.random()); // clear data - fresh form for next entry
         })
         .catch((error) => {

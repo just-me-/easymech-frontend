@@ -91,11 +91,7 @@ function MachineFields(props: Props) {
         break;
       case 'date':
         // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
-<<<<<<< HEAD
-        console.log("2Do DATE VALIDATION");
-=======
         console.log('2Do DATE VALIDATION');
->>>>>>> refactoring_mh
         break;
       default:
         break;

@@ -31,12 +31,6 @@ function MachineSearch(props: Props) {
       setViewState('loader');
       api
         .updateMachine(machineEditData)
-<<<<<<< HEAD
-        .then((result) => {
-            result = api.checkResponse(result);
-            setViewState("list");
-            NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", machineEditData.seriennummer +" aktualisiert");
-=======
         .then(result => {
           result = api.checkResponse(result);
           setViewState('list');
@@ -44,7 +38,6 @@ function MachineSearch(props: Props) {
             'Die Maschine wurde erfolgreich gespeichert.',
             result.seriennummer + ' aktualisiert',
           );
->>>>>>> refactoring_mh
         })
         .catch(error => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
