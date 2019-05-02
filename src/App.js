@@ -73,15 +73,35 @@ class App extends React.Component<Props, State> {
     callback();
   };
 
+  componentDidMount() {
+    if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
+      const keycloak = Keycloak('/keycloak.json');
+      keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then(authenticated => {
+        this.setState({ keycloak, authenticated });
+      });
+      if (this.state.keycloak) {
+        if (this.state.authenticated) {
+          this.props.keycloak.loadUserInfo().then(userInfo => {
+            this.setState({
+              name: userInfo.name,
+              email: userInfo.email,
+              id: userInfo.sub,
+            });
+            console.log(userInfo.name + userInfo.email + userInfo.sub);
+          });
+        }
+      }
+    }
+  }
+
   render() {
     const { isAuthenticated, token } = this.state;
 
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
       if (isAuthenticated) {
         return <AppMenu history={history} signout={this.signout} />;
-      } else {
-        return null;
       }
+      return null
     });
 
     return (
@@ -98,8 +118,9 @@ class App extends React.Component<Props, State> {
             <MenuBar />
           </Grid.Column>
           {/*
-            The following are protected routes that are only available for logged-in users. We also pass the user and token so
-            these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
+            The following are protected routes that are only available for logged-in users.
+            We also pass the user and token so these components can do API calls.
+            PrivateRoute is not part of react-router but our own implementation.
           */}
 
           <Grid.Column id="Content-grid" width={12}>
@@ -109,27 +130,6 @@ class App extends React.Component<Props, State> {
         <Notification />
       </Router>
     );
-  }
-
-  componentDidMount() {
-    if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
-      const keycloak = Keycloak('/keycloak.json');
-      keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then(authenticated => {
-        this.setState({ keycloak: keycloak, authenticated: authenticated });
-      });
-      if (this.state.keycloak) {
-        if (this.state.authenticated) {
-          this.props.keycloak.loadUserInfo().then(userInfo => {
-            this.setState({
-              name: userInfo.name,
-              email: userInfo.email,
-              id: userInfo.sub,
-            });
-            console.log(userInfo.name + userInfo.email + userInfo.sub);
-          });
-        }
-      }
-    }
   }
 }
 export default App;
