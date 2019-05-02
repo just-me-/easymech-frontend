@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "jsinspect": "^0.12.7",
     "keycloak-js": "^6.0.0",
+    "linter": "0.0.7",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-keycloak": "^5.0.0",
