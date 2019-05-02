@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import Keycloak from 'keycloak-js';
