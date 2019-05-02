@@ -24,7 +24,7 @@ function CustomerSearch(props: Props) {
   const [searchData, setSearchData] = useState({});
   const [customerEditData, setCustomerEditData] = useState({});
   const [key, setKey] = useState(Math.random());
-  const [formIsValid, setFormIsValid] = useState(true); //alrdy saved, unchanged entries are valid
+  const [formIsValid, setFormIsValid] = useState(true); // alrdy saved, unchanged entries are valid
 
   function saveCustomer() {
     if (formIsValid) {
