@@ -31,7 +31,7 @@ function Machine() {
             'Bitte erneut versuchen!',
           );
         });
-    } else if (!formIsValid) {
+    } else {
       NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
     }
   }

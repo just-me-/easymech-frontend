@@ -17,7 +17,6 @@ function MachineTypeList(props: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
   function getMachineTypeListData() {
-    console.log(props.filterData);
     api
       .getFilteredMachineTypes(props.filterData)
       .then(result => {

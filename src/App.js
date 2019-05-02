@@ -3,12 +3,13 @@ import { Grid } from 'semantic-ui-react';
 import Keycloak from 'keycloak-js';
 
 import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { NotificationContainer } from 'react-notifications';
 
 import Login from './components/Login';
 import AppMenu from './components/AppMenu';
 import AppPrivateRoutes from './components/AppPrivateRoutes';
-import Notification from './components/Notification';
 
+import 'react-notifications/lib/notifications.css';
 import './App.css';
 
 type Props = {};
@@ -125,7 +126,7 @@ class App extends React.Component<Props, State> {
             <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token} />
           </Grid.Column>
         </Grid>
-        <Notification />
+        <NotificationContainer />
       </Router>
     );
   }

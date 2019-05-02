@@ -117,7 +117,7 @@ function MachineFields(props: Props) {
         );
       });
   }
-
+  
   function getMachineTypesName() {
     apiTypes
       .getMachineTypes()

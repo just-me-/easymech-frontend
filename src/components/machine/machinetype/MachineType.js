@@ -14,9 +14,9 @@ import MachineTypeList from './MachineTypeList';
 function MachineType() {
   const [machineTypeData, setMachineTypeData] = useState({});
   const [searchData, setSearchData] = useState({});
+  const [machineTypeEditData, setMachineTypeEditData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
   const [viewState, setViewState] = useState('list');
-  const [machineTypeEditData, setMachineTypeEditData] = useState({});
 
   function addMachineType() {
     if (formIsValid) {
@@ -104,7 +104,7 @@ function MachineType() {
             'Bitte erneut versuchen!',
           );
         });
-    } else if (!formIsValid) {
+    } else {
       NotificationManager.info('Bitte füllen Sie alle Pflichtfelder aus!');
     }
   }
