@@ -5,5 +5,5 @@ export function checkRequired(str) {
   return !!str && str.length > 0;
 }
 export function toNumber(str) {
-  return str.toString().replace(/\D/g, "");
+  return str.toString().replace(/\D/g, '');
 }

@@ -1,11 +1,11 @@
 // @flow
 
-import React, { useState } from "react";
-import { Button, Form, Header } from "semantic-ui-react";
-import { NotificationManager } from "react-notifications";
+import React, { useState } from 'react';
+import { Button, Form, Header } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
-import * as api from "../../api/machine";
-import MachineFields from "../machine/MachineFields";
+import * as api from '../../api/machine';
+import MachineFields from './MachineFields';
 
 function Machine() {
   const [machineData, setMachineData] = useState({});
@@ -16,25 +16,23 @@ function Machine() {
     if (formIsValid) {
       api
         .addMachine(machineData)
-        .then(result => {
+        .then((result) => {
           result = api.checkResponse(result);
           NotificationManager.success(
-            "Die Maschine wurde erfolgreich gespeichert.",
-            result.seriennummer + " erfasst"
+            'Die Maschine wurde erfolgreich gespeichert.',
+            `${result.seriennummer} erfasst`,
           );
           setKey(Math.random()); // clear data - fresh form for next entry
         })
-        .catch(error => {
-          console.log("Ups, ein Fehler ist aufgetreten", error);
+        .catch((error) => {
+          console.log('Ups, ein Fehler ist aufgetreten', error);
           NotificationManager.error(
-            "Beim Speichern ist ein Fehler aufgetreten.",
-            "Bitte erneut versuchen!"
+            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
           );
         });
-    } else {
-      if (!formIsValid) {
-        NotificationManager.info("Bitte prüfen Sie Ihre Eingabe!");
-      }
+    } else if (!formIsValid) {
+      NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
     }
   }
 
@@ -44,11 +42,7 @@ function Machine() {
         Maschine erfassen
       </Header>
       <Form>
-        <MachineFields
-          key={key}
-          setData={setMachineData}
-          setValidState={setFormIsValid}
-        />
+        <MachineFields key={key} setData={setMachineData} setValidState={setFormIsValid} />
         <Button
           primary
           content="Speichern"

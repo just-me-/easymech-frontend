@@ -1,9 +1,7 @@
-import React from "react";
-import {
-  NotificationContainer /*, NotificationManager*/
-} from "react-notifications";
+import React from 'react';
+import { NotificationContainer /* , NotificationManager */ } from 'react-notifications';
 
-import "react-notifications/lib/notifications.css";
+import 'react-notifications/lib/notifications.css';
 
 function Notification() {
   /*

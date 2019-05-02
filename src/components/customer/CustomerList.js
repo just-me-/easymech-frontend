@@ -1,24 +1,17 @@
 // @flow
 
-import _ from "lodash";
-import React, { useState, useEffect } from "react";
-import {
-  Header,
-  Table,
-  Loader,
-  Dimmer,
-  Segment,
-  Icon
-} from "semantic-ui-react";
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
 
-import * as api from "../../api/customer";
-import "./CustomerList.css";
+import * as api from '../../api/customer';
+import './CustomerList.css';
 
-import type { Customer } from "../../api/customer";
+import type { Customer } from '../../api/customer';
 
 export type Props = {
   editCustomer: string => void,
-  filterData: ?Customer
+  filterData: ?Customer,
 };
 
 function CustomerList(props: Props) {
@@ -33,7 +26,7 @@ function CustomerList(props: Props) {
         setIsLoading(false);
         setCustomerListData(result);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
   }
 
   useEffect(() => {
@@ -62,27 +55,10 @@ function CustomerList(props: Props) {
         <Table.Body>
           {_.map(
             customerListData,
-            (
-              {
-                id,
-                firma,
-                adresse,
-                vorname,
-                nachname,
-                plz,
-                ort,
-                email,
-                telefon
-              },
-              index
-            ) => (
+            ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }, index) => (
               <Table.Row key={index}>
-                <Table.Cell
-                  onClick={() => props.editCustomer(id)}
-                  className="Hover-effect link"
-                >
-                  <Icon name="external" size="tiny" className="Inline-icon" />{" "}
-                  {firma}
+                <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect link">
+                  <Icon name="external" size="tiny" className="Inline-icon" /> {firma}
                 </Table.Cell>
                 <Table.Cell>{adresse}</Table.Cell>
                 <Table.Cell>{plz}</Table.Cell>
@@ -91,22 +67,20 @@ function CustomerList(props: Props) {
                 <Table.Cell>{nachname}</Table.Cell>
                 <Table.Cell>
                   {email && (
-                    <a href={"mailto:" + email}>
-                      <Icon name="mail" size="tiny" className="Inline-icon" />{" "}
-                      {email}
+                    <a href={'mailto:' + email}>
+                      <Icon name="mail" size="tiny" className="Inline-icon" /> {email}
                     </a>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {telefon && (
-                    <a href={"tel:" + telefon}>
-                      <Icon name="call" size="tiny" className="Inline-icon" />{" "}
-                      {telefon}
+                    <a href={'tel:' + telefon}>
+                      <Icon name="call" size="tiny" className="Inline-icon" /> {telefon}
                     </a>
                   )}
                 </Table.Cell>
               </Table.Row>
-            )
+            ),
           )}
         </Table.Body>
       </Table>

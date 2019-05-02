@@ -1,12 +1,12 @@
 // @flow
 
-import React, { useState } from "react";
-import { Button, Header, Form } from "semantic-ui-react";
-import { NotificationManager } from "react-notifications";
+import React, { useState } from 'react';
+import { Button, Header, Form } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
-import * as api from "../../api/customer";
+import * as api from '../../api/customer';
 
-import CustomerFields from "./CustomerFields";
+import CustomerFields from './CustomerFields';
 
 function Customer() {
   const [customerData, setCustomerData] = useState({});
@@ -17,23 +17,23 @@ function Customer() {
     if (formIsValid) {
       api
         .addCustomer(customerData)
-        .then(result => {
+        .then((result) => {
           result = api.checkResponse(result);
           NotificationManager.success(
-            "Der Kunde wurde erfolgreich gespeichert.",
-            result.firma + " erfasst"
+            'Der Kunde wurde erfolgreich gespeichert.',
+            `${result.firma} erfasst`,
           );
           setKey(Math.random()); // clear data - fresh form for next entry
         })
-        .catch(error => {
-          console.log("Ups, ein Fehler ist aufgetreten", error);
+        .catch((error) => {
+          console.log('Ups, ein Fehler ist aufgetreten', error);
           NotificationManager.error(
-            "Beim Speichern ist ein Fehler aufgetreten.",
-            "Bitte erneut versuchen!"
+            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
           );
         });
     } else {
-      NotificationManager.info("Bitte überprüfen Sie Ihre Eingaben!");
+      NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
     }
   }
 
@@ -43,11 +43,7 @@ function Customer() {
         Kunde erfassen
       </Header>
       <Form>
-        <CustomerFields
-          key={key}
-          setData={setCustomerData}
-          setValidState={setFormIsValid}
-        />
+        <CustomerFields key={key} setData={setCustomerData} setValidState={setFormIsValid} />
         <Button
           primary
           content="Speichern"

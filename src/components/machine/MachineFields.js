@@ -1,40 +1,40 @@
 // @flow
 
-import _ from "lodash";
-import React, { useState, useEffect } from "react";
-import { Search, Form } from "semantic-ui-react";
-import TextareaAutosize from "react-textarea-autosize";
-import { NotificationManager } from "react-notifications";
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Search, Form } from 'semantic-ui-react';
+import TextareaAutosize from 'react-textarea-autosize';
+import { NotificationManager } from 'react-notifications';
 
-import NumberInput from "../NumberInput";
+import NumberInput from '../NumberInput';
 
-import * as validation from "../validation";
-import * as apiTypes from "../../api/machinetype";
-import * as apiCustomer from "../../api/customer";
+import * as validation from '../validation';
+import * as apiTypes from '../../api/machinetype';
+import * as apiCustomer from '../../api/customer';
 
-import type { MachineType } from "../../api/machinetype";
-import type { Machine } from "../../api/machine";
+import type { MachineType } from '../../api/machinetype';
+import type { Machine } from '../../api/machine';
 
 export type Props = {
   data?: Machine,
   setData?: Machine => void,
   setValidState?: boolean => void,
   searchView?: boolean,
-  machineTyp?: MachineType
+  machineTyp?: MachineType,
 };
 
 function MachineFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
-    seriennummer: (props.data && props.data.seriennummer) || "",
-    mastnummer: (props.data && props.data.mastnummer) || "",
-    motorennummer: (props.data && props.data.motorennummer) || "",
-    betriebsdauer: (props.data && props.data.betriebsdauer) || "",
-    jahrgang: (props.data && props.data.jahrgang) || "",
-    notiz: (props.data && props.data.notiz) || "",
-    maschinentypId: (props.data && props.data.maschinentypId) || "",
-    besitzerId: (props.data && props.data.besitzerId) || "",
-    isActive: (props.data && props.data.isActive) || ""
+    seriennummer: (props.data && props.data.seriennummer) || '',
+    mastnummer: (props.data && props.data.mastnummer) || '',
+    motorennummer: (props.data && props.data.motorennummer) || '',
+    betriebsdauer: (props.data && props.data.betriebsdauer) || '',
+    jahrgang: (props.data && props.data.jahrgang) || '',
+    notiz: (props.data && props.data.notiz) || '',
+    maschinentypId: (props.data && props.data.maschinentypId) || '',
+    besitzerId: (props.data && props.data.besitzerId) || '',
+    isActive: (props.data && props.data.isActive) || '',
   };
 
   const [machineData, setMachineData] = useState(initialData);
@@ -55,12 +55,12 @@ function MachineFields(props: Props) {
   function resetMachineTypeSearchComponent() {
     setMachineTypeLoading(false);
     setMachineTypeResults([]);
-    setMachineTypeValue("");
+    setMachineTypeValue('');
   }
   function resetCustomerSearchComponent() {
     setCustomerLoading(false);
     setCustomerResults([]);
-    setCustomerValue("");
+    setCustomerValue('');
   }
 
   function handleMachineTypeSelect(e, { result }) {
@@ -79,9 +79,8 @@ function MachineFields(props: Props) {
     setTimeout(() => {
       if (value.length < 1) return resetMachineTypeSearchComponent();
 
-      const re = new RegExp(_.escapeRegExp(value), "i");
-      const isMatch = machineTypeResults =>
-        re.test(machineTypeResults.fabrikat);
+      const re = new RegExp(_.escapeRegExp(value), 'i');
+      const isMatch = machineTypeResults => re.test(machineTypeResults.fabrikat);
 
       setMachineTypeLoading(false);
       setMachineTypeResults(_.filter(machineTypes, isMatch));
@@ -94,7 +93,7 @@ function MachineFields(props: Props) {
     setTimeout(() => {
       if (value.length < 1) return resetCustomerSearchComponent;
 
-      const re = new RegExp(_.escapeRegExp(value), "i");
+      const re = new RegExp(_.escapeRegExp(value), 'i');
       const isMatch = customerResults => re.test(customerResults.firma);
 
       setCustomerLoading(false);
@@ -111,10 +110,10 @@ function MachineFields(props: Props) {
         setCustomer(result);
       })
       .catch(error => {
-        console.log("Ups, ein Fehler ist aufgetreten", error);
+        console.log('Ups, ein Fehler ist aufgetreten', error);
         NotificationManager.error(
-          "Kunden konnten nicht geladen werden",
-          "Bitte überprüfen Sie Ihre Verbindung!"
+          'Kunden konnten nicht geladen werden',
+          'Bitte überprüfen Sie Ihre Verbindung!',
         );
       });
   }
@@ -128,10 +127,10 @@ function MachineFields(props: Props) {
         setMachineTypes(result);
       })
       .catch(error => {
-        console.log("Ups, ein Fehler ist aufgetreten", error);
+        console.log('Ups, ein Fehler ist aufgetreten', error);
         NotificationManager.error(
-          "Maschinentypen konnten nicht geladen werden",
-          "Bitte überprüfen Sie Ihre Verbindung!"
+          'Maschinentypen konnten nicht geladen werden',
+          'Bitte überprüfen Sie Ihre Verbindung!',
         );
       });
   }
@@ -139,12 +138,12 @@ function MachineFields(props: Props) {
   function handleChange(element, { validate }) {
     let value = element.target.value;
     switch (validate) {
-      case "number":
+      case 'number':
         value = validation.toNumber(value);
         break;
-      case "date":
+      case 'date':
         // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
-        console.log("2Do DATE VALIDATION");
+        console.log('2Do DATE VALIDATION');
         break;
       default:
         break;
@@ -178,12 +177,12 @@ function MachineFields(props: Props) {
           const besitzerId = props.data.besitzerId;
           if (besitzerId) {
             const owner = customer.find(x => x.id === besitzerId);
-            setCustomerValue(owner ? owner.firma : "");
+            setCustomerValue(owner ? owner.firma : '');
           }
         }
       }
     },
-    [customer]
+    [customer],
   );
 
   useEffect(
@@ -192,15 +191,13 @@ function MachineFields(props: Props) {
         if (props.data && props.data.id) {
           const maschinentypId = props.data.maschinentypId;
           if (maschinentypId) {
-            const maschinentyp = machineTypes.find(
-              x => x.id === maschinentypId
-            );
-            setMachineTypeValue(maschinentyp ? maschinentyp.fabrikat : "");
+            const maschinentyp = machineTypes.find(x => x.id === maschinentypId);
+            setMachineTypeValue(maschinentyp ? maschinentyp.fabrikat : '');
           }
         }
       }
     },
-    [machineTypes]
+    [machineTypes],
   );
 
   return (
@@ -210,7 +207,7 @@ function MachineFields(props: Props) {
           <Form.Input
             id="seriennummer"
             label="Seriennr."
-            placeholder={props.searchView ? "" : "Pflichtfeld"}
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
             value={machineData.seriennummer}
             onChange={handleChange}
           />
@@ -231,14 +228,14 @@ function MachineFields(props: Props) {
             loading={isMachineTypeLoading}
             onResultSelect={handleMachineTypeSelect}
             onSearchChange={_.debounce(handleMachineTypeChange, 500, {
-              leading: true
+              leading: true,
             })}
             results={machineTypeResults.map((result, index) => {
               return { key: index, id: result.id, title: result.fabrikat };
             })}
             value={machineTypeValue}
             noResultsMessage="Keine Maschinentypen gefunden"
-            placeholder={props.searchView ? "" : "Pflichtfeld"}
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
           />
           <Form.Field
             control={Search}
@@ -246,14 +243,14 @@ function MachineFields(props: Props) {
             loading={isCustomerLoading}
             onResultSelect={handleCustomerSelect}
             onSearchChange={_.debounce(handleCustomerChange, 500, {
-              leading: true
+              leading: true,
             })}
             results={customerResults.map((result, index) => {
               return { key: index, id: result.id, title: result.firma };
             })}
             value={customerValue}
             noResultsMessage="Keine Kunden gefunden"
-            placeholder={props.searchView ? "" : "Pflichtfeld"}
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
           />
         </Form.Group>
 
@@ -279,7 +276,7 @@ function MachineFields(props: Props) {
             innerLabel="YYYY"
             value={machineData.jahrgang}
             validate="number"
-            realValidation={"date"}
+            realValidation={'date'}
             handleChange={handleChange}
           />
           <Form.Input

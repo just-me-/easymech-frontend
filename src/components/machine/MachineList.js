@@ -1,26 +1,19 @@
 // @flow
 
-import _ from "lodash";
-import React, { useState, useEffect } from "react";
-import {
-  Header,
-  Table,
-  Loader,
-  Dimmer,
-  Segment,
-  Icon
-} from "semantic-ui-react";
-import { NotificationManager } from "react-notifications";
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
-import * as api from "../../api/machine";
-import * as apiTypes from "../../api/machinetype";
-import * as apiCustomer from "../../api/customer";
+import * as api from '../../api/machine';
+import * as apiTypes from '../../api/machinetype';
+import * as apiCustomer from '../../api/customer';
 
-import type { Machine } from "../../api/machine";
+import type { Machine } from '../../api/machine';
 
 export type Props = {
   editMachine: string => void,
-  filterData: ?Machine
+  filterData: ?Machine,
 };
 
 function MachineList(props: Props) {
@@ -38,7 +31,7 @@ function MachineList(props: Props) {
         setIsLoading(false);
         setMachineListData(result);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
   }
 
   function getCustomers() {
@@ -50,8 +43,8 @@ function MachineList(props: Props) {
       })
       .catch(error => {
         NotificationManager.error(
-          "Kunden konnten nicht geladen werden",
-          "Bitte überprüfen Sie Ihre Verbindung!"
+          'Kunden konnten nicht geladen werden',
+          'Bitte überprüfen Sie Ihre Verbindung!',
         );
       });
   }
@@ -62,9 +55,9 @@ function MachineList(props: Props) {
       if (customer) {
         return customer.firma;
       }
-      return "Nicht gefunden";
+      return 'Nicht gefunden';
     }
-    return "Kein Besitzer hinterlegt";
+    return 'Kein Besitzer hinterlegt';
   }
 
   function getMachineTypeText(id) {
@@ -73,9 +66,9 @@ function MachineList(props: Props) {
       if (machineType) {
         return machineType.fabrikat;
       }
-      return "Nicht gefunden";
+      return 'Nicht gefunden';
     }
-    return "Kein Typ hinterlegt";
+    return 'Kein Typ hinterlegt';
   }
 
   function getMachineTypes() {
@@ -87,8 +80,8 @@ function MachineList(props: Props) {
       })
       .catch(error => {
         NotificationManager.error(
-          "Maschinentypen konnten nicht geladen werden",
-          "Bitte überprüfen Sie Ihre Verbindung!"
+          'Maschinentypen konnten nicht geladen werden',
+          'Bitte überprüfen Sie Ihre Verbindung!',
         );
       });
   }
@@ -129,26 +122,22 @@ function MachineList(props: Props) {
                 betriebsdauer,
                 jahrgang,
                 besitzerId,
-                maschinentypId
+                maschinentypId,
               },
-              index
+              index,
             ) => (
               <Table.Row key={index}>
-                <Table.Cell
-                  onClick={() => props.editMachine(id)}
-                  className="Hover-effect link"
-                >
-                  <Icon name="external" size="tiny" className="Inline-icon" />{" "}
-                  {seriennummer}
+                <Table.Cell onClick={() => props.editMachine(id)} className="Hover-effect link">
+                  <Icon name="external" size="tiny" className="Inline-icon" /> {seriennummer}
                 </Table.Cell>
                 <Table.Cell>{mastnummer}</Table.Cell>
                 <Table.Cell>{motorennummer}</Table.Cell>
-                <Table.Cell>{betriebsdauer || ""}</Table.Cell>
-                <Table.Cell>{jahrgang || ""}</Table.Cell>
+                <Table.Cell>{betriebsdauer || ''}</Table.Cell>
+                <Table.Cell>{jahrgang || ''}</Table.Cell>
                 <Table.Cell>{getCustomerText(besitzerId)}</Table.Cell>
                 <Table.Cell>{getMachineTypeText(maschinentypId)}</Table.Cell>
               </Table.Row>
-            )
+            ),
           )}
         </Table.Body>
       </Table>

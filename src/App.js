@@ -1,17 +1,17 @@
 // @flow
 
-import React from "react";
-import { Grid } from "semantic-ui-react";
-import Keycloak from "keycloak-js";
+import React from 'react';
+import { Grid } from 'semantic-ui-react';
+import Keycloak from 'keycloak-js';
 
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 
-import Login from "./components/Login";
-import AppMenu from "./components/AppMenu";
-import AppPrivateRoutes from "./components/AppPrivateRoutes";
-import Notification from "./components/Notification";
+import Login from './components/Login';
+import AppMenu from './components/AppMenu';
+import AppPrivateRoutes from './components/AppPrivateRoutes';
+import Notification from './components/Notification';
 
-import "./App.css";
+import './App.css';
 
 type Props = {};
 type State = {
@@ -19,42 +19,38 @@ type State = {
   token: ?string,
   name: string,
   email: string,
-  id: string
+  id: string,
 };
 
 class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem('token');
 
     if (token) {
       this.state = {
         isAuthenticated: true,
-        token
+        token,
       };
     } else {
       this.state = {
         isAuthenticated: false,
-        token: undefined
+        token: undefined,
       };
     }
 
     this.state = {
       keycloak: null,
       authenticated: false,
-      name: "",
-      email: "",
-      id: ""
+      name: '',
+      email: '',
+      id: '',
     };
   }
 
-  authenticate = (
-    login: string,
-    password: string,
-    callback: (error: ?Error) => void
-  ) => {
-    this.setState({ isAuthenticated: true, token: "myToken" });
-    sessionStorage.setItem("token", "myToken");
+  authenticate = (login: string, password: string, callback: (error: ?Error) => void) => {
+    this.setState({ isAuthenticated: true, token: 'myToken' });
+    sessionStorage.setItem('token', 'myToken');
     callback(null);
     /*
         api
@@ -71,9 +67,9 @@ class App extends React.Component<Props, State> {
   signout = (callback: () => void) => {
     this.setState({
       isAuthenticated: false,
-      token: undefined
+      token: undefined,
     });
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem('token');
     callback();
   };
 
@@ -94,11 +90,7 @@ class App extends React.Component<Props, State> {
           exact
           path="/"
           render={props => (
-            <Login
-              {...props}
-              authenticate={this.authenticate}
-              isAuthenticated={isAuthenticated}
-            />
+            <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
           )}
         />
         <Grid id="App-grid" stackable>
@@ -120,20 +112,18 @@ class App extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (!(process.env.NODE_ENV && process.env.NODE_ENV === "development")) {
-      const keycloak = Keycloak("/keycloak.json");
-      keycloak
-        .init({ onLoad: "login-required", promiseType: "native" })
-        .then(authenticated => {
-          this.setState({ keycloak: keycloak, authenticated: authenticated });
-        });
+    if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
+      const keycloak = Keycloak('/keycloak.json');
+      keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then(authenticated => {
+        this.setState({ keycloak: keycloak, authenticated: authenticated });
+      });
       if (this.state.keycloak) {
         if (this.state.authenticated) {
           this.props.keycloak.loadUserInfo().then(userInfo => {
             this.setState({
               name: userInfo.name,
               email: userInfo.email,
-              id: userInfo.sub
+              id: userInfo.sub,
             });
             console.log(userInfo.name + userInfo.email + userInfo.sub);
           });

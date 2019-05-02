@@ -1,15 +1,15 @@
 // @flow
 
-import _ from "lodash";
-import React, { useState, useEffect } from "react";
-import { Table, Loader, Dimmer, Segment, Icon } from "semantic-ui-react";
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
 
-import * as api from "../../../api/machinetype";
-import type { MachineType } from "../../../api/machinetype";
+import * as api from '../../../api/machinetype';
+import type { MachineType } from '../../../api/machinetype';
 
 export type Props = {
   editMachineType: string => void,
-  filterData: ?MachineType
+  filterData: ?MachineType,
 };
 
 function MachineTypeList(props: Props) {
@@ -25,7 +25,7 @@ function MachineTypeList(props: Props) {
         setIsLoading(false);
         setMachineTypeListData(result);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
   }
 
   useEffect(() => {
@@ -64,29 +64,25 @@ function MachineTypeList(props: Props) {
                 eigengewicht,
                 hubkraft,
                 hubhoehe,
-                pneugroesse
+                pneugroesse,
               },
-              index
+              index,
             ) => (
               <Table.Row key={index}>
-                <Table.Cell
-                  onClick={() => props.editMachineType(id)}
-                  className="Hover-effect link"
-                >
-                  <Icon name="external" size="tiny" className="Inline-icon" />{" "}
-                  {fabrikat}
+                <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
+                  <Icon name="external" size="tiny" className="Inline-icon" /> {fabrikat}
                 </Table.Cell>
                 <Table.Cell>{motortyp}</Table.Cell>
-                <Table.Cell>{maschinenhoehe || ""}</Table.Cell>
-                <Table.Cell>{maschinenlaenge || ""}</Table.Cell>
-                <Table.Cell>{maschinenbreite || ""}</Table.Cell>
-                <Table.Cell>{pneugroesse || ""}</Table.Cell>
-                <Table.Cell>{nutzlast || ""}</Table.Cell>
-                <Table.Cell>{eigengewicht || ""}</Table.Cell>
-                <Table.Cell>{hubkraft || ""}</Table.Cell>
-                <Table.Cell>{hubhoehe || ""}</Table.Cell>
+                <Table.Cell>{maschinenhoehe || ''}</Table.Cell>
+                <Table.Cell>{maschinenlaenge || ''}</Table.Cell>
+                <Table.Cell>{maschinenbreite || ''}</Table.Cell>
+                <Table.Cell>{pneugroesse || ''}</Table.Cell>
+                <Table.Cell>{nutzlast || ''}</Table.Cell>
+                <Table.Cell>{eigengewicht || ''}</Table.Cell>
+                <Table.Cell>{hubkraft || ''}</Table.Cell>
+                <Table.Cell>{hubhoehe || ''}</Table.Cell>
               </Table.Row>
-            )
+            ),
           )}
         </Table.Body>
       </Table>

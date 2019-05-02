@@ -1,31 +1,31 @@
 // @flow
 
-import React, { useState, useEffect } from "react";
-import { Header, Form, Label } from "semantic-ui-react";
-import TextareaAutosize from "react-textarea-autosize";
+import React, { useState, useEffect } from 'react';
+import { Header, Form, Label } from 'semantic-ui-react';
+import TextareaAutosize from 'react-textarea-autosize';
 
-import type { Customer } from "../../api/customer";
-import * as validation from "../validation";
+import type { Customer } from '../../api/customer';
+import * as validation from '../validation';
 
 export type Props = {
   data?: Customer,
   setData?: Customer => void,
   setValidState?: boolean => void,
-  searchView?: boolean
+  searchView?: boolean,
 };
 
 function CustomerFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
-    firma: (props.data && props.data.firma) || "",
-    adresse: (props.data && props.data.adresse) || "",
-    plz: (props.data && props.data.plz) || "",
-    ort: (props.data && props.data.ort) || "",
-    vorname: (props.data && props.data.vorname) || "",
-    nachname: (props.data && props.data.nachname) || "",
-    email: (props.data && props.data.email) || "",
-    telefon: (props.data && props.data.telefon) || "",
-    notiz: (props.data && props.data.notiz) || ""
+    firma: (props.data && props.data.firma) || '',
+    adresse: (props.data && props.data.adresse) || '',
+    plz: (props.data && props.data.plz) || '',
+    ort: (props.data && props.data.ort) || '',
+    vorname: (props.data && props.data.vorname) || '',
+    nachname: (props.data && props.data.nachname) || '',
+    email: (props.data && props.data.email) || '',
+    telefon: (props.data && props.data.telefon) || '',
+    notiz: (props.data && props.data.notiz) || '',
   };
 
   const [customerData, setCustomerData] = useState(initialData);
@@ -37,9 +37,7 @@ function CustomerFields(props: Props) {
 
   useEffect(() => {
     const requiredIsValide = validation.checkRequired(customerData.firma);
-    const mailIsValide = customerData.email
-      ? validation.checkMail(customerData.email)
-      : true;
+    const mailIsValide = customerData.email ? validation.checkMail(customerData.email) : true;
 
     if (props.setValidState) {
       props.setValidState(requiredIsValide && mailIsValide);
@@ -59,7 +57,7 @@ function CustomerFields(props: Props) {
           <Form.Input
             id="firma"
             label="Name"
-            placeholder={props.searchView ? "" : "Pflichtfeld"}
+            placeholder={props.searchView ? '' : 'Pflichtfeld'}
             value={customerData.firma}
             onChange={handleChange}
           />
@@ -72,18 +70,8 @@ function CustomerFields(props: Props) {
         </Form.Group>
 
         <Form.Group widths="equal">
-          <Form.Input
-            id="plz"
-            label="PLZ"
-            value={customerData.plz}
-            onChange={handleChange}
-          />
-          <Form.Input
-            id="ort"
-            label="Ort"
-            value={customerData.ort}
-            onChange={handleChange}
-          />
+          <Form.Input id="plz" label="PLZ" value={customerData.plz} onChange={handleChange} />
+          <Form.Input id="ort" label="Ort" value={customerData.ort} onChange={handleChange} />
         </Form.Group>
       </div>
 

@@ -1,4 +1,4 @@
-const backend = "http://sinv-56057.edu.hsr.ch:40006";
+const backend = 'http://sinv-56057.edu.hsr.ch:40006';
 
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -11,8 +11,8 @@ export function checkStatus(response) {
 }
 
 export function checkResponse(response) {
-  if (response.status !== "ok") {
-    throw new Error("Servermeldung: " + response.message);
+  if (response.status !== 'ok') {
+    throw new Error('Servermeldung: ' + response.message);
   }
   return response.data;
 }
@@ -33,26 +33,26 @@ export function parseJSON(response) {
 
 export function getJson(endpoint: string) {
   return fetch(`${backend}${endpoint}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/json"
-    }
+      Accept: 'application/json',
+    },
   }).then(checkStatus);
 }
 
-export function postJson(endpoint: string, params: Object, method = "POST") {
+export function postJson(endpoint: string, params: Object, method = 'POST') {
   return fetch(`${backend}${endpoint}`, {
     method: method,
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify(params),
   }).then(checkStatus);
 }
 
 export function deleteJson(endpoint: string) {
   return fetch(`${backend}${endpoint}`, {
-    method: "DELETE"
+    method: 'DELETE',
   }).then(checkStatus);
 }

@@ -1,17 +1,17 @@
 // @flow
 
-import React, { useState } from "react";
-import { Menu, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import logo from "../resources/Logo.png";
+import React, { useState } from 'react';
+import { Menu, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import logo from '../resources/Logo.png';
 
 export type Props = {
   signout: (callback: () => void) => void,
-  history: { push: string => void }
+  history: { push: string => void },
 };
 
 function AppMenu(props: Props) {
-  const [activeItem, setActiveItem] = useState("dashboard");
+  const [activeItem, setActiveItem] = useState('dashboard');
 
   function handleMenuClick(e, { name }) {
     setActiveItem(name);
@@ -26,7 +26,7 @@ function AppMenu(props: Props) {
       <Menu.Item
         content="Übersicht"
         name="dashboard"
-        active={activeItem === "dashboard"}
+        active={activeItem === 'dashboard'}
         onClick={handleMenuClick}
         as={Link}
         to="/dashboard"
@@ -35,11 +35,11 @@ function AppMenu(props: Props) {
 
       <Menu.Item>
         <Menu.Header>
-          <div onClick={e => handleMenuClick(e, { name: "search_customer" })}>
+          <div onClick={e => handleMenuClick(e, { name: 'search_customer' })}>
             <Link
               to={{
-                pathname: "/customer_search",
-                state: { listRedirect: true }
+                pathname: '/customer_search',
+                state: { listRedirect: true },
               }}
             >
               <Icon name="address book outline" />
@@ -52,7 +52,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Erfassen"
             name="add_customer"
-            active={activeItem === "add_customer"}
+            active={activeItem === 'add_customer'}
             onClick={handleMenuClick}
             as={Link}
             to="/customer"
@@ -60,7 +60,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Suchen"
             name="search_customer"
-            active={activeItem === "search_customer"}
+            active={activeItem === 'search_customer'}
             onClick={handleMenuClick}
             as={Link}
             to="/customer_search"
@@ -71,17 +71,13 @@ function AppMenu(props: Props) {
       <Menu.Item>
         <Menu.Header>
           <Icon name="truck" />
-          <Link
-            to={{ pathname: "/machine_search", state: { listRedirect: true } }}
-          >
-            Maschinen
-          </Link>
+          <Link to={{ pathname: '/machine_search', state: { listRedirect: true } }}>Maschinen</Link>
         </Menu.Header>
         <Menu.Menu>
           <Menu.Item
             content="Erfassen"
             name="add_machine"
-            active={activeItem === "add_machine"}
+            active={activeItem === 'add_machine'}
             onClick={handleMenuClick}
             as={Link}
             to="/machine"
@@ -89,7 +85,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Suchen"
             name="search_machine"
-            active={activeItem === "search_machine"}
+            active={activeItem === 'search_machine'}
             onClick={handleMenuClick}
             as={Link}
             to="/machine_search"
@@ -97,7 +93,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Maschinentypen verwalten"
             name="machinetype"
-            active={activeItem === "machinetype"}
+            active={activeItem === 'machinetype'}
             onClick={handleMenuClick}
             as={Link}
             to="/machinetype"
@@ -114,7 +110,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Reparatur und Service erfassen"
             name="add_service"
-            active={activeItem === "add_service"}
+            active={activeItem === 'add_service'}
             onClick={handleMenuClick}
             as={Link}
             to="/service"
@@ -122,7 +118,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Vermietung erfassen"
             name="add_rental"
-            active={activeItem === "add_rental"}
+            active={activeItem === 'add_rental'}
             onClick={handleMenuClick}
             as={Link}
             to="/rental"
@@ -130,7 +126,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Ver- und Ankauf erfassen"
             name="sell_machine"
-            active={activeItem === "sell_machine"}
+            active={activeItem === 'sell_machine'}
             onClick={handleMenuClick}
             as={Link}
             to="/machine_buy_sell"
@@ -139,7 +135,7 @@ function AppMenu(props: Props) {
           <Menu.Item
             content="Suchen"
             name="search_service"
-            active={activeItem === "search_service"}
+            active={activeItem === 'search_service'}
             onClick={handleMenuClick}
             as={Link}
             to="/service_search"
@@ -149,11 +145,11 @@ function AppMenu(props: Props) {
 
       <Menu.Item
         name="logout"
-        active={activeItem === "logout"}
+        active={activeItem === 'logout'}
         content="Abmelden"
         onClick={event => {
           event.preventDefault();
-          props.signout(() => props.history.push("/"));
+          props.signout(() => props.history.push('/'));
         }}
         href="/logout"
         icon="sign-out"
