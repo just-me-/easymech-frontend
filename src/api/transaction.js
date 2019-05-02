@@ -16,7 +16,7 @@ function prepareDto(transactionObject: Transaction) {
 }
 
 export function addTransaction(transactionObject: Transaction): Promise<SaveResult> {
-  return helper.postJson("/transaktionen/", prepareDto(machineObject), "POST").then(helper.parseJSON);
+  return helper.postJson("/transaktionen/", prepareDto(transactionObject), "POST").then(helper.parseJSON);
 }
 
 export function updateTransaction(transactionObject: Transaction): Promise<SaveResult> {
