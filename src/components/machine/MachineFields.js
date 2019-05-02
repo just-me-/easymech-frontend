@@ -7,6 +7,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { NotificationManager } from 'react-notifications';
 
 import NumberInput from '../NumberInput';
+import SmartInput from '../SmartInput';
 
 import * as validation from '../validation';
 import * as apiTypes from '../../api/machinetype';
@@ -38,68 +39,8 @@ function MachineFields(props: Props) {
   };
 
   const [machineData, setMachineData] = useState(initialData);
-
-  // ich glaub sollten wir doch auslagern - ging
-  // beim NumberInput sehr einfach abgesehen von Flow
-  // => aber erst wenn die Maschine grundsätzlich läuft xD
-  const [machineTypes, setMachineTypes] = useState([]);
-  const [machineTypeResults, setMachineTypeResults] = useState([]);
-  const [isMachineTypeLoading, setMachineTypeLoading] = useState(false);
-  const [machineTypeValue, setMachineTypeValue] = useState();
-
-  const [customer, setCustomer] = useState([]); // 2Do - plural oder?
-  const [customerResults, setCustomerResults] = useState([]);
-  const [customerValue, setCustomerValue] = useState();
-  const [isCustomerLoading, setCustomerLoading] = useState(false);
-
-  function resetMachineTypeSearchComponent() {
-    setMachineTypeLoading(false);
-    setMachineTypeResults([]);
-    setMachineTypeValue('');
-  }
-  function resetCustomerSearchComponent() {
-    setCustomerLoading(false);
-    setCustomerResults([]);
-    setCustomerValue('');
-  }
-
-  function handleMachineTypeSelect(e, { result }) {
-    setMachineData({ ...machineData, maschinentypId: result.id });
-    setMachineTypeValue(result.title);
-  }
-
-  function handleCustomerSelect(e, { result }) {
-    setMachineData({ ...machineData, besitzerId: result.id });
-    setCustomerValue(result.title);
-  }
-
-  function handleMachineTypeChange(e, { value }) {
-    setMachineTypeLoading(true);
-    setMachineTypeValue(e.target.value);
-    setTimeout(() => {
-      if (value.length < 1) return resetMachineTypeSearchComponent();
-
-      const re = new RegExp(_.escapeRegExp(value), 'i');
-      const isMatch = machineTypeResults => re.test(machineTypeResults.fabrikat);
-
-      setMachineTypeLoading(false);
-      setMachineTypeResults(_.filter(machineTypes, isMatch));
-    }, 300);
-  }
-
-  function handleCustomerChange(e, { value }) {
-    setCustomerLoading(true);
-    setCustomerValue(e.target.value);
-    setTimeout(() => {
-      if (value.length < 1) return resetCustomerSearchComponent;
-
-      const re = new RegExp(_.escapeRegExp(value), 'i');
-      const isMatch = customerResults => re.test(customerResults.firma);
-
-      setCustomerLoading(false);
-      setCustomerResults(_.filter(customer, isMatch));
-    }, 300);
-  }
+  const [customerData, setCustomerData] = useState();
+  const [machinetypeData, setMachinetypeData] = useState();
 
   function getCustomersList() {
     apiCustomer
@@ -107,7 +48,7 @@ function MachineFields(props: Props) {
       .then(result => {
         result = apiCustomer.checkResponse(result);
         // 2Do nicht unnütze Customer Daten im Browser speichern
-        setCustomer(result);
+        setCustomerData(result);
       })
       .catch(error => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
@@ -117,14 +58,14 @@ function MachineFields(props: Props) {
         );
       });
   }
-  
+
   function getMachineTypesName() {
     apiTypes
       .getMachineTypes()
       .then(result => {
         result = apiTypes.checkResponse(result);
         // 2Do nicht unnütze Machine Daten im Browser speichern
-        setMachineTypes(result);
+        setMachinetypeData(result);
       })
       .catch(error => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
