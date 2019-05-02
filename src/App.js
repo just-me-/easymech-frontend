@@ -85,7 +85,7 @@ class App extends React.Component<Props, State> {
     render() {
         const {isAuthenticated, token} = this.state;
 
-        const MenuBar = withRouter(({history, location: {pathname}}) => {
+        const MenuBar = withRouter(({history}) => {
             if (isAuthenticated) {
                 return (
                     <AppMenu history={history} signout={this.signout}/>

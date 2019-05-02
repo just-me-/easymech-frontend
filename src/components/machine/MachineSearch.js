@@ -34,7 +34,7 @@ function MachineSearch(props: Props) {
         .then((result) => {
             result = api.checkResponse(result);
             setViewState("list");
-            NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", result.seriennummer+" aktualisiert");
+            NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", machineEditData.seriennummer +" aktualisiert");
         })
         .catch(error => {
           console.log("Ups, ein Fehler ist aufgetreten", error);

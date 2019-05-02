@@ -18,7 +18,7 @@ function Machine() {
         .addMachine(machineData)
         .then((result) => {
           result = api.checkResponse(result);
-          NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", result.seriennummer +" erfasst");
+          NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", machineData.seriennummer +" erfasst");
           setKey(Math.random()); // clear data - fresh form for next entry
         })
         .catch(error => {

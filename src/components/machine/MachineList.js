@@ -43,7 +43,8 @@ function MachineList(props: Props) {
         setCustomerData(result)
       })
       .catch(error => {
-        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+        NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!" );
+        console.log(error);
       });
   }
 
@@ -78,6 +79,7 @@ function MachineList(props: Props) {
       })
       .catch(error => {
         NotificationManager.error("Maschinentypen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+        console.log(error);
       });
   }
 
