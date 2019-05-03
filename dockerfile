@@ -14,8 +14,9 @@ COPY package.json /usr/src/app/package.json
 RUN npm install --silent
 RUN npm install serve --silent
 
+# npm run build
+# serve -s build -l 40007
+
 # start app
-CMD ["ls", "-alh"]
-CMD ["npm", "run-script", "build"]
-CMD ["ls", "-alh"]
+CMD ["npm", "run", "build"]
 CMD ["serve", "-s", "build"]
