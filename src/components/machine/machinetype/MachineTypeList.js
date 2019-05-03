@@ -1,32 +1,30 @@
 // @flow
 
-import _ from 'lodash'
-import React, {useState, useEffect} from 'react'
-import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react'
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
 
-import * as api from "../../../api/machinetype"
-import type { MachineType } from "../../../api/machinetype";
+import * as api from '../../../api/machinetype';
+import type { MachineType } from '../../../api/machinetype';
 
 export type Props = {
-  editMachineType: (string) => void,
-  filterData: ?MachineType
+  editMachineType: string => void,
+  filterData: ?MachineType,
 };
 
 function MachineTypeList(props: Props) {
-
   const [machineTypeListData, setMachineTypeListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   function getMachineTypeListData() {
-    console.log(props.filterData);
     api
       .getFilteredMachineTypes(props.filterData)
-      .then((result) => {
+      .then(result => {
         result = api.checkResponse(result);
         setIsLoading(false);
         setMachineTypeListData(result);
       })
-      .catch(error => console.log("Ups, ein Fehler ist aufgetreten", error));
+      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
   }
 
   useEffect(() => {
@@ -51,35 +49,52 @@ function MachineTypeList(props: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(machineTypeListData, ({ id, fabrikat, motortyp, maschinenhoehe, maschinenlaenge, maschinenbreite,
-                                           nutzlast, eigengewicht, hubkraft,hubhoehe, pneugroesse }, index) => (
-            <Table.Row key={index}>
-              <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
-                <Icon name='external' size='tiny' className="Inline-icon"/> {fabrikat}
-              </Table.Cell>
-              <Table.Cell>{motortyp}</Table.Cell>
-              <Table.Cell>{maschinenhoehe || ""}</Table.Cell>
-              <Table.Cell>{maschinenlaenge || ""}</Table.Cell>
-              <Table.Cell>{maschinenbreite || ""}</Table.Cell>
-              <Table.Cell>{pneugroesse || ""}</Table.Cell>
-              <Table.Cell>{nutzlast || ""}</Table.Cell>
-              <Table.Cell>{eigengewicht || ""}</Table.Cell>
-              <Table.Cell>{hubkraft || ""}</Table.Cell>
-              <Table.Cell>{hubhoehe || ""}</Table.Cell>
-            </Table.Row>
-          ))}
+          {_.map(
+            machineTypeListData,
+            (
+              {
+                id,
+                fabrikat,
+                motortyp,
+                maschinenhoehe,
+                maschinenlaenge,
+                maschinenbreite,
+                nutzlast,
+                eigengewicht,
+                hubkraft,
+                hubhoehe,
+                pneugroesse,
+              },
+              index,
+            ) => (
+              <Table.Row key={index}>
+                <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
+                  <Icon name="external" size="tiny" className="Inline-icon" /> {fabrikat}
+                </Table.Cell>
+                <Table.Cell>{motortyp}</Table.Cell>
+                <Table.Cell>{maschinenhoehe || ''}</Table.Cell>
+                <Table.Cell>{maschinenlaenge || ''}</Table.Cell>
+                <Table.Cell>{maschinenbreite || ''}</Table.Cell>
+                <Table.Cell>{pneugroesse || ''}</Table.Cell>
+                <Table.Cell>{nutzlast || ''}</Table.Cell>
+                <Table.Cell>{eigengewicht || ''}</Table.Cell>
+                <Table.Cell>{hubkraft || ''}</Table.Cell>
+                <Table.Cell>{hubhoehe || ''}</Table.Cell>
+              </Table.Row>
+            ),
+          )}
         </Table.Body>
       </Table>
 
-      { isLoading &&
+      {isLoading && (
         <Segment>
           <Dimmer inverted active>
             <Loader inverted>Maschinentypen werden geladen...</Loader>
           </Dimmer>
         </Segment>
-      }
+      )}
     </div>
-  )
+  );
 }
 
-export default MachineTypeList
+export default MachineTypeList;

@@ -1,11 +1,11 @@
 // @flow
 
-import React, {useState} from 'react'
-import {Button, Form, Header} from 'semantic-ui-react'
-import {NotificationManager} from "react-notifications";
+import React, { useState } from 'react';
+import { Button, Form, Header } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
-import * as api from "../../api/machine";
-import MachineFields from "../machine/MachineFields";
+import * as api from '../../api/machine';
+import MachineFields from './MachineFields';
 
 function Machine() {
   const [machineData, setMachineData] = useState({});
@@ -13,38 +13,47 @@ function Machine() {
   const [key, setKey] = useState(Math.random());
 
   function addMachine() {
-    if(formIsValid) {
+    if (formIsValid) {
       api
         .addMachine(machineData)
         .then((result) => {
           result = api.checkResponse(result);
-          NotificationManager.success("Die Maschine wurde erfolgreich gespeichert.", machineData.seriennummer +" erfasst");
+          NotificationManager.success(
+            'Die Maschine wurde erfolgreich gespeichert.',
+            `${result.seriennummer} erfasst`,
+          );
           setKey(Math.random()); // clear data - fresh form for next entry
         })
-        .catch(error => {
-          console.log("Ups, ein Fehler ist aufgetreten", error);
-          NotificationManager.error("Beim Speichern ist ein Fehler aufgetreten.", "Bitte erneut versuchen!");
+        .catch((error) => {
+          console.log('Ups, ein Fehler ist aufgetreten', error);
+          NotificationManager.error(
+            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
+          );
         });
     } else {
-        if(!formIsValid){
-          NotificationManager.info("Bitte prüfen Sie Ihre Eingabe!");
-        }
+      NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
     }
   }
 
   return (
     <div>
-      <Header as='h1' textAlign='center'>
+      <Header as="h1" textAlign="center">
         Maschine erfassen
       </Header>
       <Form>
         <MachineFields key={key} setData={setMachineData} setValidState={setFormIsValid} />
-        <Button primary content='Speichern' icon='save' labelPosition='left' floated='right'
-                onClick={() => addMachine()}
+        <Button
+          primary
+          content="Speichern"
+          icon="save"
+          labelPosition="left"
+          floated="right"
+          onClick={() => addMachine()}
         />
       </Form>
     </div>
-  )
+  );
 }
 
 export default Machine;
