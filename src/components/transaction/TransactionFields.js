@@ -3,7 +3,6 @@
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 import {Search, Form, Header} from 'semantic-ui-react'
-import TextareaAutosize from "react-textarea-autosize";
 import {NotificationManager} from "react-notifications";
 
 import NumberInput from "../NumberInput"
@@ -130,7 +129,6 @@ function TransactionFields(props: Props) {
                 value = validation.toNumber(value);
                 break;
             case "date":
-                // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
                 console.log("2Do DATE VALIDATION");
                 break;
             default:
@@ -180,24 +178,8 @@ function TransactionFields(props: Props) {
 
     return (
         <div>
+            <Header as='h2'>Ankauf</Header>
             <div className="Form-section">
-                <Header as='h2'>Ankauf</Header>
-                <Form.Group widths='equal'>
-                    <Form.Input
-                        id='seriennummer'
-                        label='Seriennr.'
-                        placeholder={props.searchView ? '' : 'Pflichtfeld'}
-                        value={transactionData.seriennummer}
-                        onChange={handleChange}
-                    />
-                    <NumberInput
-                        id='betriebsdauer'
-                        label='Betriebsdauer' innerLabel='Stunden'
-                        value={transactionData.betriebsdauer} validate='number'
-                        handleChange={handleChange}
-                    />
-                </Form.Group>
-
                 <Form.Group widths='equal'>
                     <Form.Field
                         control={Search}
@@ -222,49 +204,63 @@ function TransactionFields(props: Props) {
                         placeholder={props.searchView ? '' : 'Pflichtfeld'}
                     />
                 </Form.Group>
-                </div>
-                <Header as='h2'>Verkauf</Header>
-                <div className="Form-section">
-                <Form.Group widths='equal'>
-                    <Form.Input
-                        id='mastnummer'
-                        label='Mastnr.'
-                        value={transactionData.mastnummer}
-                        onChange={handleChange}
-                    />
-                    <Form.Input
-                        id='motorennummer'
-                        label='Motorenr.'
-                        value={transactionData.motorennummer}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
 
                 <Form.Group widths='equal'>
                     <NumberInput
-                        id='jahrgang'
-                        label='Jahrgang' innerLabel='YYYY'
-                        value={transactionData.jahrgang} validate='number' realValidation={'date'}
+                        id='preis'
+                        label='Preis' innerLabel='CHF'
+                        value={transactionData.preis} validate='number'
                         handleChange={handleChange}
                     />
                     <Form.Input
-                        label='Dummy'
-                        className='dummyObject'
-                        placeholder='Dummy Placeholder for equal dividing'
-                    />
-                </Form.Group>
-
-                {props.searchView ||
-                <Form.Group widths='equal' className='OneField'>
-                    <Form.Field
-                        control={TextareaAutosize}
-                        id='notiz'
-                        label='Notizen'
+                        id='datum'
+                        label='Datum'
+                        value={transactionData.datum}
                         onChange={handleChange}
-                        value={transactionData.notiz}
                     />
                 </Form.Group>
-                }
+                </div>
+                <Header as='h2'>Verkauf</Header>
+                <div className="Form-section">
+                    <Form.Group widths='equal'>
+                        <Form.Field
+                            control={Search}
+                            label='Maschine'
+                            loading={isMachineLoading}
+                            onResultSelect={handleMachineSelect}
+                            onSearchChange={_.debounce(handleMachineChange, 500, { leading: true })}
+                            results={machineResults.map((result, index) => {return {key: index, id: result.id, title: result.seriennummer}})}
+                            value={machineValue}
+                            noResultsMessage='Keine Maschinen gefunden'
+                            placeholder={props.searchView ? '' : 'Pflichtfeld'}
+                        />
+                        <Form.Field
+                            control={Search}
+                            label='Besitzer'
+                            loading={isCustomerLoading}
+                            onResultSelect={handleCustomerSelect}
+                            onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
+                            results={customerResults.map((result, index) => {return {key: index, id: result.id, title: result.firma}})}
+                            value={customerValue}
+                            noResultsMessage='Keine Kunden gefunden'
+                            placeholder={props.searchView ? '' : 'Pflichtfeld'}
+                        />
+                    </Form.Group>
+
+                    <Form.Group widths='equal'>
+                        <NumberInput
+                            id='preis'
+                            label='Preis' innerLabel='CHF'
+                            value={transactionData.preis} validate='number'
+                            handleChange={handleChange}
+                        />
+                        <Form.Input
+                            id='datum'
+                            label='Datum'
+                            value={transactionData.datum}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
                 </div>
         </div>
     )
