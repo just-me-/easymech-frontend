@@ -21,6 +21,9 @@ type State = {
   name: string,
   email: string,
   id: string,
+  keycloak?: {
+    loadUserInfo: () => () => void,
+  },
 };
 
 class App extends React.Component<Props, State> {
@@ -28,24 +31,14 @@ class App extends React.Component<Props, State> {
     super(props);
     const token = sessionStorage.getItem('token');
 
-    if (token) {
-      this.state = {
-        isAuthenticated: true,
-        token,
-      };
-    } else {
-      this.state = {
-        isAuthenticated: false,
-        token: undefined,
-      };
-    }
-
     this.state = {
-      keycloak: null,
+      keycloak: undefined,
       authenticated: false,
       name: '',
       email: '',
       id: '',
+      isAuthenticated: !!token,
+      token: token || undefined,
     };
   }
 
@@ -67,12 +60,12 @@ class App extends React.Component<Props, State> {
   componentDidMount() {
     if (!(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
       const keycloak = Keycloak('/keycloak.json');
-      keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then(authenticated => {
-        this.setState({ keycloak, authenticated });
+      keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then((isAuthenticated) => {
+        this.setState({ keycloak, isAuthenticated });
       });
       if (this.state.keycloak) {
-        if (this.state.authenticated) {
-          this.props.keycloak.loadUserInfo().then(userInfo => {
+        if (this.state.isAuthenticated) {
+          this.state.keycloak.loadUserInfo().then((userInfo) => {
             this.setState({
               name: userInfo.name,
               email: userInfo.email,
@@ -92,7 +85,7 @@ class App extends React.Component<Props, State> {
       if (isAuthenticated) {
         return <AppMenu history={history} signout={this.signout} />;
       }
-      return null
+      return null;
     });
 
     return (
