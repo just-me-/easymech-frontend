@@ -33,7 +33,7 @@ function MachineType() {
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           NotificationManager.error(
-            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Beim Speichern des Maschinentyps ist ein Fehler aufgetreten.',
             'Bitte erneut versuchen!',
           );
         });

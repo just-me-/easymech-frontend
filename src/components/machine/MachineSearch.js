@@ -24,7 +24,7 @@ function MachineSearch(props: Props) {
   const [searchData, setSearchData] = useState({});
   const [machineEditData, setMachineEditData] = useState({});
   const [key, setKey] = useState(Math.random());
-  const [formIsValid, setFormIsValid] = useState(true); //alrdy saved, unchanged entries are valid
+  const [formIsValid, setFormIsValid] = useState(true); // alrdy saved, unchanged entries are valid
 
   function saveMachine() {
     if (formIsValid) {
@@ -43,7 +43,7 @@ function MachineSearch(props: Props) {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           setViewState('edit');
           NotificationManager.error(
-            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
             'Bitte erneut versuchen!',
           );
         });
@@ -68,7 +68,7 @@ function MachineSearch(props: Props) {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('edit');
         NotificationManager.error(
-          'Beim Löschen ist ein Fehler aufgetreten.',
+          'Beim Löschen der Maschine ist ein Fehler aufgetreten.',
           'Bitte erneut versuchen!',
         );
       });

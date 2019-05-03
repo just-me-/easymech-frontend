@@ -43,7 +43,7 @@ function CustomerSearch(props: Props) {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           setViewState('edit');
           NotificationManager.error(
-            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Beim Speichern des Kundens ist ein Fehler aufgetreten.',
             'Bitte erneut versuchen!',
           );
         });
@@ -68,7 +68,7 @@ function CustomerSearch(props: Props) {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('edit');
         NotificationManager.error(
-          'Beim Löschen ist ein Fehler aufgetreten.',
+          'Beim Löschen des Kundens ist ein Fehler aufgetreten.',
           'Bitte erneut versuchen!',
         );
       });

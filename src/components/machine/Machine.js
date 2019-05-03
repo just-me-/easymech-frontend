@@ -27,7 +27,7 @@ function Machine() {
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           NotificationManager.error(
-            'Beim Speichern ist ein Fehler aufgetreten.',
+            'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
             'Bitte erneut versuchen!',
           );
         });
