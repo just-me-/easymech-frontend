@@ -18,5 +18,7 @@ RUN npm install serve --silent
 # serve -s build -l 40007
 
 # start app
-CMD ["npm", "run", "build"]
-CMD ["serve", "-s", "build"]
+# CMD ["npm", "run", "build"]
+# CMD ["npm", "run-script", "build"]
+# CMD ["serve", "-s", "build"]
+CMD ["npm", "start"]
