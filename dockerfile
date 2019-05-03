@@ -15,5 +15,7 @@ RUN npm install --silent
 RUN npm install serve --silent
 
 # start app
+CMD ["ls", "-alh"]
 CMD ["npm", "run-script", "build"]
+CMD ["ls", "-alh"]
 CMD ["serve", "-s", "build"]
