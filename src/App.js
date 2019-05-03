@@ -53,16 +53,6 @@ class App extends React.Component<Props, State> {
     this.setState({ isAuthenticated: true, token: 'myToken' });
     sessionStorage.setItem('token', 'myToken');
     callback(null);
-    /*
-        api
-          .login(login, password)
-          .then(({ token }) => {
-            this.setState({ isAuthenticated: true, token });
-            sessionStorage.setItem("token", token);
-            callback(null);
-          })
-          .catch(error => callback(error));
-        */
   };
 
   signout = (callback: () => void) => {
@@ -118,12 +108,6 @@ class App extends React.Component<Props, State> {
           <Grid.Column id="Menu-grid" width={4}>
             <MenuBar />
           </Grid.Column>
-          {/*
-            The following are protected routes that are only available for logged-in users.
-            We also pass the user and token so these components can do API calls.
-            PrivateRoute is not part of react-router but our own implementation.
-          */}
-
           <Grid.Column id="Content-grid" width={12}>
             <AppPrivateRoutes isAuthenticated={isAuthenticated} token={token} />
           </Grid.Column>
