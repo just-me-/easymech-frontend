@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "eslint": "^5.12.0",
-    "jsinspect": "^0.12.7",
     "keycloak-js": "^6.0.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
@@ -32,6 +30,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint": "^5.12.0",
+    "jsinspect": "^0.12.7",
     "@babel/preset-flow": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-flowtype": "^3.7.0",
