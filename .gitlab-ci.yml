@@ -3,6 +3,7 @@ image: node:latest
 stages:
   - build
   - test
+  - flow
   - deploy
   - run
 
@@ -27,6 +28,13 @@ test:
     - ls
     - npm install
     - npm test
+
+flow:
+  stage: flow
+  script:
+    - pwd
+    - ls
+    - npm run flow
 
 deploy:
     stage: deploy
