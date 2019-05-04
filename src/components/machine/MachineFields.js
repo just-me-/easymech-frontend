@@ -84,16 +84,14 @@ function MachineFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    switch (validate) {
-      case 'number':
+    if(validate) {
+      if(validate === 'number') {
         value = validation.toNumber(value);
-        break;
-      case 'date':
+      }
+      if(validate === 'date') {
         // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
         console.log('2Do DATE VALIDATION');
-        break;
-      default:
-        break;
+      }
     }
     setMachineData({ ...machineData, [element.target.id]: value });
   }

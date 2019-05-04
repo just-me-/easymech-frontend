@@ -34,12 +34,8 @@ function MachineTypeFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    switch (validate) {
-      case 'number':
-        value = validation.toNumber(value);
-        break;
-      default:
-        break;
+    if (validate && validate === 'number') {
+      value = validation.toNumber(value);
     }
     setMachineTypeData({ ...machineTypeData, [element.target.id]: value });
   }
