@@ -34,7 +34,7 @@ function SmartInput(props: Props) {
   }
 
   function handleChange(e, { value }) {
-    props.onResultSelect({ id: 0 });
+    props.onResultSelect({ id: "0" });
     setIsValide(false);
     setIsLoading(true);
     setValue(e.target.value);
