@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Form } from 'semantic-ui-react';
 
-import NumberInput from '../../NumberInput';
-import * as validation from '../../validation';
+import NumberInput from '../../shared/NumberInput';
+import * as validation from '../../shared/validation';
+
+import '../../shared/Fields.css';
 
 import type { MachineType } from '../../../api/machinetype';
 

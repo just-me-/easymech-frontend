@@ -5,7 +5,9 @@ import { Header, Form, Label } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import type { Customer } from '../../api/customer';
-import * as validation from '../validation';
+import * as validation from '../shared/validation';
+
+import '../shared/Fields.css';
 
 export type Props = {
   data?: Customer,

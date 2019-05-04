@@ -5,12 +5,14 @@ import { Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NotificationManager } from 'react-notifications';
 
-import NumberInput from '../NumberInput';
-import SmartInput from '../SmartInput';
+import NumberInput from '../shared/NumberInput';
+import SmartInput from '../shared/SmartInput';
 
-import * as validation from '../validation';
+import * as validation from '../shared/validation';
 import * as apiTypes from '../../api/machinetype';
 import * as apiCustomer from '../../api/customer';
+
+import '../shared/Fields.css';
 
 import type { MachineType } from '../../api/machinetype';
 import type { Machine } from '../../api/machine';
