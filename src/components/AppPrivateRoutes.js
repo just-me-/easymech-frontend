@@ -13,8 +13,8 @@ import Machine from './machine/Machine';
 import MachineType from './machine/machinetype/MachineType';
 import MachineSearch from './machine/MachineSearch';
 
-import BuySell from './transaction/BuySell';
-import Rental from './transaction/Rental';
+import Transaction from "./transaction/Transaction";
+import Rental from "./transaction/Rental";
 
 import Service from './service/Service';
 import ServiceSearch from './service/ServiceSearch';
@@ -85,7 +85,7 @@ function AppPrivateRoutes(props: Props) {
         path="/machine_buy_sell"
         isAuthenticated={props.isAuthenticated}
         token={props.token}
-        component={BuySell}
+        component={Transaction}
       />
     </div>
   );
