@@ -54,7 +54,7 @@ function MachineFields(props: Props) {
 
   function getCustomersList() {
     apiCustomer
-      .getCustomers()
+      .getCustomers(true)
       .then((result) => {
         result = apiCustomer.checkResponse(result);
         setCustomerData(result);
