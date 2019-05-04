@@ -34,7 +34,6 @@ function MachineFields(props: Props) {
     notiz: (props.data && props.data.notiz) || '',
     maschinentypId: (props.data && props.data.maschinentypId) || '',
     besitzerId: (props.data && props.data.besitzerId) || '',
-    isActive: (props.data && props.data.isActive) || '',
   };
 
   const [machineData, setMachineData] = useState(initialData);
@@ -107,7 +106,6 @@ function MachineFields(props: Props) {
       props.setValidState(requiredIsValide);
     }
     if (props.setData) {
-      machineData.isActive = true;
       props.setData(machineData);
     }
   });

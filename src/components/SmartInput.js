@@ -11,26 +11,31 @@ export type Props = {
   setElementId: ?number,
   isRequired?: boolean,
   elements: ?[],
-  onResultSelect: (result: {id: string})  => void
+  onResultSelect: (result: { id: string }) => void,
 };
 
 function SmartInput(props: Props) {
   const [matchedResults, setMatchedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
+  const [isValide, setIsValide] = useState(true);
 
   function resetSearch() {
     setIsLoading(false);
+    setIsValide(true);
     setMatchedResults([]);
     setValue('');
   }
 
   function handleSelect(e, { result }) {
     props.onResultSelect(result);
+    setIsValide(true);
     setValue(result.title);
   }
 
   function handleChange(e, { value }) {
+    props.onResultSelect({ id: 0 });
+    setIsValide(false);
     setIsLoading(true);
     setValue(e.target.value);
     setTimeout(() => {
@@ -46,8 +51,8 @@ function SmartInput(props: Props) {
 
   useEffect(() => {
     if (props.elements && props.elements.length > 0 && props.setElementId) {
-      const owner = props.elements.find(x => x.id === props.setElementId);
-      setValue(owner ? owner[props.matchingKey] : '');
+      const match = props.elements.find(x => x.id === props.setElementId);
+      setValue(match ? match[props.matchingKey] : '');
     }
   });
 
@@ -59,13 +64,16 @@ function SmartInput(props: Props) {
       onSearchChange={_.debounce(handleChange, 500, {
         leading: true,
       })}
-      results={matchedResults.map((result, index) => {
-        return { key: index, id: result.id, title: result[props.matchingKey] };
-      })}
+      results={matchedResults.map((result, index) => ({
+        key: index,
+        id: result.id,
+        title: result[props.matchingKey],
+      }))}
       value={value}
       loading={isLoading}
       noResultsMessage={props.noResultsMessage}
       placeholder={props.isRequired ? 'Pflichtfeld' : ''}
+      error={!isValide}
     />
   );
 }

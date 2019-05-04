@@ -10,7 +10,6 @@ export type Machine = {
   notiz?: string,
   betriebsdauer?: number,
   jahrgang?: number,
-  isActive?: boolean,
   besitzerId?: number,
   maschinentypId?: number,
 };
