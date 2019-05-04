@@ -70,8 +70,17 @@ function AppMenu(props: Props) {
 
       <Menu.Item>
         <Menu.Header>
-          <Icon name="truck" />
-          <Link to={{ pathname: '/machine_search', state: { listRedirect: true } }}>Maschinen</Link>
+          <div onClick={e => handleMenuClick(e, { name: 'search_machine' })}>
+            <Link
+              to={{
+                pathname: '/machine_search',
+                state: { listRedirect: true },
+              }}
+            >
+              <Icon name="truck" />
+              Maschinen
+            </Link>
+          </div>
         </Menu.Header>
         <Menu.Menu>
           <Menu.Item
