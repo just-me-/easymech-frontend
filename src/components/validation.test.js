@@ -15,6 +15,12 @@ test('Mail missing . and @', () => {
 test('Mail missing text between . and @', () => {
   expect(validation.checkMail('abluewin@.ch')).toBe(false);
 });
+test('Mail empty', () => {
+  expect(validation.checkMail('')).toBe(false);
+});
+test('Mail undef', () => {
+  expect(validation.checkMail(undefined)).toBe(false);
+});
 
 test('Required string undef', () => {
   expect(validation.checkRequired(undefined)).toBe(false);
@@ -24,6 +30,25 @@ test('Required string empty', () => {
 });
 test('Required string exists', () => {
   expect(validation.checkRequired('b')).toBe(true);
+});
+
+test('Check year undef', () => {
+  expect(validation.checkYear(undefined)).toBe(false);
+});
+test('Check year empty', () => {
+  expect(validation.checkYear('')).toBe(false);
+});
+test('Check year valid string', () => {
+  expect(validation.checkYear('2000')).toBe(true);
+});
+test('Check year valid number', () => {
+  expect(validation.checkYear(2000)).toBe(true);
+});
+test('Check year invalid - to small', () => {
+  expect(validation.checkYear('999')).toBe(false);
+});
+test('Check year invalid - to big', () => {
+  expect(validation.checkYear('11111')).toBe(false);
 });
 
 test('Delete to empty string', () => {

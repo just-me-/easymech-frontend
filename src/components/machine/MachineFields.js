@@ -40,6 +40,8 @@ function MachineFields(props: Props) {
   const [customerData, setCustomerData] = useState();
   const [machinetypeData, setMachinetypeData] = useState();
 
+  const [yearIsValid, setYearIsValid] = useState(true);
+
   function handleMachineTypeSelect(result) {
     setMachineData({ ...machineData, maschinentypId: result.id });
   }
@@ -86,9 +88,9 @@ function MachineFields(props: Props) {
       if (validate === 'number') {
         value = validation.toNumber(value);
       }
-      if (validate === 'date') {
-        // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
-        console.log('2Do DATE VALIDATION');
+      if (validate === 'year') {
+        value = validation.toNumber(value);
+        if (props.setValidState) setYearIsValid(value ? validation.checkYear(value) : true);
       }
     }
     setMachineData({ ...machineData, [element.target.id]: value });
@@ -99,7 +101,7 @@ function MachineFields(props: Props) {
       && parseInt(machineData.maschinentypId, 10) > 0
       && parseInt(machineData.besitzerId, 10) > 0;
     if (props.setValidState) {
-      props.setValidState(requiredIsValide);
+      props.setValidState(requiredIsValide && yearIsValid);
     }
     if (props.setData) {
       props.setData(machineData);
@@ -142,7 +144,6 @@ function MachineFields(props: Props) {
             noResultsMessage="Keine Maschinentypen gefunden"
             isRequired={!props.searchView}
           />
-
           <SmartInput
             label="Besitzer"
             matchingKey="firma"
@@ -175,9 +176,9 @@ function MachineFields(props: Props) {
             label="Jahrgang"
             innerLabel="YYYY"
             value={machineData.jahrgang}
-            validate="number"
-            realValidation="date"
+            validate="year"
             handleChange={handleChange}
+            error={!yearIsValid}
           />
           <Form.Input
             label="Dummy"
