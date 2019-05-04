@@ -53,7 +53,6 @@ function MachineFields(props: Props) {
       .getCustomers()
       .then((result) => {
         result = apiCustomer.checkResponse(result);
-        // 2Do nicht unnütze Customer Daten im Browser speichern
         setCustomerData(result);
       })
       .catch((error) => {
@@ -70,7 +69,6 @@ function MachineFields(props: Props) {
       .getMachineTypes()
       .then((result) => {
         result = apiTypes.checkResponse(result);
-        // 2Do nicht unnütze Machine Daten im Browser speichern
         setMachinetypeData(result);
       })
       .catch((error) => {
@@ -84,11 +82,11 @@ function MachineFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if(validate) {
-      if(validate === 'number') {
+    if (validate) {
+      if (validate === 'number') {
         value = validation.toNumber(value);
       }
-      if(validate === 'date') {
+      if (validate === 'date') {
         // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
         console.log('2Do DATE VALIDATION');
       }
