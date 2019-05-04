@@ -54,7 +54,7 @@ function SmartInput(props: Props) {
       const match = props.elements.find(x => x.id === props.setElementId);
       setValue(match ? match[props.matchingKey] : '');
     }
-  });
+  }, [props.elements]);
 
   return (
     <Form.Field
