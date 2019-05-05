@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Search } from 'semantic-ui-react';
 
 export type Props = {
+  id: string, 
   label: string,
   matchingKey: string,
   noResultsMessage: string,
@@ -58,6 +59,7 @@ function SmartInput(props: Props) {
 
   return (
     <Form.Field
+      id={props.id}
       control={Search}
       label={props.label}
       onResultSelect={handleSelect}

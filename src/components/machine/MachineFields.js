@@ -138,6 +138,7 @@ function MachineFields(props: Props) {
 
         <Form.Group widths="equal">
           <SmartInput
+            id="maschinentyp"
             label="Maschinentyp"
             matchingKey="fabrikat"
             onResultSelect={handleMachineTypeSelect}
@@ -147,6 +148,7 @@ function MachineFields(props: Props) {
             isRequired={!props.searchView}
           />
           <SmartInput
+            id="besitzer"
             label="Besitzer"
             matchingKey="firma"
             onResultSelect={handleCustomerSelect}
