@@ -1,5 +1,6 @@
 import { NotificationManager } from 'react-notifications';
-import * as api from '../../api/customer';
+import * as apiCustomer from '../../api/customer';
+import * as apiMachinetype from '../../api/machinetype';
 
 export function saveCustomer({
   formIsValid = undefined,
@@ -8,12 +9,12 @@ export function saveCustomer({
   setViewState = undefined,
   exists = false, // add or edit customer
 } = {}) {
-  const action = exists ? api.updateCustomer : api.addCustomer;
+  const action = exists ? apiCustomer.updateCustomer : apiCustomer.addCustomer;
   if (formIsValid) {
     if (setViewState) setViewState('loader');
     action(customerData)
       .then((result) => {
-        result = api.checkResponse(result);
+        result = apiCustomer.checkResponse(result);
         NotificationManager.success(
           'Der Kunde wurde erfolgreich gespeichert.',
           `${result.firma}${exists ? 'aktualisiert' : 'erfasst'}`,
@@ -43,10 +44,25 @@ export function getCustomers({
   loadingSetter = undefined,
   dataSetter = undefined,
 } = {}) {
-  api
+  apiCustomer
     .getFilteredCustomers(filterData)
     .then((result) => {
-      result = api.checkResponse(result);
+      result = apiCustomer.checkResponse(result);
+      if (loadingSetter) loadingSetter(false);
+      if (dataSetter) dataSetter(result);
+    })
+    .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
+}
+
+export function getMachinetypes({
+  filterData = undefined,
+  loadingSetter = undefined,
+  dataSetter = undefined,
+} = {}) {
+  apiMachinetype
+    .getFilteredMachineTypes(filterData)
+    .then((result) => {
+      result = apiMachinetype.checkResponse(result);
       if (loadingSetter) loadingSetter(false);
       if (dataSetter) dataSetter(result);
     })

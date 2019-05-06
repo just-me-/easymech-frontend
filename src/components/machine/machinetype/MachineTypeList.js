@@ -4,7 +4,8 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
 
-import * as api from '../../../api/machinetype';
+import * as machinetypeCalls from '../../shared/functions';
+
 import type { MachineType } from '../../../api/machinetype';
 
 export type Props = {
@@ -16,19 +17,12 @@ function MachineTypeList(props: Props) {
   const [machineTypeListData, setMachineTypeListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  function getMachineTypeListData() {
-    api
-      .getFilteredMachineTypes(props.filterData)
-      .then(result => {
-        result = api.checkResponse(result);
-        setIsLoading(false);
-        setMachineTypeListData(result);
-      })
-      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
-  }
-
   useEffect(() => {
-    getMachineTypeListData();
+    machinetypeCalls.getMachinetypes({
+      filterData: props.filterData,
+      loadingSetter: setIsLoading,
+      dataSetter: setMachineTypeListData,
+    });
   }, []);
 
   return (
