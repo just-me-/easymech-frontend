@@ -21,12 +21,21 @@ function CustomerList(props: Props) {
   const [customerListData, setCustomerListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getListData = customerCalls.getCustomers(props.filterData, setIsLoading, setCustomerListData);
+  const getListData = customerCalls.getCustomers(
+    props.filterData,
+    setIsLoading,
+    setCustomerListData,
+  );
   console.log(getListData);
 
   useEffect(() => {
-    //getListData();
-    customerCalls.getCustomers(props.filterData, setIsLoading, setCustomerListData);
+    // getListData();
+    customerCalls.getCustomers({
+      filterData: props.filterData,
+      loadingSetter: setIsLoading,
+      dataSetter: setCustomerListData,
+      fix: 'test',
+    });
   }, []);
 
   return (
