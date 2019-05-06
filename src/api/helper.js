@@ -11,7 +11,17 @@ export function checkStatus(response) {
 
 export function checkResponse(response) {
   if (response.status !== 'ok') {
-    throw new Error(`Servermeldung: ${response.message}`);
+    const errorCodes = {
+      200: 'Duplikat',
+      201: 'Noch in Verwendung',
+    };
+    const errorCode = errorCodes
+      ? errorCodes[response.errorCode]
+      : `Unbekannter Fehler ${response.errorCode}`;
+    throw Object.assign(
+      new Error(`Fehlercode: ${errorCode} - Servermeldung: ${response.message}`),
+      { code: response.errorCode, codeMsg: errorCode, msg: response.message },
+    );
   }
   return response.data;
 }

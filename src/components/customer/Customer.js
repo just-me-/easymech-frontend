@@ -27,10 +27,15 @@ function Customer() {
         })
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
-          NotificationManager.error(
-            'Beim Speichern des Kundens ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
+
+          if (error.code && error.code > 0) {
+            NotificationManager.error(error.msg, error.codeMsg);
+          } else {
+            NotificationManager.error(
+              'Beim Speichern des Kundens ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+            );
+          }
         });
     } else {
       NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');

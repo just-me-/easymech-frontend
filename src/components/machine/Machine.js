@@ -26,10 +26,14 @@ function Machine() {
         })
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
-          NotificationManager.error(
-            'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
+          if (error.code && error.code > 0) {
+            NotificationManager.error(error.msg, error.codeMsg);
+          } else {
+            NotificationManager.error(
+              'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+            );
+          }
         });
     } else {
       NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
