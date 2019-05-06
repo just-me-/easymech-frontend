@@ -2,8 +2,11 @@
 
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
+import {
+  Header, Table, Loader, Dimmer, Segment, Icon,
+} from 'semantic-ui-react';
 
+import * as customerCalls from '../shared/getFunctions';
 import * as api from '../../api/customer';
 import './CustomerList.css';
 
@@ -18,19 +21,12 @@ function CustomerList(props: Props) {
   const [customerListData, setCustomerListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  function getListData() {
-    api
-      .getFilteredCustomers(props.filterData)
-      .then(result => {
-        result = api.checkResponse(result);
-        setIsLoading(false);
-        setCustomerListData(result);
-      })
-      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
-  }
+  const getListData = customerCalls.getCustomers(props.filterData, setIsLoading, setCustomerListData);
+  console.log(getListData);
 
   useEffect(() => {
-    getListData();
+    //getListData();
+    customerCalls.getCustomers(props.filterData, setIsLoading, setCustomerListData);
   }, []);
 
   return (
@@ -55,10 +51,14 @@ function CustomerList(props: Props) {
         <Table.Body>
           {_.map(
             customerListData,
-            ({ id, firma, adresse, vorname, nachname, plz, ort, email, telefon }, index) => (
+            ({
+              id, firma, adresse, vorname, nachname, plz, ort, email, telefon,
+            }, index) => (
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect link">
-                  <Icon name="external" size="tiny" className="Inline-icon" /> {firma}
+                  <Icon name="external" size="tiny" className="Inline-icon" />
+                  {' '}
+                  {firma}
                 </Table.Cell>
                 <Table.Cell>{adresse}</Table.Cell>
                 <Table.Cell>{plz}</Table.Cell>
@@ -67,16 +67,20 @@ function CustomerList(props: Props) {
                 <Table.Cell>{nachname}</Table.Cell>
                 <Table.Cell>
                   {email && (
-                    <a href={'mailto:' + email}>
-                      <Icon name="mail" size="tiny" className="Inline-icon" /> {email}
-                    </a>
+                  <a href={`mailto:${email}`}>
+                    <Icon name="mail" size="tiny" className="Inline-icon" />
+                    {' '}
+                    {email}
+                  </a>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {telefon && (
-                    <a href={'tel:' + telefon}>
-                      <Icon name="call" size="tiny" className="Inline-icon" /> {telefon}
-                    </a>
+                  <a href={`tel:${telefon}`}>
+                    <Icon name="call" size="tiny" className="Inline-icon" />
+                    {' '}
+                    {telefon}
+                  </a>
                   )}
                 </Table.Cell>
               </Table.Row>
