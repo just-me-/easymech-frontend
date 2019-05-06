@@ -43,15 +43,23 @@ export function getCustomers({
   filterData = undefined,
   loadingSetter = undefined,
   dataSetter = undefined,
+  deletedToo = false,
 } = {}) {
-  apiCustomer
-    .getFilteredCustomers(filterData)
+  const action = deletedToo ? apiCustomer.getCustomers : apiCustomer.getFilteredCustomers;
+  const param = deletedToo ? true : filterData;
+  action(param)
     .then((result) => {
       result = apiCustomer.checkResponse(result);
       if (loadingSetter) loadingSetter(false);
       if (dataSetter) dataSetter(result);
     })
-    .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
+    .catch((error) => {
+      console.log('Ups, ein Fehler ist aufgetreten', error);
+      NotificationManager.error(
+        'Kunden konnten nicht geladen werden',
+        'Bitte überprüfen Sie Ihre Verbindung!',
+      );
+    });
 }
 
 export function getMachinetypes({
@@ -59,12 +67,18 @@ export function getMachinetypes({
   loadingSetter = undefined,
   dataSetter = undefined,
 } = {}) {
-  apiMachinetype
-    .getFilteredMachineTypes(filterData)
+  const action = filterData ? apiMachinetype.getFilteredMachineTypes : apiMachinetype.getMachineTypes;
+  action(filterData)
     .then((result) => {
       result = apiMachinetype.checkResponse(result);
       if (loadingSetter) loadingSetter(false);
       if (dataSetter) dataSetter(result);
     })
-    .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
+    .catch((error) => {
+      console.log('Ups, ein Fehler ist aufgetreten', error);
+      NotificationManager.error(
+        'Maschinentypen konnten nicht geladen werden',
+        'Bitte überprüfen Sie Ihre Verbindung!',
+      );
+    });
 }
