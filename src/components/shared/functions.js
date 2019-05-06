@@ -1,6 +1,5 @@
 import * as api from '../../api/customer';
 
-// CustomrList => get all customers
 export function getCustomers({
   filterData = undefined,
   loadingSetter = undefined,

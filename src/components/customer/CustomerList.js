@@ -6,8 +6,7 @@ import {
   Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
 
-import * as customerCalls from '../shared/getFunctions';
-import * as api from '../../api/customer';
+import * as customerCalls from '../shared/functions';
 import './CustomerList.css';
 
 import type { Customer } from '../../api/customer';
