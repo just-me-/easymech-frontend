@@ -2,12 +2,12 @@
 
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Header, Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
-import { NotificationManager } from 'react-notifications';
+import {
+  Header, Table, Loader, Dimmer, Segment, Icon,
+} from 'semantic-ui-react';
 
 import * as api from '../../api/machine';
-import * as apiTypes from '../../api/machinetype';
-import * as apiCustomer from '../../api/customer';
+import * as sharedCalls from '../shared/functions';
 
 import type { Machine } from '../../api/machine';
 
@@ -26,27 +26,12 @@ function MachineList(props: Props) {
   function getListData() {
     api
       .getFilteredMachines(props.filterData)
-      .then(result => {
+      .then((result) => {
         result = api.checkResponse(result);
         setIsLoading(false);
         setMachineListData(result);
       })
       .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
-  }
-
-  function getCustomers() {
-    apiCustomer
-      .getCustomers(true)
-      .then(result => {
-        result = apiCustomer.checkResponse(result);
-        setCustomerData(result);
-      })
-      .catch(error => {
-        NotificationManager.error(
-          'Kunden konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
   }
 
   function getCustomerText(id) {
@@ -71,25 +56,15 @@ function MachineList(props: Props) {
     return 'Kein Typ hinterlegt';
   }
 
-  function getMachineTypes() {
-    apiTypes
-      .getMachineTypes()
-      .then(result => {
-        result = apiTypes.checkResponse(result);
-        setMachineTypeData(result);
-      })
-      .catch(error => {
-        NotificationManager.error(
-          'Maschinentypen konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
-  }
-
   useEffect(() => {
     getListData();
-    getMachineTypes();
-    getCustomers();
+    sharedCalls.getCustomers({
+      deletedToo: true,
+      dataSetter: setCustomerData,
+    });
+    sharedCalls.getMachinetypes({
+      dataSetter: setMachineTypeData,
+    });
   }, []);
 
   return (
@@ -128,7 +103,9 @@ function MachineList(props: Props) {
             ) => (
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editMachine(id)} className="Hover-effect link">
-                  <Icon name="external" size="tiny" className="Inline-icon" /> {seriennummer}
+                  <Icon name="external" size="tiny" className="Inline-icon" />
+                  {' '}
+                  {seriennummer}
                 </Table.Cell>
                 <Table.Cell>{mastnummer}</Table.Cell>
                 <Table.Cell>{motorennummer}</Table.Cell>
