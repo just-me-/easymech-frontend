@@ -3,14 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { NotificationManager } from 'react-notifications';
 
 import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
 
 import * as validation from '../shared/validation';
-import * as apiTypes from '../../api/machinetype';
-import * as apiCustomer from '../../api/customer';
+import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
 
@@ -52,38 +50,6 @@ function MachineFields(props: Props) {
     setMachineData({ ...machineData, besitzerId: result.id });
   }
 
-  function getCustomersList() {
-    apiCustomer
-      .getCustomers(true)
-      .then((result) => {
-        result = apiCustomer.checkResponse(result);
-        setCustomerData(result);
-      })
-      .catch((error) => {
-        console.log('Ups, ein Fehler ist aufgetreten', error);
-        NotificationManager.error(
-          'Kunden konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
-  }
-
-  function getMachineTypesName() {
-    apiTypes
-      .getMachineTypes()
-      .then((result) => {
-        result = apiTypes.checkResponse(result);
-        setMachinetypeData(result);
-      })
-      .catch((error) => {
-        console.log('Ups, ein Fehler ist aufgetreten', error);
-        NotificationManager.error(
-          'Maschinentypen konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
-  }
-
   function handleChange(element, { validate }) {
     let value = element.target.value;
     if (validate) {
@@ -111,8 +77,13 @@ function MachineFields(props: Props) {
   });
 
   useEffect(() => {
-    setCustomerData(getCustomersList());
-    setMachinetypeData(getMachineTypesName());
+    sharedCalls.getCustomers({
+      deletedToo: true,
+      dataSetter: setCustomerData,
+    });
+    sharedCalls.getMachinetypes({
+      dataSetter: setMachinetypeData,
+    });
   }, []);
 
   return (
