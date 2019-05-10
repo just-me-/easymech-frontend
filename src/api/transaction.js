@@ -19,7 +19,9 @@ export type Rental = {
   },
 };
 
+
 // 2Do: wir brauchen noch ein converte to date :)
+// const datetypes = ['startdatum', 'enddatum', 'uebergabe.datum', 'ruecknahme.datum'];
 function prepareDto(rentalObject: Rental) {
   const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'maschinentypId'];
   return helper.convertToNumbers(rentalObject, numbertypes);

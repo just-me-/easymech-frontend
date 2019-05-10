@@ -2,6 +2,7 @@
 
 import { NotificationManager } from 'react-notifications';
 import * as apiCustomer from '../../api/customer';
+import * as apiMachine from '../../api/machine';
 import * as apiMachinetype from '../../api/machinetype';
 
 export function saveCustomer({
@@ -19,7 +20,7 @@ export function saveCustomer({
         result = apiCustomer.checkResponse(result);
         NotificationManager.success(
           'Der Kunde wurde erfolgreich gespeichert.',
-          `${result.firma}${exists ? 'aktualisiert' : 'erfasst'}`,
+          `${result.firma} ${exists ? 'aktualisiert' : 'erfasst'}`,
         );
         if (setViewState) setViewState('list');
         if (setKey) setKey(Math.random()); // clear data - fresh form for next entry
@@ -59,6 +60,29 @@ export function getCustomers({
       console.log('Ups, ein Fehler ist aufgetreten', error);
       NotificationManager.error(
         'Kunden konnten nicht geladen werden',
+        'Bitte überprüfen Sie Ihre Verbindung!',
+      );
+    });
+}
+
+export function getMachines({
+  filterData = undefined,
+  loadingSetter = undefined,
+  dataSetter = undefined,
+  deletedToo = false,
+}: any = {}) {
+  const action = deletedToo ? apiMachine.getMachines : apiMachine.getFilteredMachines;
+  const param = deletedToo ? true : filterData;
+  action(param)
+    .then((result) => {
+      result = apiMachine.checkResponse(result);
+      if (loadingSetter) loadingSetter(false);
+      if (dataSetter) dataSetter(result);
+    })
+    .catch((error) => {
+      console.log('Ups, ein Fehler ist aufgetreten', error);
+      NotificationManager.error(
+        'Maschinen konnten nicht geladen werden',
         'Bitte überprüfen Sie Ihre Verbindung!',
       );
     });

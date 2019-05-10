@@ -125,7 +125,7 @@ function MachineFields(props: Props) {
             onResultSelect={handleCustomerSelect}
             elements={customerData}
             setElementId={props.data ? props.data.besitzerId : 0}
-            noResultsMessage="Keine Maschinentypen gefunden"
+            noResultsMessage="Keine Kunden gefunden"
             isRequired={!props.searchView}
           />
         </Form.Group>
