@@ -1,13 +1,15 @@
+// @flow
+
 import { NotificationManager } from 'react-notifications';
 import * as apiCustomer from '../../api/customer';
 import * as apiMachinetype from '../../api/machinetype';
 
 export function saveCustomer({
-  formIsValid = undefined,
-  customerData = undefined,
-  setKey = undefined,
-  setViewState = undefined,
-  exists = false, // add or edit customer
+  formIsValid: boolean = undefined,
+  customerData: Customer = undefined,
+  setKey: string => void = undefined,
+  setViewState: string => void = undefined,
+  exists: boolean = false, // add or edit customer
 } = {}) {
   const action = exists ? apiCustomer.updateCustomer : apiCustomer.addCustomer;
   if (formIsValid) {
@@ -40,10 +42,10 @@ export function saveCustomer({
 }
 
 export function getCustomers({
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
-  deletedToo = false,
+  filterData: Customer = undefined,
+  loadingSetter: boolean => void = undefined,
+  dataSetter: any => void = undefined,
+  deletedToo: boolean = false,
 } = {}) {
   const action = deletedToo ? apiCustomer.getCustomers : apiCustomer.getFilteredCustomers;
   const param = deletedToo ? true : filterData;
@@ -63,9 +65,9 @@ export function getCustomers({
 }
 
 export function getMachinetypes({
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
+  filterData: Machine = undefined,
+  loadingSetter: boolean => void = undefined,
+  dataSetter: any => void = undefined,
 } = {}) {
   const action = filterData ? apiMachinetype.getFilteredMachineTypes : apiMachinetype.getMachineTypes;
   action(filterData)
