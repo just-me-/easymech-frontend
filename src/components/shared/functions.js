@@ -5,12 +5,12 @@ import * as apiCustomer from '../../api/customer';
 import * as apiMachinetype from '../../api/machinetype';
 
 export function saveCustomer({
-  formIsValid: boolean = undefined,
-  customerData: Customer = undefined,
-  setKey: string => void = undefined,
-  setViewState: string => void = undefined,
-  exists: boolean = false, // add or edit customer
-} = {}) {
+  formIsValid = undefined,
+  customerData = undefined,
+  setKey = undefined,
+  setViewState = undefined,
+  exists = false, // add or edit customer
+}: any = {}) {
   const action = exists ? apiCustomer.updateCustomer : apiCustomer.addCustomer;
   if (formIsValid) {
     if (setViewState) setViewState('loader');
@@ -42,11 +42,11 @@ export function saveCustomer({
 }
 
 export function getCustomers({
-  filterData: Customer = undefined,
-  loadingSetter: boolean => void = undefined,
-  dataSetter: any => void = undefined,
-  deletedToo: boolean = false,
-} = {}) {
+  filterData = undefined,
+  loadingSetter = undefined,
+  dataSetter = undefined,
+  deletedToo = false,
+}: any = {}) {
   const action = deletedToo ? apiCustomer.getCustomers : apiCustomer.getFilteredCustomers;
   const param = deletedToo ? true : filterData;
   action(param)
@@ -65,11 +65,13 @@ export function getCustomers({
 }
 
 export function getMachinetypes({
-  filterData: Machine = undefined,
-  loadingSetter: boolean => void = undefined,
-  dataSetter: any => void = undefined,
-} = {}) {
-  const action = filterData ? apiMachinetype.getFilteredMachineTypes : apiMachinetype.getMachineTypes;
+  filterData = undefined,
+  loadingSetter = undefined,
+  dataSetter = undefined,
+}: any = {}) {
+  const action = filterData
+    ? apiMachinetype.getFilteredMachineTypes
+    : apiMachinetype.getMachineTypes;
   action(filterData)
     .then((result) => {
       result = apiMachinetype.checkResponse(result);
