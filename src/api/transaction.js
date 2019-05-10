@@ -5,21 +5,21 @@ export const checkResponse = helper.checkResponse;
 export type Rental = {
   id?: string,
   standort?: string,
-  startdatum?: date,
-  enddatum?: date,
+  startdatum?: string, // date
+  enddatum?: string, // date
   maschinenId?: number,
   kundenId?: number,
   uebergabe?: {
-    datum: date,
+    datum: string, // date
     notiz?: string,
   },
   ruecknahme?: {
-    datum: date,
+    datum: string, // date
     notiz?: string,
   },
 };
 
-// 2Do: wir brauchen noch ein converte to date :) 
+// 2Do: wir brauchen noch ein converte to date :)
 function prepareDto(rentalObject: Rental) {
   const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'maschinentypId'];
   return helper.convertToNumbers(rentalObject, numbertypes);
