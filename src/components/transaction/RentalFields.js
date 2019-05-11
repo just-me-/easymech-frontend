@@ -12,7 +12,7 @@ import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
 
-import type { Rental } from '../../api/rental';
+import type { Rental } from '../../api/transaction';
 
 export type Props = {
   data?: Rental,
@@ -43,11 +43,11 @@ function RentalFields(props: Props) {
   const [machineData, setMachineData] = useState();
 
   function handleMachineSelect(result) {
-    setMachineData({ ...rentalData, maschinenId: result.id });
+    setRentalData({ ...rentalData, maschinenId: result.id });
   }
 
   function handleCustomerSelect(result) {
-    setMachineData({ ...rentalData, kundenId: result.id });
+    setRentalData({ ...rentalData, kundenId: result.id });
   }
 
   function handleChange(element, { validate }) {
@@ -120,7 +120,7 @@ function RentalFields(props: Props) {
             elements={machineData}
             setElementId={props.data ? props.data.maschinenId : 0}
             noResultsMessage="Keine Maschine gefunden"
-            isRequired="true"
+            isRequired={true}
           />
           <SmartInput
             id="kunde"
@@ -130,7 +130,7 @@ function RentalFields(props: Props) {
             elements={customerData}
             setElementId={props.data ? props.data.kundenId : 0}
             noResultsMessage="Kein Kunden gefunden"
-            isRequired="true"
+            isRequired={true}
           />
         </Form.Group>
 
