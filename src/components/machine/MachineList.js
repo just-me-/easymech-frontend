@@ -6,7 +6,6 @@ import {
   Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
 
-import * as api from '../../api/machine';
 import * as sharedCalls from '../shared/functions';
 
 import type { Machine } from '../../api/machine';
