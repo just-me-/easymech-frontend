@@ -1,267 +1,213 @@
 // @flow
 
-import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
-import {Search, Form, Header} from 'semantic-ui-react'
+import {Dropdown, Form} from 'semantic-ui-react'
 import {NotificationManager} from "react-notifications";
+import SmartInput from '../shared/SmartInput';
 
 import NumberInput from "../shared/NumberInput"
 
 import * as validation from "../shared/validation"
 import * as apiMachine from "../../api/machine";
 import * as apiCustomer from "../../api/customer";
-
-import type {MachineType} from "../../api/machinetype";
 import type {Transaction} from "../../api/transaction";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
+import Portal from "semantic-ui-react/dist/commonjs/addons/Portal/Portal";
+import Machine from "../machine/Machine"
+import type { TypeMachine } from '../../api/machine';
+
 
 export type Props = {
     data?: Transaction,
     setData?: (Transaction) => void,
     setValidState?: (boolean) => void,
     searchView?: boolean,
-    machineTyp?: MachineType
+    machine?: TypeMachine
 };
 
 function TransactionFields(props: Props) {
+    const options = [
+        { key: 'Verkauf', text: 'Verkauf einer Maschine erfassen', value: '0', },
+        { key: 'Ankauf', text: 'Ankauf einer Maschine erfassen', value: '1', },
+    ];
 
+    const today = new Date();
     const initialData = {
         id: (props.data && props.data.id) || undefined,
-        seriennummer: (props.data && props.data.seriennummer) || "",
-        mastnummer: (props.data && props.data.mastnummer) || "",
-        motorennummer: (props.data && props.data.motorennummer) || "",
-        betriebsdauer: (props.data && props.data.betriebsdauer) || "",
-        jahrgang: (props.data && props.data.jahrgang) || "",
-        notiz: (props.data && props.data.notiz) || "",
-        maschinentypId: (props.data && props.data.maschinentypId) || "",
-        besitzerId: (props.data && props.data.besitzerId) || "",
-        isActive: (props.data && props.data.isActive) || ""
+        preis: (props.data && props.data.preis) || "",
+        typ: (props.data && props.data.typ) || 0,
+        datum: (props.data && props.data.datum) || today.toISOString().substring(0, 10),
+        maschinenid: (props.data && props.data.maschinenid) || "",
+        kundenid: (props.data && props.data.kundenid) || ""
     };
-
     const [transactionData, setTransactionData] = useState(initialData);
+    const [customerData, setCustomerData] = useState();
+    const [machineData, setMachineData] = useState();
+    const [isOpen,setOpen] = useState(false);
 
-    const [machines, setMachines] = useState([]);
-    const [machineResults, setMachineResults] = useState([]);
-    const [isMachineLoading,setMachineLoading] = useState(false);
-    const [machineValue,setMachineValue] = useState();
-
-    const [customer, setCustomer] = useState([]); // 2Do - plural oder?
-    const [customerResults, setCustomerResults] = useState([]);
-    const [customerValue,setCustomerValue] = useState();
-    const [isCustomerLoading,setCustomerLoading] = useState(false);
-
-    function resetMachineSearchComponent(){
-        setMachineLoading(false);
-        setMachineResults([]);
-        setMachineValue("");
-    }
-    function resetCustomerSearchComponent(){
-        setCustomerLoading(false);
-        setCustomerResults([]);
-        setCustomerValue("");
+    function reportError(type, error){
+        console.log('Ups, ein Fehler ist aufgetreten', error);
+        NotificationManager.error(
+            type + ' konnten nicht geladen werden'
+        );
     }
 
-    function handleMachineSelect(e, { result }){
-        setTransactionData({...transactionData, 'maschinenid': result.id});
-        setMachineValue(result.seriennummer);
+    function handleMachineSelect(result) {
+        setTransactionData({ ...transactionData, maschinenid: result.id });
     }
 
-    function handleCustomerSelect(e, { result }){
-        setTransactionData({...transactionData, 'kundenid': result.id});
-        setCustomerValue(result.title);
+    function handleCustomerSelect(result) {
+        setTransactionData({ ...transactionData, kundenid: result.id });
     }
 
-    function handleMachineChange(e, { value }){
-        setMachineLoading(true);
-        setMachineValue(e.target.value);
-        setTimeout(() => {
-            if (value.length < 1) return resetMachineSearchComponent();
-
-            const re = new RegExp(_.escapeRegExp(value), 'i');
-            const isMatch = machineResults => re.test(machineResults.seriennummer);
-
-            setMachineLoading(false);
-            setMachineResults(_.filter(machines, isMatch));
-        }, 300)
-    }
-
-    function handleCustomerChange(e, { value }){
-        setCustomerLoading(true);
-        setCustomerValue(e.target.value);
-        setTimeout(() => {
-            if (value.length < 1) return resetCustomerSearchComponent;
-
-            const re = new RegExp(_.escapeRegExp(value), 'i');
-            const isMatch = customerResults => re.test(customerResults.firma);
-
-            setCustomerLoading(false);
-            setCustomerResults(_.filter(customer, isMatch));
-        }, 300)
-    }
-
-    function getCustomersList(){
+    function getCustomersList() {
         apiCustomer
             .getCustomers()
             .then((result) => {
-                setCustomer(apiCustomer.checkResponse(result))
+                setCustomerData(apiCustomer.checkResponse(result));
             })
-            .catch(error => {
-                console.log("Ups, ein Fehler ist aufgetreten", error);
-                NotificationManager.error("Kunden konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+            .catch((error) => {
+                reportError("Kunden",error);
             });
     }
 
-    function getMachinesName(){
+    function getMachineName() {
         apiMachine
             .getMachines()
             .then((result) => {
-                setMachines(apiMachine.checkResponse(result));
+                setMachineData(apiMachine.checkResponse(result));
             })
-            .catch(error => {
-                console.log("Ups, ein Fehler ist aufgetreten", error);
-                NotificationManager.error("Maschinen konnten nicht geladen werden", "Bitte überprüfen Sie Ihre Verbindung!");
+            .catch((error) => {
+                reportError("Maschinen",error)
             });
+    }
+
+    function handlePortal(){
+        setOpen(!isOpen);
     }
 
     function handleChange(element, { validate }) {
         let value = element.target.value;
-        switch(validate) {
-            case "number":
+        switch (validate) {
+            case 'number':
                 value = validation.toNumber(value);
                 break;
-            case "date":
-                console.log("2Do DATE VALIDATION");
+            case 'date':
+                console.log('2Do DATE VALIDATION');
                 break;
             default:
                 break;
         }
-        setTransactionData({...transactionData, [element.target.id]: value});
+        setTransactionData({ ...transactionData, [element.target.id]: value });
+    }
+    function handleDropDown(element){
+        let value = element.target.innerHTML;
+        if(value.includes("Ankauf")){
+            setTransactionData({ ...transactionData, typ: 1});
+        }
     }
 
     useEffect(() => {
-        const requiredIsValide = validation.checkRequired(transactionData.preis);
-        if(props.setValidState) {
-            props.setValidState(requiredIsValide);
+        const requiredIsValid = validation.checkRequired(transactionData.preis);
+
+        if (props.setValidState) {
+            props.setValidState(requiredIsValid);
         }
-        if(props.setData) {
+        if (props.setData) {
             props.setData(transactionData);
         }
     });
 
     useEffect(() => {
-        setCustomer(getCustomersList());
-        setMachines(getMachinesName());
+        setCustomerData(getCustomersList());
+        setMachineData(getMachineName());
     }, []);
-
-    useEffect(() => {
-        if(customer && customer.length > 0) {
-            if(props.data && props.data.id) {
-                const besitzerId = props.data.besitzerId;
-                if(besitzerId) {
-                    const owner = customer.find(x => x.id === besitzerId);
-                    setCustomerValue(owner ? owner.firma : "");
-                }
-            }
-        }
-    }, [customer]);
-
-    useEffect(() => {
-        if(machines && machines.length > 0) {
-            if(props.data && props.data.id) {
-                const maschinenid = props.data.maschinenid;
-                if(maschinenid) {
-                    const maschine = machines.find(x => x.id === maschinenid);
-                    setMachineValue(maschine ? maschine.seriennummer : "");
-                }
-            }
-        }
-    }, [machines]);
 
     return (
         <div>
-            <Header as='h2'>Ankauf</Header>
             <div className="Form-section">
                 <Form.Group widths='equal'>
-                    <Form.Field
-                        control={Search}
-                        label='Maschine'
-                        loading={isMachineLoading}
+                    <SmartInput
+                        label="Maschinen"
+                        matchingKey="seriennummer"
                         onResultSelect={handleMachineSelect}
-                        onSearchChange={_.debounce(handleMachineChange, 500, { leading: true })}
-                        results={machineResults.map((result, index) => {return {key: index, id: result.id, title: result.seriennummer}})}
-                        value={machineValue}
-                        noResultsMessage='Keine Maschinen gefunden'
-                        placeholder={props.searchView ? '' : 'Pflichtfeld'}
+                        elements={machineData}
+                        setElementId={props.data ? props.data.maschinenid : 0}
+                        noResultsMessage="Keine Maschinen gefunden"
+                        isRequired={!props.searchView}
                     />
-                    <Form.Field
-                        control={Search}
-                        label='Besitzer'
-                        loading={isCustomerLoading}
+
+                    <SmartInput
+                        label="Kunde"
+                        matchingKey="firma"
                         onResultSelect={handleCustomerSelect}
-                        onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
-                        results={customerResults.map((result, index) => {return {key: index, id: result.id, title: result.firma}})}
-                        value={customerValue}
-                        noResultsMessage='Keine Kunden gefunden'
-                        placeholder={props.searchView ? '' : 'Pflichtfeld'}
+                        elements={customerData}
+                        setElementId={props.data ? props.data.kundenid : 0}
+                        noResultsMessage="Keine Kunden gefunden"
+                        isRequired={!props.searchView}
                     />
                 </Form.Group>
-
                 <Form.Group widths='equal'>
                     <NumberInput
                         id='preis'
-                        label='Preis' innerLabel='CHF'
-                        value={transactionData.preis} validate='number'
+                        label='Preis'
+                        innerLabel='CHF'
+                        value={transactionData.preis}
+                        validate='number'
                         handleChange={handleChange}
                     />
                     <Form.Input
                         id='datum'
                         label='Datum'
+                        placeholder='YYYY-MM-DD'
                         value={transactionData.datum}
                         onChange={handleChange}
                     />
                 </Form.Group>
-                </div>
-                <Header as='h2'>Verkauf</Header>
-                <div className="Form-section">
-                    <Form.Group widths='equal'>
-                        <Form.Field
-                            control={Search}
-                            label='Maschine'
-                            loading={isMachineLoading}
-                            onResultSelect={handleMachineSelect}
-                            onSearchChange={_.debounce(handleMachineChange, 500, { leading: true })}
-                            results={machineResults.map((result, index) => {return {key: index, id: result.id, title: result.seriennummer}})}
-                            value={machineValue}
-                            noResultsMessage='Keine Maschinen gefunden'
-                            placeholder={props.searchView ? '' : 'Pflichtfeld'}
-                        />
-                        <Form.Field
-                            control={Search}
-                            label='Besitzer'
-                            loading={isCustomerLoading}
-                            onResultSelect={handleCustomerSelect}
-                            onSearchChange={_.debounce(handleCustomerChange, 500, { leading: true })}
-                            results={customerResults.map((result, index) => {return {key: index, id: result.id, title: result.firma}})}
-                            value={customerValue}
-                            noResultsMessage='Keine Kunden gefunden'
-                            placeholder={props.searchView ? '' : 'Pflichtfeld'}
-                        />
-                    </Form.Group>
+                <Form.Group>
+                    <Dropdown
+                        id='typ'
+                        placeholder='Auswahl Transaktion'
+                        fluid
+                        selection
+                        options={options}
+                        onChange={handleDropDown}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Button
+                        content='Maschine Erfassen'
+                        disabled={isOpen}
+                        onClick={handlePortal}
+                        positive
+                    />
 
-                    <Form.Group widths='equal'>
-                        <NumberInput
-                            id='preis'
-                            label='Preis' innerLabel='CHF'
-                            value={transactionData.preis} validate='number'
-                            handleChange={handleChange}
-                        />
-                        <Form.Input
-                            id='datum'
-                            label='Datum'
-                            value={transactionData.datum}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </div>
+                    <Portal open={isOpen} >
+                        <Segment
+                            style={{
+                                left: '40%',
+                                position: 'fixed',
+                                top: '20%',
+                                zIndex: 1000,
+                            }}
+                            pilled
+                        >
+
+                            <Machine/>
+
+                            <Button
+                                content='Schliessen'
+                                negative
+                                onClick={() =>{
+                                    handlePortal();
+                                    getMachineName();
+                                }}
+                            />
+                        </Segment>
+                    </Portal>
+                </Form.Group>
+            </div>
         </div>
     )
 }
