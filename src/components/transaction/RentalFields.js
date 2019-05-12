@@ -51,7 +51,6 @@ function RentalFields(props: Props) {
   }
 
   function handleChange(element, { validate }) {
-    console.log(element, element.target.value, element.target.id);
     let value = element.target.value;
     if (validate) {
       if (validate === 'number') {
