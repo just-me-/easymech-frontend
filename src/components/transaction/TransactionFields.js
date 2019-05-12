@@ -6,10 +6,8 @@ import {NotificationManager} from "react-notifications";
 import SmartInput from '../shared/SmartInput';
 
 import NumberInput from "../shared/NumberInput"
-
+import * as helper from "../shared/functions"
 import * as validation from "../shared/validation"
-import * as apiMachine from "../../api/machine";
-import * as apiCustomer from "../../api/customer";
 import type {Transaction} from "../../api/transaction";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
@@ -61,28 +59,6 @@ function TransactionFields(props: Props) {
         setTransactionData({ ...transactionData, kundenid: result.id });
     }
 
-    function getCustomersList() {
-        apiCustomer
-            .getCustomers()
-            .then((result) => {
-                setCustomerData(apiCustomer.checkResponse(result));
-            })
-            .catch((error) => {
-                reportError("Kunden",error);
-            });
-    }
-
-    function getMachineName() {
-        apiMachine
-            .getMachines()
-            .then((result) => {
-                setMachineData(apiMachine.checkResponse(result));
-            })
-            .catch((error) => {
-                reportError("Maschinen",error)
-            });
-    }
-
     function handlePortal(){
         setOpen(!isOpen);
     }
@@ -121,8 +97,8 @@ function TransactionFields(props: Props) {
     });
 
     useEffect(() => {
-        setCustomerData(getCustomersList());
-        setMachineData(getMachineName());
+        setCustomerData(helper.getCustomers());
+        setMachineData(helper.getMachines());
     }, []);
 
     return (
@@ -204,7 +180,7 @@ function TransactionFields(props: Props) {
                                 negative
                                 onClick={() =>{
                                     handlePortal();
-                                    getMachineName();
+                                    helper.getMachines();
                                 }}
                             />
                         </Segment>
