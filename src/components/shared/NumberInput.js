@@ -8,13 +8,14 @@ export type Props = {
   label: string,
   innerLabel: string,
   value: ?string,
+  error?: boolean,
   validate?: string,
   handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
 };
 
 function NumberInput(props: Props) {
   return (
-    <Form.Field>
+    <Form.Field error={props.error}>
       <label htmlFor={props.id}>{props.label}</label>
       <Input
         id={props.id}

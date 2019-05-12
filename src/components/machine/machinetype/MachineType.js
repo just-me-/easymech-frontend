@@ -32,10 +32,14 @@ function MachineType() {
         })
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
-          NotificationManager.error(
-            'Beim Speichern des Maschinentyps ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
+          if (error.code && error.code > 0) {
+            NotificationManager.error(error.msg, error.codeMsg);
+          } else {
+            NotificationManager.error(
+              'Beim Speichern des Maschinentyps ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+            );
+          }
         });
     } else if (!formIsValid) {
       NotificationManager.info('Bitte füllen Sie alle Pflichtfelder aus!');
@@ -76,10 +80,14 @@ function MachineType() {
       .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('edit');
-        NotificationManager.error(
-          'Beim Löschen ist ein Fehler aufgetreten.',
-          'Bitte erneut versuchen!',
-        );
+        if (error.code && error.code > 0) {
+          NotificationManager.error(error.msg, error.codeMsg);
+        } else {
+          NotificationManager.error(
+            'Beim Löschen ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
+          );
+        }
       });
   }
 
@@ -99,10 +107,14 @@ function MachineType() {
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           setViewState('edit');
-          NotificationManager.error(
-            'Beim Speichern ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
+          if (error.code && error.code > 0) {
+            NotificationManager.error(error.msg, error.codeMsg);
+          } else {
+            NotificationManager.error(
+              'Beim Speichern des Maschinentyps ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+            );
+          }
         });
     } else {
       NotificationManager.info('Bitte füllen Sie alle Pflichtfelder aus!');

@@ -1,9 +1,12 @@
 // @flow
 
 import React, { useState } from 'react';
-import { Header, Form, Button, Dimmer, Loader } from 'semantic-ui-react';
+import {
+  Header, Form, Button, Dimmer, Loader,
+} from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
+import * as customerCalls from '../shared/functions';
 import * as api from '../../api/customer';
 
 import CustomerList from './CustomerList';
@@ -27,50 +30,38 @@ function CustomerSearch(props: Props) {
   const [formIsValid, setFormIsValid] = useState(true); // alrdy saved, unchanged entries are valid
 
   function saveCustomer() {
-    if (formIsValid) {
-      setViewState('loader');
-      api
-        .updateCustomer(customerEditData)
-        .then(result => {
-          result = api.checkResponse(result);
-          setViewState('list');
-          NotificationManager.success(
-            'Der Kunde wurde erfolgreich gespeichert.',
-            result.firma + ' aktualisiert',
-          );
-        })
-        .catch(error => {
-          console.log('Ups, ein Fehler ist aufgetreten', error);
-          setViewState('edit');
-          NotificationManager.error(
-            'Beim Speichern des Kundens ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
-        });
-    } else {
-      NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
-    }
+    customerCalls.saveCustomer({
+      customerData: customerEditData,
+      formIsValid,
+      keySetter: setKey,
+      setViewState,
+      exists: true
+    });
   }
 
   function deleteCustomer() {
     setViewState('loader');
     api
       .deleteCustomer(customerEditData.id)
-      .then(result => {
+      .then((result) => {
         result = api.checkResponse(result);
         setViewState('list');
         NotificationManager.success(
           'Der Kunde wurde erfolgreich gelöscht.',
-          customerEditData.firma + ' gelöscht',
+          `${customerEditData.firma} gelöscht`,
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('edit');
-        NotificationManager.error(
-          'Beim Löschen des Kundens ist ein Fehler aufgetreten.',
-          'Bitte erneut versuchen!',
-        );
+        if (error.code && error.code > 0) {
+          NotificationManager.error(error.msg, error.codeMsg);
+        } else {
+          NotificationManager.error(
+            'Beim Löschen des Kundens ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
+          );
+        }
       });
   }
 
@@ -78,13 +69,13 @@ function CustomerSearch(props: Props) {
     setViewState('loader');
     api
       .getCustomer(customerId)
-      .then(result => {
+      .then((result) => {
         setKey(Math.random()); // be sure that a fresh form is prepered
         result = api.checkResponse(result);
         setCustomerEditData(result);
         setTimeout(() => setViewState('edit'), 200);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('list');
         NotificationManager.error(

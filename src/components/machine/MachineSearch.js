@@ -1,7 +1,9 @@
 // @flow
 
 import React, { useState } from 'react';
-import { Header, Form, Button, Dimmer, Loader } from 'semantic-ui-react';
+import {
+  Header, Form, Button, Dimmer, Loader,
+} from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
 import * as api from '../../api/machine';
@@ -31,21 +33,25 @@ function MachineSearch(props: Props) {
       setViewState('loader');
       api
         .updateMachine(machineEditData)
-        .then(result => {
+        .then((result) => {
           result = api.checkResponse(result);
           setViewState('list');
           NotificationManager.success(
             'Die Maschine wurde erfolgreich gespeichert.',
-            result.seriennummer + ' aktualisiert',
+            `${result.seriennummer} aktualisiert`,
           );
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
           setViewState('edit');
-          NotificationManager.error(
-            'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
+          if (error.code && error.code > 0) {
+            NotificationManager.error(error.msg, error.codeMsg);
+          } else {
+            NotificationManager.error(
+              'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+            );
+          }
         });
     } else {
       NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
@@ -56,21 +62,25 @@ function MachineSearch(props: Props) {
     setViewState('loader');
     api
       .deleteMachine(machineEditData.id)
-      .then(result => {
+      .then((result) => {
         result = api.checkResponse(result);
         setViewState('list');
         NotificationManager.success(
           'Die Maschine wurde erfolgreich gelöscht.',
-          machineEditData.seriennummer + ' gelöscht',
+          `${machineEditData.seriennummer} gelöscht`,
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('edit');
-        NotificationManager.error(
-          'Beim Löschen der Maschine ist ein Fehler aufgetreten.',
-          'Bitte erneut versuchen!',
-        );
+        if (error.code && error.code > 0) {
+          NotificationManager.error(error.msg, error.codeMsg);
+        } else {
+          NotificationManager.error(
+            'Beim Löschen der Maschine ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
+          );
+        }
       });
   }
 
@@ -78,13 +88,13 @@ function MachineSearch(props: Props) {
     setViewState('loader');
     api
       .getMachine(machineId)
-      .then(result => {
+      .then((result) => {
         setKey(Math.random()); // be sure that a fresh form is prepered
         result = api.checkResponse(result);
         setMachineEditData(result);
         setTimeout(() => setViewState('edit'), 200);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ups, ein Fehler ist aufgetreten', error);
         setViewState('list');
         NotificationManager.error(

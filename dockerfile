@@ -8,11 +8,17 @@ WORKDIR /usr/src/app
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-ENV NODE_ENV production
 
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
 RUN npm install --silent
+RUN npm install serve --silent
+
+# npm run build
+# serve -s build -l 40007
 
 # start app
+# CMD ["npm", "run", "build"]
+# CMD ["npm", "run-script", "build"]
+# CMD ["serve", "-s", "build"]
 CMD ["npm", "start"]

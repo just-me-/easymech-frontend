@@ -11,7 +11,17 @@ export function checkStatus(response) {
 
 export function checkResponse(response) {
   if (response.status !== 'ok') {
-    throw new Error(`Servermeldung: ${response.message}`);
+    const errorCodes = {
+      200: 'Duplikat',
+      201: 'Noch in Verwendung',
+    };
+    const errorCode = errorCodes
+      ? errorCodes[response.errorCode]
+      : `Unbekannter Fehler ${response.errorCode}`;
+    throw Object.assign(
+      new Error(`Fehlercode: ${errorCode} - Servermeldung: ${response.message}`),
+      { code: response.errorCode, codeMsg: errorCode, msg: response.message },
+    );
   }
   return response.data;
 }
@@ -22,6 +32,28 @@ export function convertToNumbers(dto, fieldsToConvert) {
     let convertedNumber = parseInt(dto[fieldsToConvert[key]], 10);
     if (isNaN(convertedNumber)) convertedNumber = 0;
     convertedDto[fieldsToConvert[key]] = convertedNumber;
+  }
+  return convertedDto;
+}
+
+function parseToDatabaseDate(date) {
+  if(date && date.length > 0) {
+    const arr = date.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
+    date = `${arr[3]}-${arr[2]}-${arr[1]}`;
+  }
+  return date;
+}
+
+export function convertToDatabaseDates(dto, fieldsToConvert) {
+  const convertedDto = dto;
+  for (const key in fieldsToConvert) {
+    // support neasted fields
+    let key_arr = fieldsToConvert[key].split('.');
+    if (key_arr && key_arr[1]) {
+      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(dto[key_arr[0]][key_arr[1]]);
+    } else {
+      convertedDto[fieldsToConvert[key]] = parseToDatabaseDate(dto[fieldsToConvert[key]]);
+    }
   }
   return convertedDto;
 }

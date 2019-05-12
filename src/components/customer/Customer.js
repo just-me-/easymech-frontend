@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import { Button, Header, Form } from 'semantic-ui-react';
-import { NotificationManager } from 'react-notifications';
 
-import * as api from '../../api/customer';
+import * as customerCalls from '../shared/functions';
 
 import CustomerFields from './CustomerFields';
 
@@ -14,27 +13,12 @@ function Customer() {
   const [key, setKey] = useState(Math.random());
 
   function addCustomer() {
-    if (formIsValid) {
-      api
-        .addCustomer(customerData)
-        .then((result) => {
-          result = api.checkResponse(result);
-          NotificationManager.success(
-            'Der Kunde wurde erfolgreich gespeichert.',
-            `${result.firma} erfasst`,
-          );
-          setKey(Math.random()); // clear data - fresh form for next entry
-        })
-        .catch((error) => {
-          console.log('Ups, ein Fehler ist aufgetreten', error);
-          NotificationManager.error(
-            'Beim Speichern des Kundens ist ein Fehler aufgetreten.',
-            'Bitte erneut versuchen!',
-          );
-        });
-    } else {
-      NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
-    }
+    customerCalls.saveCustomer({
+      customerData,
+      formIsValid,
+      setKey,
+      exists: false,
+    });
   }
 
   return (

@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { NotificationManager } from 'react-notifications';
 
-import NumberInput from '../NumberInput';
-import SmartInput from '../SmartInput';
+import NumberInput from '../shared/NumberInput';
+import SmartInput from '../shared/SmartInput';
 
-import * as validation from '../validation';
-import * as apiTypes from '../../api/machinetype';
-import * as apiCustomer from '../../api/customer';
+import * as validation from '../shared/validation';
+import * as sharedCalls from '../shared/functions';
+
+import '../shared/Fields.css';
 
 import type { MachineType } from '../../api/machinetype';
 import type { Machine } from '../../api/machine';
@@ -34,12 +34,13 @@ function MachineFields(props: Props) {
     notiz: (props.data && props.data.notiz) || '',
     maschinentypId: (props.data && props.data.maschinentypId) || '',
     besitzerId: (props.data && props.data.besitzerId) || '',
-    isActive: (props.data && props.data.isActive) || '',
   };
 
   const [machineData, setMachineData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machinetypeData, setMachinetypeData] = useState();
+
+  const [yearIsValid, setYearIsValid] = useState(true);
 
   function handleMachineTypeSelect(result) {
     setMachineData({ ...machineData, maschinentypId: result.id });
@@ -49,52 +50,16 @@ function MachineFields(props: Props) {
     setMachineData({ ...machineData, besitzerId: result.id });
   }
 
-  function getCustomersList() {
-    apiCustomer
-      .getCustomers()
-      .then((result) => {
-        result = apiCustomer.checkResponse(result);
-        // 2Do nicht unnütze Customer Daten im Browser speichern
-        setCustomerData(result);
-      })
-      .catch((error) => {
-        console.log('Ups, ein Fehler ist aufgetreten', error);
-        NotificationManager.error(
-          'Kunden konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
-  }
-
-  function getMachineTypesName() {
-    apiTypes
-      .getMachineTypes()
-      .then((result) => {
-        result = apiTypes.checkResponse(result);
-        // 2Do nicht unnütze Machine Daten im Browser speichern
-        setMachinetypeData(result);
-      })
-      .catch((error) => {
-        console.log('Ups, ein Fehler ist aufgetreten', error);
-        NotificationManager.error(
-          'Maschinentypen konnten nicht geladen werden',
-          'Bitte überprüfen Sie Ihre Verbindung!',
-        );
-      });
-  }
-
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    switch (validate) {
-      case 'number':
+    if (validate) {
+      if (validate === 'number') {
         value = validation.toNumber(value);
-        break;
-      case 'date':
-        // 2Do - Hmm also muss einfach im Format YYYY sein, sonst "werde rot" + "hinweis"
-        console.log('2Do DATE VALIDATION');
-        break;
-      default:
-        break;
+      }
+      if (validate === 'year') {
+        value = validation.toNumber(value);
+        if (props.setValidState) setYearIsValid(value ? validation.checkYear(value) : true);
+      }
     }
     setMachineData({ ...machineData, [element.target.id]: value });
   }
@@ -104,17 +69,21 @@ function MachineFields(props: Props) {
       && parseInt(machineData.maschinentypId, 10) > 0
       && parseInt(machineData.besitzerId, 10) > 0;
     if (props.setValidState) {
-      props.setValidState(requiredIsValide);
+      props.setValidState(requiredIsValide && yearIsValid);
     }
     if (props.setData) {
-      machineData.isActive = true;
       props.setData(machineData);
     }
   });
 
   useEffect(() => {
-    setCustomerData(getCustomersList());
-    setMachinetypeData(getMachineTypesName());
+    sharedCalls.getCustomers({
+      deletedToo: true,
+      dataSetter: setCustomerData,
+    });
+    sharedCalls.getMachinetypes({
+      dataSetter: setMachinetypeData,
+    });
   }, []);
 
   return (
@@ -140,6 +109,7 @@ function MachineFields(props: Props) {
 
         <Form.Group widths="equal">
           <SmartInput
+            id="maschinentyp"
             label="Maschinentyp"
             matchingKey="fabrikat"
             onResultSelect={handleMachineTypeSelect}
@@ -148,14 +118,14 @@ function MachineFields(props: Props) {
             noResultsMessage="Keine Maschinentypen gefunden"
             isRequired={!props.searchView}
           />
-
           <SmartInput
+            id="besitzer"
             label="Besitzer"
             matchingKey="firma"
             onResultSelect={handleCustomerSelect}
             elements={customerData}
             setElementId={props.data ? props.data.besitzerId : 0}
-            noResultsMessage="Keine Maschinentypen gefunden"
+            noResultsMessage="Keine Kunden gefunden"
             isRequired={!props.searchView}
           />
         </Form.Group>
@@ -181,9 +151,9 @@ function MachineFields(props: Props) {
             label="Jahrgang"
             innerLabel="YYYY"
             value={machineData.jahrgang}
-            validate="number"
-            realValidation="date"
+            validate="year"
             handleChange={handleChange}
+            error={!yearIsValid}
           />
           <Form.Input
             label="Dummy"
