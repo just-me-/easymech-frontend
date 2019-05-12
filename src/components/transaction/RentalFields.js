@@ -90,8 +90,8 @@ function RentalFields(props: Props) {
   useEffect(() => {
     const requiredIsValide =
       Object.values(datesAreValid).every(val => val === true)
-      && parseInt(rentalData.maschinentypId, 10) > 0
-      && parseInt(rentalData.besitzerId, 10) > 0;
+      && parseInt(rentalData.maschinenId, 10) > 0
+      && parseInt(rentalData.kundenId, 10) > 0;
     if (props.setValidState) {
       props.setValidState(requiredIsValide);
     }

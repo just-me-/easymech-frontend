@@ -5,26 +5,23 @@ export const checkResponse = helper.checkResponse;
 export type Rental = {
   id?: string,
   standort?: string,
-  startdatum?: string, // date
-  enddatum?: string, // date
+  startdatum?: string,
+  enddatum?: string,
   maschinenId?: number,
   kundenId?: number,
   uebergabe?: {
-    datum: string, // date
+    datum: string,
     notiz?: string,
   },
   ruecknahme?: {
-    datum: string, // date
+    datum: string,
     notiz?: string,
   },
 };
 
-
-// 2Do: wir brauchen noch ein converte to date :)
-// const datetypes = ['startdatum', 'enddatum', 'uebergabe.datum', 'ruecknahme.datum'];
 function prepareDto(rentalObject: Rental) {
-  const numbertypes = ['betriebsdauer', 'jahrgang', 'besitzerId', 'maschinentypId'];
-  return helper.convertToNumbers(rentalObject, numbertypes);
+  const datetypes = ['startdatum', 'enddatum', 'uebergabe.datum', 'ruecknahme.datum'];
+  return helper.convertToDatabaseDates(rentalObject, datetypes);
 }
 
 export function addRental(rentalObject: Rental): Promise<SaveResult> {
