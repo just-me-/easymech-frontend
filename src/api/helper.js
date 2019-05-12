@@ -28,7 +28,7 @@ export function checkResponse(response) {
 }
 
 export function convertToNumbers(dto, fieldsToConvert) {
-  const convertedDto = dto;
+  const convertedDto = Object.assign({}, dto);
   for (const key in fieldsToConvert) {
     let convertedNumber = parseInt(dto[fieldsToConvert[key]], 10);
     if (isNaN(convertedNumber)) convertedNumber = 0;
@@ -38,22 +38,23 @@ export function convertToNumbers(dto, fieldsToConvert) {
 }
 
 function parseToDatabaseDate(date) {
-  if (date && date.length > 0) {
-    const arr = date.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
-    date = `${arr[3]}-${arr[2]}-${arr[1]}`;
+  let convertedDate = Object.assign("", date);
+  if (convertedDate && convertedDate.length > 0) {
+    const arr = convertedDate.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
+    convertedDate = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}-${arr[2]}-${arr[1]}` : '';
   }
-  return date;
+  return convertedDate;
 }
 
 export function convertToDatabaseDates(dto, fieldsToConvert) {
-  const convertedDto = dto;
+  const convertedDto = Object.assign({}, dto);
   for (const key in fieldsToConvert) {
     // support neasted fields
     const key_arr = fieldsToConvert[key].split('.');
     if (key_arr && key_arr[1]) {
-      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(dto[key_arr[0]][key_arr[1]]);
+      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(convertedDto[key_arr[0]][key_arr[1]]);
     } else {
-      convertedDto[fieldsToConvert[key]] = parseToDatabaseDate(dto[fieldsToConvert[key]]);
+      convertedDto[fieldsToConvert[key]] = parseToDatabaseDate(convertedDto[fieldsToConvert[key]]);
     }
   }
   return convertedDto;
