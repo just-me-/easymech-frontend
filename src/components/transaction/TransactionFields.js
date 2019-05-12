@@ -97,8 +97,15 @@ function TransactionFields(props: Props) {
     });
 
     useEffect(() => {
-        setCustomerData(helper.getCustomers());
-        setMachineData(helper.getMachines());
+        helper.getCustomers({
+            deletedToo: true,
+            dataSetter: setCustomerData,
+        });
+        helper.getMachines({
+            deletedToo: true,
+            dataSetter: setMachineData,
+        });
+
     }, []);
 
     return (
