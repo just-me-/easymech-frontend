@@ -129,6 +129,7 @@ function TransactionFields(props: Props) {
             <div className="Form-section">
                 <Form.Group widths='equal'>
                     <SmartInput
+                        id="maschine"
                         label="Maschinen"
                         matchingKey="seriennummer"
                         onResultSelect={handleMachineSelect}
@@ -139,6 +140,7 @@ function TransactionFields(props: Props) {
                     />
 
                     <SmartInput
+                        id="kunde"
                         label="Kunde"
                         matchingKey="firma"
                         onResultSelect={handleCustomerSelect}
