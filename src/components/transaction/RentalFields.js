@@ -29,12 +29,12 @@ function RentalFields(props: Props) {
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
     uebergabe: {
-      datum: (props.data && props.data.uebergabe.datum) || '',
-      notiz: (props.data && props.data.uebergabe.notiz) || '',
+      datum: (props.data && props.data.uebergabe && props.data.uebergabe.datum) || '',
+      notiz: (props.data && props.data.uebergabe && props.data.uebergabe.notiz) || '',
     },
     ruecknahme: {
-      datum: (props.data && props.data.ruecknahme.datum) || '',
-      notiz: (props.data && props.data.ruecknahme.notiz) || '',
+      datum: (props.data && props.data.ruecknahme && props.data.ruecknahme.datum) || '',
+      notiz: (props.data && props.data.ruecknahme && props.data.ruecknahme.notiz) || '',
     },
   };
 
@@ -47,6 +47,12 @@ function RentalFields(props: Props) {
     enddatum: true,
     uebergabe__datum: true,
     ruecknahme__datum: true
+  });
+
+  const [visibility, setVisibility] = useState({
+    uebergabe_notiz: initialData.uebergabe.datum !== "",
+    ruecknahme: initialData.uebergabe.datum !== "",
+    ruecknahme_notiz: initialData.ruecknahme.datum !== "",
   });
 
   function handleMachineSelect(result) {
@@ -192,6 +198,7 @@ function RentalFields(props: Props) {
             placeholder="Dummy Placeholder for equal dividing"
           />
         </Form.Group>
+        {visibility.uebergabe_notiz && (
         <Form.Group widths="equal" className="OneField">
           <Form.Field
             control={TextareaAutosize}
@@ -201,36 +208,43 @@ function RentalFields(props: Props) {
             value={rentalData.uebergabe.notiz}
           />
         </Form.Group>
+        )}
       </div>
 
+      {visibility.ruecknahme && (
+      <React.Fragment>
       <Header as="h2">Rückgabe</Header>
-      <div className="Form-section">
-        <Form.Group widths="equal">
-          <NumberInput
-            id="ruecknahme__datum"
-            label="Datum"
-            innerLabel="DD.MM.YYYY"
-            value={rentalData.ruecknahme.datum}
-            validate="date"
-            handleChange={handleChange}
-            error={!datesAreValid["ruecknahme__datum"]}
-          />
-          <Form.Input
-            label="Dummy"
-            className="dummyObject"
-            placeholder="Dummy Placeholder for equal dividing"
-          />
-        </Form.Group>
-        <Form.Group widths="equal" className="OneField">
-          <Form.Field
-            control={TextareaAutosize}
-            id="ruecknahme__notiz"
-            label="Notizen"
-            onChange={handleChange}
-            value={rentalData.ruecknahme.notiz}
-          />
-        </Form.Group>
-      </div>
+        <div className="Form-section">
+          <Form.Group widths="equal">
+            <NumberInput
+              id="ruecknahme__datum"
+              label="Datum"
+              innerLabel="DD.MM.YYYY"
+              value={rentalData.ruecknahme.datum}
+              validate="date"
+              handleChange={handleChange}
+              error={!datesAreValid["ruecknahme__datum"]}
+            />
+            <Form.Input
+              label="Dummy"
+              className="dummyObject"
+              placeholder="Dummy Placeholder for equal dividing"
+            />
+          </Form.Group>
+          {visibility.ruecknahme_notiz && (
+          <Form.Group widths="equal" className="OneField">
+            <Form.Field
+              control={TextareaAutosize}
+              id="ruecknahme__notiz"
+              label="Notizen"
+              onChange={handleChange}
+              value={rentalData.ruecknahme.notiz}
+            />
+          </Form.Group>
+          )}
+        </div>
+      </React.Fragment>
+      )}
     </div>
   );
 }
