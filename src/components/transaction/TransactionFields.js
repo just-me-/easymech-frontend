@@ -2,7 +2,6 @@
 
 import React, {useState, useEffect} from 'react'
 import {Dropdown, Form} from 'semantic-ui-react'
-import {NotificationManager} from "react-notifications";
 import SmartInput from '../shared/SmartInput';
 
 import NumberInput from "../shared/NumberInput"
@@ -44,13 +43,6 @@ function TransactionFields(props: Props) {
     const [customerData, setCustomerData] = useState();
     const [machineData, setMachineData] = useState();
     const [isOpen,setOpen] = useState(false);
-
-    function reportError(type, error){
-        console.log('Ups, ein Fehler ist aufgetreten', error);
-        NotificationManager.error(
-            type + ' konnten nicht geladen werden'
-        );
-    }
 
     function handleMachineSelect(result) {
         setTransactionData({ ...transactionData, maschinenid: result.id });
