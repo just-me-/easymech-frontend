@@ -45,3 +45,10 @@
     display: none;
   }
 }
+
+.Portal-section{
+  left: 40%;
+  position: fixed;
+  top: 20%;
+  zIndex: 1000;
+}

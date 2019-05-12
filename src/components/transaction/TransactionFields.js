@@ -14,6 +14,7 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import Portal from "semantic-ui-react/dist/commonjs/addons/Portal/Portal";
 import Machine from "../machine/Machine"
 import type { TypeMachine } from '../../api/machine';
+import "../shared/Fields.css"
 
 
 export type Props = {
@@ -170,27 +171,21 @@ function TransactionFields(props: Props) {
                     />
 
                     <Portal open={isOpen} >
-                        <Segment
-                            style={{
-                                left: '40%',
-                                position: 'fixed',
-                                top: '20%',
-                                zIndex: 1000,
-                            }}
-                            pilled
-                        >
+                        <div className="Portal-section">
+                            <Segment pilled>
 
-                            <Machine/>
+                                <Machine/>
 
-                            <Button
-                                content='Schliessen'
-                                negative
-                                onClick={() =>{
-                                    handlePortal();
-                                    helper.getMachines();
-                                }}
-                            />
-                        </Segment>
+                                <Button
+                                    content='Schliessen'
+                                    negative
+                                    onClick={() =>{
+                                        handlePortal();
+                                        helper.getMachines();
+                                    }}
+                                />
+                            </Segment>
+                        </div>
                     </Portal>
                 </Form.Group>
             </div>
