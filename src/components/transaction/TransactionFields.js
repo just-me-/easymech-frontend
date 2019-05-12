@@ -109,7 +109,8 @@ function TransactionFields(props: Props) {
     }
 
     useEffect(() => {
-        const requiredIsValid = validation.checkRequired(transactionData.preis);
+        const requiredIsValid = validation.checkRequired(transactionData.preis)
+            && validation.checkDateISO(transactionData.datum);
 
         if (props.setValidState) {
             props.setValidState(requiredIsValid);

@@ -21,6 +21,15 @@ export function checkDate(str) {
     && date.getDate() === parseInt(dmy[0], 10)
   );
 }
+
+export function checkDateISO(str) {
+    const validFormat = !!str && /\d{4}-\d{2}-\d{2}/.test(str);
+    if (!validFormat){
+        return false;
+    }
+    return true;
+}
+
 export function toNumber(str) {
   return str.toString().replace(/\D/g, '');
 }
