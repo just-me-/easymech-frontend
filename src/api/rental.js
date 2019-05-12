@@ -19,9 +19,18 @@ export type Rental = {
     },
 };
 
+function deleteSubObjectIfDateEmtpy(object: string, rentalObject: Rental) {
+  if(rentalObject[object]["datum"] === "") {
+    rentalObject = { ...rentalObject, [object]: null };
+  }
+  return rentalObject;
+}
+
 function prepareDto(rentalObject: Rental) {
     const datetypes = ['startdatum', 'enddatum', 'uebergabe.datum', 'ruecknahme.datum'];
-    return helper.convertToDatabaseDates(rentalObject, datetypes);
+    let rental = helper.convertToDatabaseDates(rentalObject, datetypes);
+    rental = deleteSubObjectIfDateEmtpy("uebergabe", rental);
+    return deleteSubObjectIfDateEmtpy("ruecknahme", rental);
 }
 
 export function addRental(rentalObject: Rental): Promise<SaveResult> {

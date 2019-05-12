@@ -14,6 +14,7 @@ export function checkResponse(response) {
     const errorCodes = {
       200: 'Duplikat',
       201: 'Noch in Verwendung',
+      203: 'Nicht vermietbar'
     };
     const errorCode = errorCodes
       ? errorCodes[response.errorCode]
