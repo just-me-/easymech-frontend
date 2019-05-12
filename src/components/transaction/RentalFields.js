@@ -107,6 +107,15 @@ function RentalFields(props: Props) {
   });
 
   useEffect(() => {
+    setVisibility({
+      uebergabe_notiz: datesAreValid.uebergabe__datum && rentalData.uebergabe.datum.length > 0,
+      ruecknahme: datesAreValid.uebergabe__datum && rentalData.uebergabe.datum.length > 0,
+      ruecknahme_notiz: datesAreValid.ruecknahme__datum && rentalData.ruecknahme.datum.length > 0,
+
+    });
+  }, [rentalData, datesAreValid]);
+
+  useEffect(() => {
     sharedCalls.getCustomers({
       deletedToo: true,
       dataSetter: setCustomerData,
