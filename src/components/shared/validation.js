@@ -22,12 +22,9 @@ export function checkDate(str) {
   );
 }
 
+// 2Do - @dario - wozu brauchen wir das?
 export function checkDateISO(str) {
-    const validFormat = !!str && /\d{4}-\d{2}-\d{2}/.test(str);
-    if (!validFormat){
-        return false;
-    }
-    return true;
+  return !!str && /\d{4}-\d{2}-\d{2}/.test(str);
 }
 
 export function toNumber(str) {
