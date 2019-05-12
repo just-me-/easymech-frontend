@@ -49,12 +49,13 @@ class App extends React.Component<Props, State> {
   };
 
   signout = (callback: () => void) => {
+    const { keycloak } = this.state;
     this.setState({
       isAuthenticated: false,
       token: undefined,
     });
-    if (this.state.keycloak) {
-        this.state.keycloak.logout();
+    if (keycloak) {
+        keycloak.logout();
     }
     sessionStorage.removeItem('token');
     callback();
