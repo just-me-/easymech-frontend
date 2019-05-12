@@ -50,6 +50,39 @@ test('Check year invalid - to small', () => {
 test('Check year invalid - to big', () => {
   expect(validation.checkYear('11111')).toBe(false);
 });
+// year range ist limited from 1900 to 2099
+test('Lowest valide year', () => {
+  expect(validation.checkYear('1900')).toBe(true);
+});
+test('To low is invalid', () => {
+  expect(validation.checkYear('1899')).toBe(false);
+});
+test('Biggest valide year', () => {
+  expect(validation.checkYear('2099')).toBe(true);
+});
+test('To big is invalid', () => {
+  expect(validation.checkYear('2100')).toBe(false);
+});
+
+test('Allow none leading zeros', () => {
+  expect(validation.checkDate('1.1.2019')).toBe(true);
+});
+test('Formal valid date but it does not realy exist', () => {
+  expect(validation.checkDate('30.02.2019')).toBe(false);
+});
+// year range ist limited from 1900 to 2099
+test('Lowest valide year', () => {
+  expect(validation.checkDate('01.01.1900')).toBe(true);
+});
+test('To low is invalid', () => {
+  expect(validation.checkDate('31.12.1899')).toBe(false);
+});
+test('Biggest valide year', () => {
+  expect(validation.checkDate('31.12.2099')).toBe(true);
+});
+test('To big is invalid', () => {
+  expect(validation.checkDate('01.01.2100')).toBe(false);
+});
 
 test('Delete to empty string', () => {
   expect(validation.toNumber('bjnejkr')).toBe('');
@@ -68,4 +101,11 @@ test('Can handle numbers', () => {
 });
 test('Can handle 0 (as number)', () => {
   expect(validation.toNumber(0)).toBe('0');
+});
+
+test('Delete to empty string', () => {
+  expect(validation.toDate('bjnejkr')).toBe('');
+});
+test('Convert to date', () => {
+  expect(validation.toDate('2wv0.0!r jv3.2mk01rv9')).toBe('20.03.2019');
 });

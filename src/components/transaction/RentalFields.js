@@ -61,6 +61,8 @@ function RentalFields(props: Props) {
         // if (props.setValidState) setYearIsValid(value ? validation.checkYear(value) : true);
       }
       if (validate === 'date') {
+        value = validation.toDate(value);
+        let result = validation.checkDate(value); 
         console.log('2doo');
       }
     }
