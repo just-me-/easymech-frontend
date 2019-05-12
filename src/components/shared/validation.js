@@ -10,12 +10,12 @@ export function checkYear(str) {
 }
 export function checkDate(str) {
   const validFormat = !!str && /^\d{1,2}\.\d{1,2}\.(19|20)\d{2}$/i.test(str);
-  if(!validFormat) return false;
+  if (!validFormat) return false;
 
   // does date exist?
-  const dmy = str.split(".");
+  const dmy = str.split('.');
   const date = new Date(dmy[2], dmy[1] - 1, dmy[0]);
-  return (date.getFullYear() == dmy[2] && date.getMonth() == dmy[1] - 1 && date.getDate() == dmy[0])
+  return date.getFullYear() == dmy[2] && date.getMonth() == dmy[1] - 1 && date.getDate() == dmy[0];
 }
 export function toNumber(str) {
   return str.toString().replace(/\D/g, '');
