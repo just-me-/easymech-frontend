@@ -5,9 +5,9 @@ import React, {useState, useEffect} from 'react'
 import {Search, Form, Header} from 'semantic-ui-react'
 import {NotificationManager} from "react-notifications";
 
-import NumberInput from "../NumberInput"
+import NumberInput from "../shared/NumberInput"
 
-import * as validation from "../validation"
+import * as validation from "../shared/validation"
 import * as apiMachine from "../../api/machine";
 import * as apiCustomer from "../../api/customer";
 
