@@ -23,10 +23,6 @@ export function updateTransaction(transactionObject: Transaction): Promise<SaveR
   return helper.postJson("/transaktionen/"+transactionObject.id, prepareDto(transactionObject), "PUT").then(helper.parseJSON);
 }
 
-export function deleteTransaction(id: string): Promise<SaveResult> {
-  return helper.deleteJson("/transaktionen/"+id).then(helper.parseJSON);
-}
-
 export function getTransaction(id: string): Promise<Transaction> {
   return helper.getJson("/transaktionen/"+id).then(helper.parseJSON);
 }
