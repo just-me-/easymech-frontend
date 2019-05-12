@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button, Form, Header } from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
-import * as api from '../../api/transaction';
+import * as api from '../../api/rental';
 import RentalFields from './RentalFields';
 
 function Rental() {

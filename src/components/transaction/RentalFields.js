@@ -12,7 +12,7 @@ import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
 
-import type { Rental } from '../../api/transaction';
+import type { Rental } from '../../api/rental';
 
 export type Props = {
   data?: Rental,
