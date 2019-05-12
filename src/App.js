@@ -53,6 +53,9 @@ class App extends React.Component<Props, State> {
       isAuthenticated: false,
       token: undefined,
     });
+    if (this.state.keycloak) {
+        this.state.keycloak.logout();
+    }
     sessionStorage.removeItem('token');
     callback();
   };
