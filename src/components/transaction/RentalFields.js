@@ -68,23 +68,10 @@ function RentalFields(props: Props) {
     // handle nested object fields
     const id_arr = element.target.id.split('__');
     if (id_arr && id_arr[1]) {
-      // console.log(id_arr[0], id_arr[1]);
-      // setRentalData({ ...rentalData, [id_arr[0]]: {[id_arr[1]]: value} });
-      // const ob = id_arr[0];
-      // const sub = id_arr[1];
-      // console.log("keys",ob, sub, rentalData[ob][sub])
-      // let data = rentalData;
-      // rentalData[ob][sub] = value;
-      // setRentalData(data);
-
-      setRentalData({ ...rentalData, [id_arr[0]]: { ...rentalData[id_arr[0]], [id_arr[1]]: value } });
-
-      console.log({ ...rentalData });
-      // /setRentalData({ ...rentalData, [[ob], [sub]]: value});
-      // setRentalData({ ...rentalData, [id_arr[0][id_arr[1]]]: value} );
-
-      // delay... bad
-      // setRentalData(_.update(rentalData, `${id_arr[0]}.${id_arr[1]}`, () => value));
+      setRentalData({
+        ...rentalData,
+        [id_arr[0]]: { ...rentalData[id_arr[0]], [id_arr[1]]: value },
+      });
     } else {
       setRentalData({ ...rentalData, [element.target.id]: value });
     }
@@ -110,13 +97,6 @@ function RentalFields(props: Props) {
       dataSetter: setMachineData,
     });
   }, []);
-
-  useEffect(
-    () => {
-      console.log('Data: ', rentalData);
-    },
-    [rentalData],
-  );
 
   return (
     <div>
