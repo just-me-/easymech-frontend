@@ -14,7 +14,7 @@ export function checkResponse(response) {
     const errorCodes = {
       200: 'Duplikat',
       201: 'Noch in Verwendung',
-      203: 'Nicht vermietbar'
+      203: 'Nicht vermietbar',
     };
     const errorCode = errorCodes
       ? errorCodes[response.errorCode]
@@ -38,7 +38,7 @@ export function convertToNumbers(dto, fieldsToConvert) {
 }
 
 function parseToDatabaseDate(date) {
-  if(date && date.length > 0) {
+  if (date && date.length > 0) {
     const arr = date.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
     date = `${arr[3]}-${arr[2]}-${arr[1]}`;
   }
@@ -49,7 +49,7 @@ export function convertToDatabaseDates(dto, fieldsToConvert) {
   const convertedDto = dto;
   for (const key in fieldsToConvert) {
     // support neasted fields
-    let key_arr = fieldsToConvert[key].split('.');
+    const key_arr = fieldsToConvert[key].split('.');
     if (key_arr && key_arr[1]) {
       convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(dto[key_arr[0]][key_arr[1]]);
     } else {

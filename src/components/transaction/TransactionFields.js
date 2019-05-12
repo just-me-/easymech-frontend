@@ -80,6 +80,7 @@ function TransactionFields(props: Props) {
     useEffect(() => {
         const requiredIsValid = validation.checkRequired(transactionData.preis)
             && validation.checkDateISO(transactionData.datum);
+            // 2Do also der User gibt ja CH Format ein, ned ISO, oder? :-/
 
         if (props.setValidState) {
             props.setValidState(requiredIsValid);
