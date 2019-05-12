@@ -37,7 +37,11 @@
   }
 }
 
-/* rly dirty fix... */
 .dummyObject {
   visibility: hidden;
+}
+@media (max-width: 767px) { 
+  .dummyObject {
+    display: none;
+  }
 }

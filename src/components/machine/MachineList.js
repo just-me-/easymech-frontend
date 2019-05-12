@@ -6,7 +6,6 @@ import {
   Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
 
-import * as api from '../../api/machine';
 import * as sharedCalls from '../shared/functions';
 
 import type { Machine } from '../../api/machine';
@@ -22,17 +21,6 @@ function MachineList(props: Props) {
 
   const [machineTypeData, setMachineTypeData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
-
-  function getListData() {
-    api
-      .getFilteredMachines(props.filterData)
-      .then((result) => {
-        result = api.checkResponse(result);
-        setIsLoading(false);
-        setMachineListData(result);
-      })
-      .catch(error => console.log('Ups, ein Fehler ist aufgetreten', error));
-  }
 
   function getCustomerText(id) {
     if (id) {
@@ -57,7 +45,11 @@ function MachineList(props: Props) {
   }
 
   useEffect(() => {
-    getListData();
+    sharedCalls.getMachines({
+      filterData: props.filterData,
+      loadingSetter: setIsLoading,
+      dataSetter: setMachineListData,
+    });
     sharedCalls.getCustomers({
       deletedToo: true,
       dataSetter: setCustomerData,

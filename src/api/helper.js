@@ -36,6 +36,28 @@ export function convertToNumbers(dto, fieldsToConvert) {
   return convertedDto;
 }
 
+function parseToDatabaseDate(date) {
+  if(date && date.length > 0) {
+    const arr = date.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
+    date = `${arr[3]}-${arr[2]}-${arr[1]}`;
+  }
+  return date;
+}
+
+export function convertToDatabaseDates(dto, fieldsToConvert) {
+  const convertedDto = dto;
+  for (const key in fieldsToConvert) {
+    // support neasted fields
+    let key_arr = fieldsToConvert[key].split('.');
+    if (key_arr && key_arr[1]) {
+      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(dto[key_arr[0]][key_arr[1]]);
+    } else {
+      convertedDto[fieldsToConvert[key]] = parseToDatabaseDate(dto[fieldsToConvert[key]]);
+    }
+  }
+  return convertedDto;
+}
+
 export function parseJSON(response) {
   return response.json();
 }
