@@ -15,7 +15,11 @@ export function checkDate(str) {
   // does date exist?
   const dmy = str.split('.');
   const date = new Date(dmy[2], dmy[1] - 1, dmy[0]);
-  return date.getFullYear() == dmy[2] && date.getMonth() == dmy[1] - 1 && date.getDate() == dmy[0];
+  return (
+    date.getFullYear() === parseInt(dmy[2], 10)
+    && date.getMonth() === parseInt(dmy[1], 10) - 1
+    && date.getDate() === parseInt(dmy[0], 10)
+  );
 }
 export function toNumber(str) {
   return str.toString().replace(/\D/g, '');
