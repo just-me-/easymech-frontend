@@ -38,7 +38,7 @@ export function convertToNumbers(dto, fieldsToConvert) {
 }
 
 function parseToDatabaseDate(date) {
-  let convertedDate = Object.assign("", date);
+  let convertedDate = (' ' + date).slice(1); // forces a copy
   if (convertedDate && convertedDate.length > 0) {
     const arr = convertedDate.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4}).*/);
     convertedDate = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}-${arr[2]}-${arr[1]}` : '';
