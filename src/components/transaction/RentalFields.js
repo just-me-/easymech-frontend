@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Header, Form } from 'semantic-ui-react';
+import { Header, Form, Transition } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import NumberInput from '../shared/NumberInput';
@@ -206,7 +206,7 @@ function RentalFields(props: Props) {
             placeholder="Dummy Placeholder for equal dividing"
           />
         </Form.Group>
-        {visibility.uebergabe_notiz && (
+        <Transition visible={visibility.uebergabe_notiz} animation="scale" duration={500}>
           <Form.Group widths="equal" className="OneField">
             <Form.Field
               control={TextareaAutosize}
@@ -216,11 +216,11 @@ function RentalFields(props: Props) {
               value={rentalData.uebergabe.notiz}
             />
           </Form.Group>
-        )}
+        </Transition>
       </div>
 
-      {visibility.ruecknahme && (
-        <React.Fragment>
+      <Transition visible={visibility.ruecknahme} animation="scale" duration={500}>
+        <div>
           <Header as="h2">Rückgabe</Header>
           <div className="Form-section">
             <Form.Group widths="equal">
@@ -239,7 +239,7 @@ function RentalFields(props: Props) {
                 placeholder="Dummy Placeholder for equal dividing"
               />
             </Form.Group>
-            {visibility.ruecknahme_notiz && (
+            <Transition visible={visibility.ruecknahme_notiz} animation="scale" duration={500}>
               <Form.Group widths="equal" className="OneField">
                 <Form.Field
                   control={TextareaAutosize}
@@ -249,10 +249,10 @@ function RentalFields(props: Props) {
                   value={rentalData.ruecknahme.notiz}
                 />
               </Form.Group>
-            )}
+            </Transition>
           </div>
-        </React.Fragment>
-      )}
+        </div>
+      </Transition>
     </div>
   );
 }
