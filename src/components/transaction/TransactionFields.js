@@ -174,7 +174,10 @@ function TransactionFields(props: Props) {
                                     negative
                                     onClick={() =>{
                                         handlePortal();
-                                        helper.getMachines();
+                                        helper.getMachines({
+                                            deletedToo: true,
+                                            dataSetter: setMachineData,
+                                        });
                                     }}
                                 />
                             </Segment>
