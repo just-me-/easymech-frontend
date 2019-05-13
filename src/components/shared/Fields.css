@@ -6,12 +6,12 @@
   border-radius: 0.5em;
 }
 .Form-section .field .ui.input input,
-.ui.form .Form-section .field  textarea {
+.ui.form .Form-section .field textarea {
   background-color: var(--opacity-white);
 }
 
 /* Labels left to inputs */
-.Form-section .field>label {
+.Form-section .field > label {
   width: 20%;
   margin-top: 0.7em !important;
   float: left;
@@ -21,18 +21,18 @@
   margin-top: 0.5em;
   opacity: var(--opacity);
 }
-.Form-section .ui.search>.results {
+.Form-section .ui.search > .results {
   left: 20%;
 }
-.Form-section .field .input{
+.Form-section .field .input {
   width: 70% !important;
 }
 @media (min-width: 768px) {
-  .Form-section .OneField .field>label {
+  .Form-section .OneField .field > label {
     width: 10%;
   }
-  .Form-section .OneField .field>.input,
-  .Form-section .OneField .field>textarea {
+  .Form-section .OneField .field > .input,
+  .Form-section .OneField .field > textarea {
     width: 85% !important;
   }
 }
@@ -40,15 +40,37 @@
 .dummyObject {
   visibility: hidden;
 }
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
   .dummyObject {
     display: none;
   }
 }
 
-.Portal-section{
+.Portal-section {
   left: 40%;
   position: fixed;
   top: 20%;
-  zIndex: 1000;
+  zindex: 1000;
+}
+
+/* better visibility for non-filled-in requires */
+/* inspired by @olam from codepen: codepen.io/olam/ */
+input:placeholder-shown {
+  box-shadow: 0 0 10px rgba(241, 100, 84, 0.6);
+  animation: pulse 2s infinite;
+}
+input:placeholder-shown:active,
+input:placeholder-shown:focus {
+  animation: none;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px 0 rgba(241, 100, 84, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 10px 10px rgba(241, 100, 84, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(241, 100, 84, 0);
+  }
 }
