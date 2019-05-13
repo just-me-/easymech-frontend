@@ -1,7 +1,9 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Header, Form } from 'semantic-ui-react';
+import {
+  Header, Form, Table, Button, Icon, Input,
+} from 'semantic-ui-react';
 
 import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
@@ -137,12 +139,104 @@ function ServiceFields(props: Props) {
 
       <Header as="h2">Material</Header>
       <div className="Form-section">
+        <Table basic="very">
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Pos</Table.HeaderCell>
+              <Table.HeaderCell>Beschreibung</Table.HeaderCell>
+              <Table.HeaderCell>Stückpreis</Table.HeaderCell>
+              <Table.HeaderCell>Anzahl</Table.HeaderCell>
+              <Table.HeaderCell>Total</Table.HeaderCell>
+              <Table.HeaderCell>Löschen</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell width="1">1</Table.Cell>
+              <Table.Cell width="7">
+                <Input value="Motoröl" />
+              </Table.Cell>
+              <Table.Cell width="3">
+                <Input value="10.00" />
+              </Table.Cell>
+              <Table.Cell width="2">
+                <Input value="10" />
+              </Table.Cell>
+              <Table.Cell width="3">100.00 CHF</Table.Cell>
+              <Table.Cell>
+                <Button icon>
+                  <Icon name="trash alternate" />
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell />
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>100.00 CHF</Table.Cell>
+              <Table.Cell />
+            </Table.Row>
+          </Table.Body>
+        </Table>
       </div>
 
       <Header as="h2">Arbeit</Header>
       <div className="Form-section">
+        <Table basic="very">
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Pos</Table.HeaderCell>
+              <Table.HeaderCell>Beschreibung</Table.HeaderCell>
+              <Table.HeaderCell>Stundensatz</Table.HeaderCell>
+              <Table.HeaderCell>Stunden</Table.HeaderCell>
+              <Table.HeaderCell>Total</Table.HeaderCell>
+              <Table.HeaderCell>Löschen</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell width="1">1</Table.Cell>
+              <Table.Cell width="7">
+                <Input value="Motoröl eingefüllt" />
+              </Table.Cell>
+              <Table.Cell width="3">
+                <Input value="10.00" />
+              </Table.Cell>
+              <Table.Cell width="2">
+                <Input value="10" />
+              </Table.Cell>
+              <Table.Cell width="3">100.00 CHF</Table.Cell>
+              <Table.Cell>
+                <Button icon>
+                  <Icon name="trash alternate" />
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell />
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>
+                <Input />
+              </Table.Cell>
+              <Table.Cell>100.00 CHF</Table.Cell>
+              <Table.Cell />
+            </Table.Row>
+          </Table.Body>
+        </Table>
       </div>
     </div>
   );
