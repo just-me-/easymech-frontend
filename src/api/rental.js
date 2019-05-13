@@ -28,7 +28,8 @@ function deleteSubObjectIfDateEmtpy(object: string, rentalObject: Rental) {
 
 function prepareDto(rentalObject: Rental) {
   const datetypes = ['startdatum', 'enddatum', 'uebergabe.datum', 'ruecknahme.datum'];
-  let rental = Object.assign({}, rentalObject);
+  // deep copy 2 prevent side effects 
+  let rental = JSON.parse(JSON.stringify(rentalObject));
   rental = helper.convertToDatabaseDates(rental, datetypes);
   rental = deleteSubObjectIfDateEmtpy('uebergabe', rental);
   return deleteSubObjectIfDateEmtpy('ruecknahme', rental);
