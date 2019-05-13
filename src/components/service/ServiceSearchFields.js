@@ -39,11 +39,11 @@ function ServiceSearchFields(props: Props) {
     const [machineData, setMachineData] = useState();
 
     function handleMachineSelect(result) {
-        setSearchData({ ...searchData, maschinenid: result.id });
+        setSearchData({ ...searchData, maschinenId: result.id });
     }
 
     function handleCustomerSelect(result) {
-        setSearchData({ ...searchData, kundenid: result.id });
+        setSearchData({ ...searchData, kundenId: result.id });
     }
 
 

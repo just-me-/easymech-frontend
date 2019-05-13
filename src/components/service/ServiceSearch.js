@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Header} from 'semantic-ui-react';
 import ServiceSearchFields from "./ServiceSearchFields";
+import SearchResult from "./SearchResult";
 
 export type Props = {
     location: {
@@ -33,12 +34,28 @@ function ServiceSearch(props: Props) {
                             content="Suchen"
                             icon="search"
                             labelPosition="left"
-                            onClick={() => setViewState('list')}
+                            onClick={() => {
+                                console.log(searchData);
+                                setViewState('list')
+                            }}
                             floated="right"
                         />
                     </Form>
                 </div>
             )}
+
+            {viewState === 'list' && (
+                <div>
+                    <SearchResult filterData={searchData} />
+                    <Button
+                        content="Zurück"
+                        icon="arrow left"
+                        labelPosition="left"
+                        onClick={() => setViewState('search')}
+                    />
+                </div>
+            )}
+
 
         </div>
   );
