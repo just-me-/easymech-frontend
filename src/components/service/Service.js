@@ -11,7 +11,9 @@ function Service() {
   const [key, setKey] = useState(Math.random());
 
   function addService() {
-    console.log("2Do...");
+    // tmp - use all varis for no warnings
+    console.log("2Do...", serviceData, formIsValid, key);
+    setKey(Math.random());
   }
 
   return (
