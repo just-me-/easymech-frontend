@@ -28,7 +28,7 @@ function ServiceSearchFields(props: Props) {
     ];
 
     const initialData = {
-        maschineId: (props.data && props.data.maschineId) || '',
+        maschinenId: (props.data && props.data.maschineId) || '',
         kundenId: (props.data && props.data.kundenId) || '',
         startdatum: (props.data && props.data.startdatum) || '',
         enddatum: (props.data && props.data.enddatum) || '',
