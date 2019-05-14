@@ -156,7 +156,7 @@ function AppMenu(props: Props) {
         name="logout"
         active={activeItem === 'logout'}
         content="Abmelden"
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault();
           props.signout(() => props.history.push('/'));
         }}
