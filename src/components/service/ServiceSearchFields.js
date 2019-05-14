@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState, useEffect} from 'react'
-import {Dropdown, Form} from 'semantic-ui-react'
+import {Form} from 'semantic-ui-react'
 import SmartInput from '../shared/SmartInput';
 
 import * as helper from "../shared/functions"
@@ -10,6 +10,7 @@ import type {Transaction} from "../../api/transaction";
 import type { TypeMachine } from '../../api/machine';
 import "../shared/Fields.css"
 import NumberInput from "../shared/NumberInput";
+import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox";
 
 
 export type Props = {
@@ -21,18 +22,15 @@ export type Props = {
 };
 
 function ServiceSearchFields(props: Props) {
-    const options = [
-        { key: 'Transaktionen', text: 'Ankauf oder Verkauf durchsuchen', value: '0', },
-        { key: 'Reservationen', text: 'Reservationen durchsuchen', value: '1', },
-        { key: 'Dienstleistungen', text: 'Dienstleistungen durchsuchen', value: '2'}
-    ];
-
     const initialData = {
         maschinenId: (props.data && props.data.maschineId) || '',
         kundenId: (props.data && props.data.kundenId) || '',
         maschinentypId: (props.data && props.data.maschinentypId) || '',
         startdatum: (props.data && props.data.startdatum) || '',
         enddatum: (props.data && props.data.enddatum) || '',
+        searchTransaction: (props.data && props.data.searchTransaction) || false,
+        searchRental: (props.data && props.data.searchRental) || false,
+        searchService: (props.data && props.data.searchService) || false,
     };
 
     const [searchData, setSearchData] = useState(initialData);
@@ -67,9 +65,9 @@ function ServiceSearchFields(props: Props) {
         }
         setSearchData({ ...searchData, [element.target.id]: value });
     }
-    function handleDropDown(element){
-        let value = element.target.innerHTML;
-        console.log(value)
+    function handleCheckBox(element, { checked }){
+        setSearchData({ ...searchData, [element.target.id]: checked });
+        console.log(checked)
     }
 
     useEffect(() => {
@@ -154,13 +152,24 @@ function ServiceSearchFields(props: Props) {
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Dropdown
-                        id='typ'
-                        placeholder='Auswahl Filter'
-                        fluid
-                        selection
-                        options={options}
-                        onChange={handleDropDown}
+                    <Checkbox
+                        id='searchTransaction'
+                        label='Ankauf oder Verkauf durchsuchen'
+                        onClick={handleCheckBox}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Checkbox
+                        id='searchRental'
+                        label='Vermietungen durchsuchen'
+                        onClick={handleCheckBox}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Checkbox
+                        id='searchService'
+                        label='Dienstleistungen durchsuchen'
+                        onClick={handleCheckBox}
                     />
                 </Form.Group>
             </div>
