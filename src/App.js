@@ -104,7 +104,12 @@ class App extends React.Component<Props, State> {
           exact
           path="/"
           render={props => (
-            <Login {...props} authenticate={this.authenticate} isAuthenticated={isAuthenticated} />
+            <Login
+              {...props}
+              production={this.state.production}
+              authenticate={this.authenticate}
+              isAuthenticated={isAuthenticated}
+            />
           )}
         />
         <Grid id="App-grid" stackable>
