@@ -30,6 +30,7 @@ function ServiceSearchFields(props: Props) {
     const initialData = {
         maschinenId: (props.data && props.data.maschineId) || '',
         kundenId: (props.data && props.data.kundenId) || '',
+        maschinentypId: (props.data && props.data.maschinentypId) || '',
         startdatum: (props.data && props.data.startdatum) || '',
         enddatum: (props.data && props.data.enddatum) || '',
     };
@@ -37,6 +38,7 @@ function ServiceSearchFields(props: Props) {
     const [searchData, setSearchData] = useState(initialData);
     const [customerData, setCustomerData] = useState();
     const [machineData, setMachineData] = useState();
+    const [machineTypeData, setMachineTypeData] = useState();
 
     function handleMachineSelect(result) {
         setSearchData({ ...searchData, maschinenId: result.id });
@@ -44,6 +46,10 @@ function ServiceSearchFields(props: Props) {
 
     function handleCustomerSelect(result) {
         setSearchData({ ...searchData, kundenId: result.id });
+    }
+
+    function handleMachineTypeSelect(result) {
+        setSearchData({ ...searchData, maschinentypId: result.id });
     }
 
 
@@ -82,7 +88,9 @@ function ServiceSearchFields(props: Props) {
             deletedToo: true,
             dataSetter: setMachineData,
         });
-
+        helper.getMachinetypes({
+            dataSetter: setMachineTypeData,
+        });
     }, []);
 
     return (
@@ -98,7 +106,18 @@ function ServiceSearchFields(props: Props) {
                         setElementId={props.data ? props.data.maschinenid : 0}
                         noResultsMessage="Keine Maschinen gefunden"
                     />
-
+                    <SmartInput
+                        id="maschinentyp"
+                        label="Maschinentyp"
+                        matchingKey="fabrikat"
+                        onResultSelect={handleMachineTypeSelect}
+                        elements={machineTypeData}
+                        setElementId={props.data ? props.data.maschinentypId : 0}
+                        noResultsMessage="Keine Maschinentypen gefunden"
+                        isRequired={!props.searchView}
+                    />
+                </Form.Group>
+                <Form.Group widths='equal'>
                     <SmartInput
                         id="kunde"
                         label="Kunde"
@@ -107,6 +126,11 @@ function ServiceSearchFields(props: Props) {
                         elements={customerData}
                         setElementId={props.data ? props.data.kundenid : 0}
                         noResultsMessage="Keine Kunden gefunden"
+                    />
+                    <Form.Input
+                        label="Dummy"
+                        className="dummyObject"
+                        placeholder="Dummy Placeholder for equal dividing"
                     />
                 </Form.Group>
                 <Form.Group widths='equal'>

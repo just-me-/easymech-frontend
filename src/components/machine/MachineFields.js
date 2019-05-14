@@ -38,7 +38,7 @@ function MachineFields(props: Props) {
 
   const [machineData, setMachineData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
-  const [machinetypeData, setMachinetypeData] = useState();
+  const [machineTypeData, setMachineTypeData] = useState();
 
   const [yearIsValid, setYearIsValid] = useState(true);
 
@@ -82,7 +82,7 @@ function MachineFields(props: Props) {
       dataSetter: setCustomerData,
     });
     sharedCalls.getMachinetypes({
-      dataSetter: setMachinetypeData,
+      dataSetter: setMachineTypeData,
     });
   }, []);
 
@@ -113,7 +113,7 @@ function MachineFields(props: Props) {
             label="Maschinentyp"
             matchingKey="fabrikat"
             onResultSelect={handleMachineTypeSelect}
-            elements={machinetypeData}
+            elements={machineTypeData}
             setElementId={props.data ? props.data.maschinentypId : 0}
             noResultsMessage="Keine Maschinentypen gefunden"
             isRequired={!props.searchView}
