@@ -25,9 +25,12 @@
   left: 20%;
 }
 .Form-section .field .input {
-  width: 70% !important;
+  width: 80% !important;
 }
 @media (min-width: 768px) {
+  .Form-section .field .input {
+    width: 70% !important;
+  }
   .Form-section .OneField .field > label {
     width: 10%;
   }
