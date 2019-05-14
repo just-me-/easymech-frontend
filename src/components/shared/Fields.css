@@ -15,6 +15,7 @@
   width: 20%;
   margin-top: 0.7em !important;
   float: left;
+  overflow: hidden;
 }
 .Form-section .ui.basic.red.label {
   margin-left: 20%;
@@ -26,6 +27,7 @@
 }
 .Form-section .field .input {
   width: 80% !important;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
   .Form-section .field .input {
