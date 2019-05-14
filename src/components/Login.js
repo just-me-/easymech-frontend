@@ -3,7 +3,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
+import {
+  Button, Form, Grid, Header, Message, Segment,
+} from 'semantic-ui-react';
 
 export type Props = {
   /* Callback to submit an authentication request to the server */
@@ -15,6 +17,7 @@ export type Props = {
       from: string,
     },
   },
+  production: boolean,
   isAuthenticated: ?boolean,
 };
 
@@ -30,7 +33,7 @@ class Login extends React.Component<Props, *> {
     event.preventDefault();
     const { login, password } = this.state;
 
-    this.props.authenticate(login, password, error => {
+    this.props.authenticate(login, password, (error) => {
       if (error) {
         this.setState({ error });
       } else {
@@ -59,26 +62,23 @@ class Login extends React.Component<Props, *> {
           </Header>
 
           <Form size="large">
-            <Segment stacked>
-              <Form.Input
-                fluid
-                icon="user"
-                iconPosition="left"
-                placeholder="Login"
-                value={this.state.login}
-              />
-              <Form.Input
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-                value={this.state.password}
-              />
+            <Segment stacked loading={this.props.production}>
+              {!this.props.production && (
+                <React.Fragment>
+                  <Form.Input fluid icon="user" iconPosition="left" placeholder="Login" />
+                  <Form.Input
+                    fluid
+                    icon="lock"
+                    iconPosition="left"
+                    placeholder="Password"
+                    type="password"
+                  />
 
-              <Button color="red" fluid size="large" onClick={this.handleSubmit}>
-                Login
-              </Button>
+                  <Button color="red" fluid size="large" onClick={this.handleSubmit}>
+                    Login
+                  </Button>
+                </React.Fragment>
+              )}
 
               {error && (
                 <Message negative>

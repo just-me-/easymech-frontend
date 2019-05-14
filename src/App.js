@@ -21,9 +21,10 @@ type State = {
   name: string,
   email: string,
   id: string,
+  production: boolean,
   keycloak?: {
     loadUserInfo: () => () => void,
-    logout: () => () => void
+    logout: () => () => void,
   },
 };
 
@@ -40,13 +41,18 @@ class App extends React.Component<Props, State> {
       id: '',
       isAuthenticated: !!token,
       token: token || undefined,
+      production:
+        !!process.env.REACT_APP_USE_KEYCLOAK
+        || !(process.env.NODE_ENV && process.env.NODE_ENV === 'development'),
     };
   }
 
   authenticate = (login: string, password: string, callback: (error: ?Error) => void) => {
-    this.setState({ isAuthenticated: true, token: 'myToken' });
-    sessionStorage.setItem('token', 'myToken');
-    callback(null);
+    if (!this.state.production) {
+      this.setState({ isAuthenticated: true, token: 'myToken' });
+      sessionStorage.setItem('token', 'myToken');
+      callback(null);
+    }
   };
 
   signout = (callback: () => void) => {
@@ -55,14 +61,14 @@ class App extends React.Component<Props, State> {
       token: undefined,
     });
     if (this.state.keycloak) {
-        this.state.keycloak.logout();
+      this.state.keycloak.logout();
     }
     sessionStorage.removeItem('token');
     callback();
   };
 
   componentDidMount() {
-    if (process.env.REACT_APP_USE_KEYCLOAK || !(process.env.NODE_ENV && process.env.NODE_ENV === 'development')) {
+    if (this.state.production) {
       const keycloak = Keycloak('/keycloak.json');
       keycloak.init({ onLoad: 'login-required', promiseType: 'native' }).then((isAuthenticated) => {
         this.setState({ keycloak, isAuthenticated });

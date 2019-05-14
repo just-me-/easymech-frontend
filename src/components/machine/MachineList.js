@@ -96,7 +96,7 @@ function MachineList(props: Props) {
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editMachine(id)} className="Hover-effect link">
                   <Icon name="external" size="tiny" className="Inline-icon" />
-                  {' '}
+                  &nbsp;
                   {seriennummer}
                 </Table.Cell>
                 <Table.Cell>{mastnummer}</Table.Cell>

@@ -56,7 +56,7 @@ function CustomerList(props: Props) {
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editCustomer(id)} className="Hover-effect link">
                   <Icon name="external" size="tiny" className="Inline-icon" />
-                  {' '}
+                  &nbsp;
                   {firma}
                 </Table.Cell>
                 <Table.Cell>{adresse}</Table.Cell>

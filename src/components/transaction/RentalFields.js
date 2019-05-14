@@ -1,7 +1,9 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Header, Form, Transition } from 'semantic-ui-react';
+import {
+  Header, Form, Transition, Message,
+} from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import NumberInput from '../shared/NumberInput';
@@ -188,7 +190,7 @@ function RentalFields(props: Props) {
         </Form.Group>
       </div>
 
-      <Header as="h2">Übergabe</Header>
+      <Header as="h2">Ausgabe der Maschinen</Header>
       <div className="Form-section">
         <Form.Group widths="equal">
           <NumberInput
@@ -200,11 +202,11 @@ function RentalFields(props: Props) {
             handleChange={handleChange}
             error={!datesAreValid.uebergabe__datum}
           />
-          <Form.Input
-            label="Dummy"
-            className="dummyObject"
-            placeholder="Dummy Placeholder for equal dividing"
-          />
+          <div className="field">
+            <Message warning visible={!rentalData.uebergabe.datum} size="mini">
+              Dieses Übergabedatum ausfüllen, sobald die Maschine dem Kunden abgegeben wurde.
+            </Message>
+          </div>
         </Form.Group>
         <Transition visible={visibility.uebergabe_notiz} animation="scale" duration={500}>
           <Form.Group widths="equal" className="OneField">
@@ -221,7 +223,7 @@ function RentalFields(props: Props) {
 
       <Transition visible={visibility.ruecknahme} animation="scale" duration={500}>
         <div>
-          <Header as="h2">Rückgabe</Header>
+          <Header as="h2">Rücknahme der Maschine</Header>
           <div className="Form-section">
             <Form.Group widths="equal">
               <NumberInput
@@ -233,11 +235,11 @@ function RentalFields(props: Props) {
                 handleChange={handleChange}
                 error={!datesAreValid.ruecknahme__datum}
               />
-              <Form.Input
-                label="Dummy"
-                className="dummyObject"
-                placeholder="Dummy Placeholder for equal dividing"
-              />
+              <div className="field">
+                <Message warning visible={!rentalData.ruecknahme.datum} size="mini">
+                  Dieses Rückgabedatum ausfüllen, sobald die Maschine zurückgegeben wurde.
+                </Message>
+              </div>
             </Form.Group>
             <Transition visible={visibility.ruecknahme_notiz} animation="scale" duration={500}>
               <Form.Group widths="equal" className="OneField">
