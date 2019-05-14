@@ -63,7 +63,7 @@ function MachineTypeList(props: Props) {
             ) => (
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
-                  <Icon name="external" size="tiny" className="Inline-icon" /> {fabrikat}
+                  <Icon name="external" size="tiny" className="Inline-icon" />&nbsp;{fabrikat}
                 </Table.Cell>
                 <Table.Cell>{motortyp}</Table.Cell>
                 <Table.Cell>{maschinenhoehe || ''}</Table.Cell>

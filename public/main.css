@@ -32,3 +32,8 @@ a:hover,
 .link:hover {
   color: #DB2828;
 }
+
+/* semantic icons should not break line in table */
+table i.icon {
+  display: inline; 
+}
