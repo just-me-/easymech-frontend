@@ -5,14 +5,16 @@ import { Dropdown, Form } from 'semantic-ui-react';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button/Button';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 import Portal from 'semantic-ui-react/dist/commonjs/addons/Portal/Portal';
-import SmartInput from '../shared/SmartInput';
 
-import NumberInput from '../shared/NumberInput';
-import * as helper from '../shared/functions';
-import * as validation from '../shared/validation';
-import type { Transaction } from '../../api/transaction';
 import Machine from '../machine/Machine';
+import SmartInput from '../shared/SmartInput';
+import NumberInput from '../shared/NumberInput';
+import * as sharedCalls from '../shared/functions';
+import * as validation from '../shared/validation';
+
+import type { Transaction } from '../../api/transaction';
 import type { TypeMachine } from '../../api/machine';
+
 import '../shared/Fields.css';
 
 export type Props = {
@@ -29,19 +31,19 @@ function TransactionFields(props: Props) {
     { key: 'Ankauf', text: 'Ankauf einer Maschine erfassen', value: '1' },
   ];
 
-  const today = new Date();
   const initialData = {
     id: (props.data && props.data.id) || undefined,
     preis: (props.data && props.data.preis) || '',
     typ: (props.data && props.data.typ) || 0,
-    datum: (props.data && props.data.datum) || today.toISOString().substring(0, 10),
+    datum: (props.data && props.data.datum) || sharedCalls.getToday(),
     maschinenid: (props.data && props.data.maschinenid) || '',
     kundenid: (props.data && props.data.kundenid) || '',
   };
   const [transactionData, setTransactionData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
-  const [isOpen, setOpen] = useState(false);
+  const [dateIsValid, setDateIsValid] = useState(true);
+  const [machinportalIsOpen, setOpen] = useState(false);
 
   function handleMachineSelect(result) {
     setTransactionData({ ...transactionData, maschinenid: result.id });
@@ -52,23 +54,23 @@ function TransactionFields(props: Props) {
   }
 
   function handlePortal() {
-    setOpen(!isOpen);
+    setOpen(!machinportalIsOpen);
   }
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    switch (validate) {
-      case 'number':
-        value = validation.toNumber(value);
-        break;
-      case 'date':
-        console.log('2Do DATE VALIDATION');
-        break;
-      default:
-        break;
+    if (validate === 'number') {
+      value = validation.toNumber(value);
+    }
+    if (validate === 'date') {
+      value = validation.toDate(value);
+      if (props.setValidState) {
+        setDateIsValid(value ? validation.checkDate(value) : true);
+      }
     }
     setTransactionData({ ...transactionData, [element.target.id]: value });
   }
+
   function handleDropDown(element) {
     const value = element.target.innerHTML;
     if (value.includes('Ankauf')) {
@@ -89,11 +91,11 @@ function TransactionFields(props: Props) {
   });
 
   useEffect(() => {
-    helper.getCustomers({
+    sharedCalls.getCustomers({
       deletedToo: true,
       dataSetter: setCustomerData,
     });
-    helper.getMachines({
+    sharedCalls.getMachines({
       deletedToo: true,
       dataSetter: setMachineData,
     });
@@ -134,12 +136,14 @@ function TransactionFields(props: Props) {
             validate="number"
             handleChange={handleChange}
           />
-          <Form.Input
+          <NumberInput
             id="datum"
             label="Datum"
-            placeholder="YYYY-MM-DD"
+            innerLabel="DD.MM.YYYY"
             value={transactionData.datum}
-            onChange={handleChange}
+            validate="date"
+            handleChange={handleChange}
+            error={!dateIsValid}
           />
         </Form.Group>
         <Form.Group>
@@ -153,9 +157,14 @@ function TransactionFields(props: Props) {
           />
         </Form.Group>
         <Form.Group>
-          <Button content="Maschine Erfassen" disabled={isOpen} onClick={handlePortal} positive />
+          <Button
+            content="Maschine Erfassen"
+            disabled={machinportalIsOpen}
+            onClick={handlePortal}
+            positive
+          />
 
-          <Portal open={isOpen}>
+          <Portal open={machinportalIsOpen}>
             <div className="Portal-section">
               <Segment pilled>
                 <Machine />
@@ -165,7 +174,7 @@ function TransactionFields(props: Props) {
                   negative
                   onClick={() => {
                     handlePortal();
-                    helper.getMachines({
+                    sharedCalls.getMachines({
                       deletedToo: true,
                       dataSetter: setMachineData,
                     });
