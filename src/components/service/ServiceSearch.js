@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Button, Form, Header } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
+
 import ServiceSearchFields from './ServiceSearchFields';
 import SearchResult from './SearchResult';
 
@@ -17,6 +19,15 @@ function ServiceSearch(props: Props) {
   const initState = props.location.state && props.location.state.listRedirect ? 'list' : 'search';
   const [viewState, setViewState] = useState(initState);
   const [searchData, setSearchData] = useState({});
+  const [formIsValid, setFormIsValid] = useState(true);
+
+  function listData() {
+    if (formIsValid) {
+      setViewState('list');
+    } else {
+      NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
+    }
+  }
 
   return (
     <div>
@@ -26,17 +37,18 @@ function ServiceSearch(props: Props) {
             Dienstleistung suchen
           </Header>
           <Form>
-            <ServiceSearchFields data={searchData} setData={setSearchData} searchView />
-
+            <ServiceSearchFields
+              data={searchData}
+              setData={setSearchData}
+              setValidState={setFormIsValid}
+              searchView
+            />
             <Button
               primary
               content="Suchen"
               icon="search"
               labelPosition="left"
-              onClick={() => {
-                console.log(searchData);
-                setViewState('list');
-              }}
+              onClick={listData}
               floated="right"
             />
           </Form>
