@@ -24,14 +24,14 @@ export type Props = {
 
 function ServiceSearchFields(props: Props) {
   const initialData = {
-    maschinenId: (props.data && props.data.maschineId) || '',
-    kundenId: (props.data && props.data.kundenId) || '',
-    maschinentypId: (props.data && props.data.maschinentypId) || '',
-    startdatum: (props.data && props.data.startdatum) || '',
-    enddatum: (props.data && props.data.enddatum) || '',
-    searchTransaction: (props.data && props.data.searchTransaction) || false,
-    searchRental: (props.data && props.data.searchRental) || false,
-    searchService: (props.data && props.data.searchService) || false,
+    maschinenId: '',
+    kundenId: '',
+    maschinentypId: '',
+    von: '',
+    bis: '',
+    searchTransaction: true,
+    searchRental: true,
+    searchService: true,
   };
 
   const [searchData, setSearchData] = useState(initialData);
@@ -40,8 +40,8 @@ function ServiceSearchFields(props: Props) {
   const [machineTypeData, setMachineTypeData] = useState();
 
   const [datesAreValid, setDatesAreValid] = useState({
-    startdatum: true,
-    enddatum: true,
+    von: true,
+    bis: true,
   });
 
   function handleMachineSelect(result) {
@@ -150,19 +150,19 @@ function ServiceSearchFields(props: Props) {
 
         <Form.Group widths="equal">
           <DatePicker
-            id="startdatum"
+            id="von"
             label="Von"
-            value={searchData.startdatum}
+            value={searchData.von}
             handleChange={handleChange}
-            error={!datesAreValid.startdatum}
+            error={!datesAreValid.von}
             callbackSetter={datePicked}
           />
           <DatePicker
-            id="enddatum"
+            id="bis"
             label="Bis"
-            value={searchData.enddatum}
+            value={searchData.bis}
             handleChange={handleChange}
-            error={!datesAreValid.enddatum}
+            error={!datesAreValid.bis}
             callbackSetter={datePicked}
           />
         </Form.Group>
@@ -172,18 +172,21 @@ function ServiceSearchFields(props: Props) {
             id="searchTransaction"
             label="An- und Verkauf durchsuchen"
             onClick={handleCheckbox}
+            checked={searchData.searchTransaction}
             className="field"
           />
           <Checkbox
             id="searchRental"
             label="Vermietungen durchsuchen"
             onClick={handleCheckbox}
+            checked={searchData.searchRental}
             className="field"
           />
           <Checkbox
             id="searchService"
             label="Dienstleistungen durchsuchen"
             onClick={handleCheckbox}
+            checked={searchData.searchService}
             className="field"
           />
         </Form.Group>
