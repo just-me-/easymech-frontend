@@ -63,12 +63,12 @@ function Machine(props: Props) {
           floated="right"
           onClick={() => addMachine()}
         />
-        {props.isIncluded && props.includerCallback && (
+        {props.isIncluded && (
           <Button
             content="Abbrechen"
             icon="arrow left"
             labelPosition="left"
-            onClick={() => props.includerCallback()}
+            onClick={() => props.includerCallback && props.includerCallback()}
           />
         )}
       </Form>
