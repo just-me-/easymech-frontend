@@ -84,11 +84,6 @@ test('To big is invalid', () => {
   expect(validation.checkDate('01.01.2100')).toBe(false);
 });
 
-test('Test ISO Date', () => {
-    expect(validation.checkDateISO('2019-05-12')).toBe(true);
-});
-
-
 test('Delete to empty string', () => {
   expect(validation.toNumber('bjnejkr')).toBe('');
 });
