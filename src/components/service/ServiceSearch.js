@@ -5,7 +5,7 @@ import { Button, Form, Header } from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
 import ServiceSearchFields from './ServiceSearchFields';
-import SearchResult from './SearchResult';
+import ServiceList from './ServiceList';
 
 export type Props = {
   location: {
@@ -57,7 +57,7 @@ function ServiceSearch(props: Props) {
 
       {viewState === 'list' && (
         <div>
-          <SearchResult filterData={searchData} />
+          <ServiceList filterData={searchData} />
           <Button
             content="Zurück"
             icon="arrow left"
