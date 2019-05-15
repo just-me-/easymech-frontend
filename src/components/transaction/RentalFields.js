@@ -6,7 +6,7 @@ import {
 } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import NumberInput from '../shared/NumberInput';
+import DatePicker from '../shared/DatePicker';
 import SmartInput from '../shared/SmartInput';
 
 import * as validation from '../shared/validation';
@@ -93,6 +93,22 @@ function RentalFields(props: Props) {
     }
   }
 
+  function datePicked(value, id) {
+    setDatesAreValid({
+      ...datesAreValid,
+      id: validation.checkDate(value),
+    });
+    const id_arr = id.split('__');
+    if (id_arr && id_arr[1]) {
+      setRentalData({
+        ...rentalData,
+        [id_arr[0]]: { ...rentalData[id_arr[0]], [id_arr[1]]: value },
+      });
+    } else {
+      setRentalData({ ...rentalData, [id]: value });
+    }
+  }
+
   useEffect(() => {
     const requiredIsValide = Object.values(datesAreValid).every(val => val === true)
       && parseInt(rentalData.maschinenId, 10) > 0
@@ -132,23 +148,21 @@ function RentalFields(props: Props) {
       <Header as="h2">Reservation</Header>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <NumberInput
+          <DatePicker
             id="startdatum"
             label="Startdatum"
-            innerLabel="DD.MM.YYYY"
             value={rentalData.startdatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.startdatum}
+            callbackSetter={datePicked}
           />
-          <NumberInput
+          <DatePicker
             id="enddatum"
             label="Enddatum"
-            innerLabel="DD.MM.YYYY"
             value={rentalData.enddatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.enddatum}
+            callbackSetter={datePicked}
           />
         </Form.Group>
 
@@ -193,14 +207,13 @@ function RentalFields(props: Props) {
       <Header as="h2">Ausgabe der Maschinen</Header>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <NumberInput
+          <DatePicker
             id="uebergabe__datum"
             label="Datum"
-            innerLabel="DD.MM.YYYY"
             value={rentalData.uebergabe.datum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.uebergabe__datum}
+            callbackSetter={datePicked}
           />
           <div className="field">
             <Message warning visible={!rentalData.uebergabe.datum} size="mini">
@@ -226,14 +239,13 @@ function RentalFields(props: Props) {
           <Header as="h2">Rücknahme der Maschine</Header>
           <div className="Form-section">
             <Form.Group widths="equal">
-              <NumberInput
+              <DatePicker
                 id="ruecknahme__datum"
                 label="Datum"
-                innerLabel="DD.MM.YYYY"
                 value={rentalData.ruecknahme.datum}
-                validate="date"
                 handleChange={handleChange}
                 error={!datesAreValid.ruecknahme__datum}
+                callbackSetter={datePicked}
               />
               <div className="field">
                 <Message warning visible={!rentalData.ruecknahme.datum} size="mini">

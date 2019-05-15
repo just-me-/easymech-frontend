@@ -5,8 +5,9 @@ import {
   Header, Form, Table, Button, Icon, Input,
 } from 'semantic-ui-react';
 
-import NumberInput from '../shared/NumberInput';
+// import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
+import DatePicker from '../shared/DatePicker';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
@@ -66,6 +67,14 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, [element.target.id]: value });
   }
 
+  function datePicked(value, id) {
+    setDatesAreValid({
+      ...datesAreValid,
+      id: validation.checkDate(value),
+    });
+    setServiceData({ ...serviceData, [id]: value });
+  }
+
   useEffect(() => {
     const requiredIsValide = Object.values(datesAreValid).every(val => val === true)
       && parseInt(serviceData.maschinenId, 10) > 0
@@ -93,23 +102,21 @@ function ServiceFields(props: Props) {
     <div>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <NumberInput
+          <DatePicker
             id="startdatum"
             label="Startdatum"
-            innerLabel="DD.MM.YYYY"
             value={serviceData.startdatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.startdatum}
+            callbackSetter={datePicked}
           />
-          <NumberInput
+          <DatePicker
             id="enddatum"
             label="Enddatum"
-            innerLabel="DD.MM.YYYY"
             value={serviceData.enddatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.enddatum}
+            callbackSetter={datePicked}
           />
         </Form.Group>
 
