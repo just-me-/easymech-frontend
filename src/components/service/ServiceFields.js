@@ -5,7 +5,7 @@ import {
   Header, Form, Table, Button, Icon, Input,
 } from 'semantic-ui-react';
 
-import NumberInput from '../shared/NumberInput';
+// import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
 

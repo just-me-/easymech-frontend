@@ -1,10 +1,8 @@
 // @flow
 
-import React, { useState, useEffect } from 'react';
-import { Form, Input } from 'semantic-ui-react';
+import React, { useState } from 'react';
 
 import { DateInput } from 'semantic-ui-calendar-react';
-import moment from 'moment';
 import 'moment/locale/de';
 
 import * as validation from './validation';
