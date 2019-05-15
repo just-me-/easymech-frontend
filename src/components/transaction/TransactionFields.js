@@ -7,6 +7,7 @@ import {
 
 import Machine from '../machine/Machine';
 import SmartInput from '../shared/SmartInput';
+import DatePicker from '../shared/DatePicker';
 import NumberInput from '../shared/NumberInput';
 import * as sharedCalls from '../shared/functions';
 import * as validation from '../shared/validation';
@@ -79,6 +80,11 @@ function TransactionFields(props: Props) {
     setTransactionData({ ...transactionData, [element.target.id]: value });
   }
 
+  function datePicked(value, id) {
+    setDateIsValid(validation.checkDate(value));
+    setTransactionData({ ...transactionData, [id]: value });
+  }
+
   function handleDropDown(element) {
     const value = element.target.innerHTML;
     if (value.includes('Ankauf')) {
@@ -149,14 +155,13 @@ function TransactionFields(props: Props) {
             validate="number"
             handleChange={handleChange}
           />
-          <NumberInput
+          <DatePicker
             id="datum"
             label="Datum"
-            innerLabel="DD.MM.YYYY"
             value={transactionData.datum}
-            validate="date"
             handleChange={handleChange}
             error={!dateIsValid}
+            callbackSetter={datePicked}
           />
         </Form.Group>
         <Form.Group>
