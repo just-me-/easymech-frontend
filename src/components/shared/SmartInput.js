@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Search } from 'semantic-ui-react';
 
 export type Props = {
-  id: string, 
+  id: string,
   label: string,
   matchingKey: string,
   noResultsMessage: string,

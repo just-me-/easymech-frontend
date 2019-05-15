@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Dropdown, Form } from 'semantic-ui-react';
+import { Dropdown, Form, Icon } from 'semantic-ui-react';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button/Button';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 import Portal from 'semantic-ui-react/dist/commonjs/addons/Portal/Portal';
@@ -16,6 +16,7 @@ import type { Transaction } from '../../api/transaction';
 import type { TypeMachine } from '../../api/machine';
 
 import '../shared/Fields.css';
+import './TransactionFields.css';
 
 export type Props = {
   data?: Transaction,
@@ -105,16 +106,21 @@ function TransactionFields(props: Props) {
     <div>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <SmartInput
-            id="maschine"
-            label="Maschinen"
-            matchingKey="seriennummer"
-            onResultSelect={handleMachineSelect}
-            elements={machineData}
-            setElementId={props.data ? props.data.maschinenid : 0}
-            noResultsMessage="Keine Maschinen gefunden"
-            isRequired={!props.searchView}
-          />
+          <div className="field hasButton">
+            <SmartInput
+              id="maschine"
+              label="Maschinen"
+              matchingKey="seriennummer"
+              onResultSelect={handleMachineSelect}
+              elements={machineData}
+              setElementId={props.data ? props.data.maschinenid : 0}
+              noResultsMessage="Keine Maschinen gefunden"
+              isRequired={!props.searchView}
+            />
+            <Button icon positive disabled={machinportalIsOpen} onClick={handlePortal}>
+              <Icon name="add" />
+            </Button>
+          </div>
 
           <SmartInput
             id="kunde"
@@ -157,13 +163,6 @@ function TransactionFields(props: Props) {
           />
         </Form.Group>
         <Form.Group>
-          <Button
-            content="Maschine Erfassen"
-            disabled={machinportalIsOpen}
-            onClick={handlePortal}
-            positive
-          />
-
           <Portal open={machinportalIsOpen}>
             <div className="Portal-section">
               <Segment pilled>
