@@ -29,6 +29,10 @@ function ServiceSearch(props: Props) {
     }
   }
 
+  function editEntry(id, type) {
+    console.log("2Do", id, type); 
+  }
+
   return (
     <div>
       {viewState === 'search' && (
@@ -57,7 +61,7 @@ function ServiceSearch(props: Props) {
 
       {viewState === 'list' && (
         <div>
-          <ServiceList filterData={searchData} />
+          <ServiceList filterData={searchData} editEntry={editEntry} />
           <Button
             content="Zurück"
             icon="arrow left"
