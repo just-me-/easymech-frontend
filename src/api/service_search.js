@@ -15,7 +15,9 @@ export type ServiceSearchObject = {
 };
 
 function prepareDto(serviceSearchObject: ServiceSearchObject) {
+  const numbertypes = ['besitzerId', 'maschinenId', 'maschinentypId'];
   const datetypes = ['von', 'bis'];
+  serviceSearchObject = helper.convertToNumbers(serviceSearchObject, numbertypes);
   return helper.convertToDatabaseDates(serviceSearchObject, datetypes);
 }
 

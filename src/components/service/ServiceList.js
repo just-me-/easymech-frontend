@@ -16,7 +16,7 @@ export type Props = {
 function ServiceList(props: Props) {
   const [rentalData, setRentalData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
-  const [serviceData, serServiceData] = useState([]);
+  const [serviceData, setServiceData] = useState([]);
 
   const [mergedData, setMergedData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,19 +26,21 @@ function ServiceList(props: Props) {
       state: 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
-      dataSetter: setRentalData,
     };
     serviceCalls.getServices({
       ...baseParameters,
       type: 'rentals',
+      dataSetter: setRentalData,
     });
     serviceCalls.getServices({
       ...baseParameters,
       type: 'transactions',
+      dataSetter: setTransactionData,
     });
     serviceCalls.getServices({
       ...baseParameters,
       type: 'services',
+      dataSetter: setServiceData,
     });
   }, []);
 
@@ -78,8 +80,8 @@ function ServiceList(props: Props) {
         id: entry.id,
         startdatum: entry.startdatum,
         enddatum: entry.enddatum,
-        maschinenid: entry.maschinenid,
-        kundenid: entry.kundenid,
+        maschinenId: entry.maschinenId,
+        kundenId: entry.kundenId,
         type: 'service',
       }));
       setMergedData(_.concat(mergedData, filteredArray));
@@ -105,7 +107,7 @@ function ServiceList(props: Props) {
         </Table.Header>
         <Table.Body>
           {_.map(mergedData, ({
-            id, type, startdatum, enddatum, maschinenid, kundenid,
+            id, type, startdatum, enddatum, maschinenId, kundenId,
           }, index) => (
             <Table.Row key={index}>
               <Table.Cell onClick={() => props.editEntry(id, type)} className="Hover-effect link">
@@ -115,8 +117,8 @@ function ServiceList(props: Props) {
               </Table.Cell>
               <Table.Cell>{startdatum}</Table.Cell>
               <Table.Cell>{enddatum}</Table.Cell>
-              <Table.Cell>{maschinenid}</Table.Cell>
-              <Table.Cell>{kundenid}</Table.Cell>
+              <Table.Cell>{maschinenId}</Table.Cell>
+              <Table.Cell>{kundenId}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
