@@ -7,6 +7,7 @@ import {
 
 import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
+import DatePicker from '../shared/DatePicker';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
@@ -93,15 +94,19 @@ function ServiceFields(props: Props) {
     <div>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <NumberInput
-            id="startdatum"
-            label="Startdatum"
-            innerLabel="DD.MM.YYYY"
-            value={serviceData.startdatum}
-            validate="date"
-            handleChange={handleChange}
-            error={!datesAreValid.startdatum}
-          />
+          <div className="field hasButton">
+            <NumberInput
+              id="startdatum"
+              label="Startdatum"
+              innerLabel="DD.MM.YYYY"
+              value={serviceData.startdatum}
+              validate="date"
+              handleChange={handleChange}
+              error={!datesAreValid.startdatum}
+            />
+            <DatePicker />
+          </div>
+
           <NumberInput
             id="enddatum"
             label="Enddatum"

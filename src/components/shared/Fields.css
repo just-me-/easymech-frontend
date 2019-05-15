@@ -27,7 +27,6 @@
 }
 .Form-section .field .input {
   width: 80% !important;
-  overflow: hidden;
 }
 @media (min-width: 768px) {
   .Form-section .field .input {
@@ -51,11 +50,43 @@
   }
 }
 
-.Portal-section {
-  left: 40%;
-  position: fixed;
-  top: 20%;
-  zindex: 1000;
+/* in case there has to be room for buttons */
+.field.hasButton {
+  position: relative;
+}
+.field.hasButton .field .input {
+  width: calc(80% - 3rem) !important;
+}
+.field.hasButton > button,
+.field.hasButton > .Button {
+  right: 5px;
+  top: 0;
+  position: absolute;
+}
+.field.hasButton > button {
+  top: 1px;
+  opacity: 0.8;
+}
+@media (min-width: 768px) {
+  .field.hasButton .field .input {
+    width: calc(60% - 0.5rem) !important;
+  }
+  .field.hasButton > button,
+  .field.hasButton > .Button {
+    right: 11%;
+  }
+}
+
+/* input helper texts should not break medium screen design */
+@media (min-width: 768px) and (max-width: 1200px) {
+  .ui[class*="right labeled"].input>input {
+    border-top-right-radius: .28571429rem !important;
+    border-bottom-right-radius: .28571429rem !important;
+    border-right-color: rgba(34,36,38,.15) !important;
+  }
+  .ui.labeled.input .label {
+    display: none;
+  }
 }
 
 /* better visibility for non-filled-in requires */
