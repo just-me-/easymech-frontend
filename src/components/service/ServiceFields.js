@@ -94,18 +94,16 @@ function ServiceFields(props: Props) {
     <div>
       <div className="Form-section">
         <Form.Group widths="equal">
-          <div className="field hasButton">
-            <NumberInput
-              id="startdatum"
-              label="Startdatum"
-              innerLabel="DD.MM.YYYY"
-              value={serviceData.startdatum}
-              validate="date"
-              handleChange={handleChange}
-              error={!datesAreValid.startdatum}
-            />
-            <DatePicker />
-          </div>
+          
+          <DatePicker
+            id="startdatum"
+            label="Startdatum"
+            innerLabel="DD.MM.YYYY"
+            value={serviceData.startdatum}
+            validate="date"
+            handleChange={handleChange}
+            error={!datesAreValid.startdatum}
+          />
 
           <NumberInput
             id="enddatum"

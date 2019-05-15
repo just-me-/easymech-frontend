@@ -7,6 +7,8 @@ import { DateInput } from 'semantic-ui-calendar-react';
 import moment from 'moment';
 import 'moment/locale/de';
 
+import NumberInput from '../shared/NumberInput';
+
 import './DatePicker.css';
 
 export type Props = {
@@ -22,16 +24,27 @@ function DatePicker(props: Props) {
   }
 
   return (
-    <DateInput
-      className="DatePicker Button"
-      localization="de"
-      dateFormat="DD.MM.YYYY"
-      closable={true}
-      hideMobileKeyboard={true}
-      iconPosition="left"
-      value={value}
-      onChange={handleChange}
-    />
+    <div className="field hasButton">
+      <NumberInput
+        id={props.id}
+        label={props.label}
+        innerLabel="DD.MM.YYYY"
+        validate="date"
+        value={props.value}
+        handleChange={props.handleChange}
+        error={props.error}
+      />
+      <DateInput
+        className="DatePicker Button"
+        localization="de"
+        dateFormat="DD.MM.YYYY"
+        closable={true}
+        hideMobileKeyboard={true}
+        iconPosition="left"
+        value={value}
+        onChange={handleChange}
+      />
+    </div>
   );
 }
 
