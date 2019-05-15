@@ -1,10 +1,9 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Dropdown, Form, Icon } from 'semantic-ui-react';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button/Button';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import Portal from 'semantic-ui-react/dist/commonjs/addons/Portal/Portal';
+import {
+  Dropdown, Form, Icon, Modal, Button,
+} from 'semantic-ui-react';
 
 import Machine from '../machine/Machine';
 import SmartInput from '../shared/SmartInput';
@@ -44,7 +43,7 @@ function TransactionFields(props: Props) {
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
   const [dateIsValid, setDateIsValid] = useState(true);
-  const [machinportalIsOpen, setOpen] = useState(false);
+  const [machinmodalIsOpen, setMachinmodalIsOpen] = useState(false);
 
   function handleMachineSelect(result) {
     setTransactionData({ ...transactionData, maschinenid: result.id });
@@ -54,8 +53,16 @@ function TransactionFields(props: Props) {
     setTransactionData({ ...transactionData, kundenid: result.id });
   }
 
-  function handlePortal() {
-    setOpen(!machinportalIsOpen);
+  function showMachineModal() {
+    setMachinmodalIsOpen(true);
+  }
+
+  function closeMachineModal() {
+    setMachinmodalIsOpen(false);
+    sharedCalls.getMachines({
+      deletedToo: true,
+      dataSetter: setMachineData,
+    });
   }
 
   function handleChange(element, { validate }) {
@@ -117,7 +124,7 @@ function TransactionFields(props: Props) {
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
-            <Button icon positive disabled={machinportalIsOpen} onClick={handlePortal}>
+            <Button icon positive disabled={machinmodalIsOpen} onClick={showMachineModal}>
               <Icon name="add" />
             </Button>
           </div>
@@ -162,27 +169,10 @@ function TransactionFields(props: Props) {
             onChange={handleDropDown}
           />
         </Form.Group>
-        <Form.Group>
-          <Portal open={machinportalIsOpen}>
-            <div className="Portal-section">
-              <Segment pilled>
-                <Machine />
 
-                <Button
-                  content="Schliessen"
-                  negative
-                  onClick={() => {
-                    handlePortal();
-                    sharedCalls.getMachines({
-                      deletedToo: true,
-                      dataSetter: setMachineData,
-                    });
-                  }}
-                />
-              </Segment>
-            </div>
-          </Portal>
-        </Form.Group>
+        <Modal open={machinmodalIsOpen}>
+          <Modal.Content as={Machine} isIncluded includerCallback={closeMachineModal} />
+        </Modal>
       </div>
     </div>
   );

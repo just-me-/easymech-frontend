@@ -1,3 +1,13 @@
+.ui.modal {
+  padding: 2rem;
+  background: var(--main-bg-color) !important;
+}
+@media only screen and (min-width: 1200px) {
+  .ui.modal {
+    width: 1100px;
+  }
+}
+
 .field.hasButton {
   position: relative;
 }

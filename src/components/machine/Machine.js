@@ -7,7 +7,12 @@ import { NotificationManager } from 'react-notifications';
 import * as api from '../../api/machine';
 import MachineFields from './MachineFields';
 
-function Machine() {
+export type Props = {
+  isIncluded?: boolean,
+  includerCallback?: () => void,
+};
+
+function Machine(props: Props) {
   const [machineData, setMachineData] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
   const [key, setKey] = useState(Math.random());
@@ -23,6 +28,9 @@ function Machine() {
             `${result.seriennummer} erfasst`,
           );
           setKey(Math.random()); // clear data - fresh form for next entry
+          if (props.includerCallback) {
+            props.includerCallback(); // 2Do: id / seriennr zurückgeben...
+          }
         })
         .catch((error) => {
           console.log('Ups, ein Fehler ist aufgetreten', error);
@@ -55,6 +63,14 @@ function Machine() {
           floated="right"
           onClick={() => addMachine()}
         />
+        {props.isIncluded && props.includerCallback && (
+          <Button
+            content="Abbrechen"
+            icon="arrow left"
+            labelPosition="left"
+            onClick={() => props.includerCallback()}
+          />
+        )}
       </Form>
     </div>
   );
