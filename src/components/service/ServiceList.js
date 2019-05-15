@@ -23,66 +23,69 @@ function ServiceList(props: Props) {
 
   useEffect(() => {
     const baseParameters = {
-      state: "all",
+      state: 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
       dataSetter: setRentalData,
     };
     serviceCalls.getServices({
       ...baseParameters,
-      type: "rentals",
+      type: 'rentals',
     });
     serviceCalls.getServices({
       ...baseParameters,
-      type: "transactions",
+      type: 'transactions',
     });
     serviceCalls.getServices({
       ...baseParameters,
-      type: "services",
+      type: 'services',
     });
   }, []);
 
-  useEffect(() => {
-    const filteredArray = rentalData.map((entry) => {
-      return {
-        "id": entry.id,
-        "startdatum": entry.startdatum,
-        "enddatum": entry.enddatum,
-        "maschinenid": entry.maschinenid,
-        "kundenid": entry.kundenid,
-        "type": "rental"
-      };
-    });
-    setMergedData(_.concat(mergedData, filteredArray));
-  }, [rentalData]);
+  useEffect(
+    () => {
+      const filteredArray = rentalData.map(entry => ({
+        id: entry.id,
+        startdatum: entry.startdatum,
+        enddatum: entry.enddatum,
+        maschinenid: entry.maschinenid,
+        kundenid: entry.kundenid,
+        type: 'rental',
+      }));
+      setMergedData(_.concat(mergedData, filteredArray));
+    },
+    [rentalData],
+  );
 
-  useEffect(() => {
-    const filteredArray = rentalData.map((entry) => {
-      return {
-        "id": entry.id,
-        "startdatum": entry.datum,
-        "enddatum": "-",
-        "maschinenid": entry.maschinenid,
-        "kundenid": entry.kundenid,
-        "type": "transaction"
-      };
-    });
-    setMergedData(_.concat(mergedData, filteredArray));
-  }, [transactionData]);
+  useEffect(
+    () => {
+      const filteredArray = rentalData.map(entry => ({
+        id: entry.id,
+        startdatum: entry.datum,
+        enddatum: '-',
+        maschinenid: entry.maschinenid,
+        kundenid: entry.kundenid,
+        type: 'transaction',
+      }));
+      setMergedData(_.concat(mergedData, filteredArray));
+    },
+    [transactionData],
+  );
 
-  useEffect(() => {
-    const filteredArray = rentalData.map((entry) => {
-      return {
-        "id": entry.id,
-        "startdatum": entry.startdatum,
-        "enddatum": entry.enddatum,
-        "maschinenid": entry.maschinenid,
-        "kundenid": entry.kundenid,
-        "type": "service"
-      };
-    });
-    setMergedData(_.concat(mergedData, filteredArray));
-  }, [serviceData]);
+  useEffect(
+    () => {
+      const filteredArray = rentalData.map(entry => ({
+        id: entry.id,
+        startdatum: entry.startdatum,
+        enddatum: entry.enddatum,
+        maschinenid: entry.maschinenid,
+        kundenid: entry.kundenid,
+        type: 'service',
+      }));
+      setMergedData(_.concat(mergedData, filteredArray));
+    },
+    [serviceData],
+  );
 
   return (
     <div>
@@ -101,24 +104,21 @@ function ServiceList(props: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(
-            mergedData,
-            ({
-              id, type, startdatum, enddatum, maschinenid, kundenid
-            }, index) => (
-              <Table.Row key={index}>
-                <Table.Cell onClick={() => props.editEntry(id, type)} className="Hover-effect link">
-                  <Icon name="external" size="tiny" className="Inline-icon" />
-                  &nbsp;
-                  {type}
-                </Table.Cell>
-                <Table.Cell>{startdatum}</Table.Cell>
-                <Table.Cell>{enddatum}</Table.Cell>
-                <Table.Cell>{maschinenid}</Table.Cell>
-                <Table.Cell>{kundenid}</Table.Cell>
-              </Table.Row>
-            ),
-          )}
+          {_.map(mergedData, ({
+            id, type, startdatum, enddatum, maschinenid, kundenid,
+          }, index) => (
+            <Table.Row key={index}>
+              <Table.Cell onClick={() => props.editEntry(id, type)} className="Hover-effect link">
+                <Icon name="external" size="tiny" className="Inline-icon" />
+                &nbsp;
+                {type}
+              </Table.Cell>
+              <Table.Cell>{startdatum}</Table.Cell>
+              <Table.Cell>{enddatum}</Table.Cell>
+              <Table.Cell>{maschinenid}</Table.Cell>
+              <Table.Cell>{kundenid}</Table.Cell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table>
 
