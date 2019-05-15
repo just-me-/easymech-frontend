@@ -11,8 +11,12 @@ export type Transaction = {
 };
 
 function prepareDto(transactionObject: Transaction) {
+  const datetypes = ['datum'];
   const numbertypes = ['preis'];
-  return helper.convertToNumbers(transactionObject, numbertypes);
+  // deep copy 2 prevent side effects
+  let transaction = JSON.parse(JSON.stringify(transactionObject));
+  transaction = helper.convertToNumbers(transactionObject, numbertypes);
+  return helper.convertToDatabaseDates(transaction, datetypes);
 }
 
 export function addTransaction(transactionObject: Transaction): Promise<SaveResult> {

@@ -21,12 +21,6 @@ export function checkDate(str) {
     && date.getDate() === parseInt(dmy[0], 10)
   );
 }
-
-// 2Do - @dario - wozu brauchen wir das?
-export function checkDateISO(str) {
-  return !!str && /\d{4}-\d{2}-\d{2}/.test(str);
-}
-
 export function toNumber(str) {
   return str.toString().replace(/\D/g, '');
 }

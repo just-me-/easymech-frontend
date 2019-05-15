@@ -110,3 +110,17 @@ export function getMachinetypes({
       );
     });
 }
+
+export function getToday() {
+  const today = new Date();
+  return parseIsoDate(today.toISOString().substring(0, 10));
+}
+/* 2Do: sobald suche funktioniert und wir diese Funktion
+   noch weiter brauchen auslagern... api oder validation */
+function parseIsoDate(date) {
+  if (date && date.length > 0) {
+    const arr = date.match(/^(\d{4})-(\d{1,2})-(\d{1,2}).*/);
+    date = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}.${arr[2]}.${arr[1]}` : '';
+  }
+  return date;
+}

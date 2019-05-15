@@ -24,7 +24,7 @@ export type Props = {
 function ServiceFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
-    startdatum: (props.data && props.data.startdatum) || '',
+    startdatum: (props.data && props.data.startdatum) || sharedCalls.getToday(),
     enddatum: (props.data && props.data.enddatum) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',

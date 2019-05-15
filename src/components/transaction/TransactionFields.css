@@ -1,0 +1,30 @@
+.ui.modal {
+  padding: 2rem;
+  background: var(--main-bg-color) !important;
+}
+@media only screen and (min-width: 1200px) {
+  .ui.modal {
+    width: 1100px;
+  }
+}
+
+.field.hasButton {
+  position: relative;
+}
+.field.hasButton .field .input {
+  width: calc(80% - 3rem) !important;
+}
+.field.hasButton > button {
+  top: 1px;
+  right: 0;
+  position: absolute;
+  opacity: 0.8;
+}
+@media (min-width: 768px) {
+  .field.hasButton .field .input {
+    width: calc(60% - 0.5rem) !important;
+  }
+  .field.hasButton > button {
+    right: 11%;
+  }
+}
