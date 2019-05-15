@@ -110,14 +110,13 @@ function ServiceFields(props: Props) {
             error={!datesAreValid.startdatum}
             callbackSetter={datePicked}
           />
-          <NumberInput
+          <DatePicker
             id="enddatum"
             label="Enddatum"
-            innerLabel="DD.MM.YYYY"
             value={serviceData.enddatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.enddatum}
+            callbackSetter={datePicked}
           />
         </Form.Group>
 
