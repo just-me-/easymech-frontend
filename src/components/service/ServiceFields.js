@@ -67,6 +67,14 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, [element.target.id]: value });
   }
 
+  function datePicked(value, id) {
+    setDatesAreValid({
+      ...datesAreValid,
+      id: validation.checkDate(value),
+    });
+    setServiceData({ ...serviceData, [id]: value });
+  }
+
   useEffect(() => {
     const requiredIsValide = Object.values(datesAreValid).every(val => val === true)
       && parseInt(serviceData.maschinenId, 10) > 0
@@ -94,17 +102,14 @@ function ServiceFields(props: Props) {
     <div>
       <div className="Form-section">
         <Form.Group widths="equal">
-          
           <DatePicker
             id="startdatum"
             label="Startdatum"
-            innerLabel="DD.MM.YYYY"
             value={serviceData.startdatum}
-            validate="date"
             handleChange={handleChange}
             error={!datesAreValid.startdatum}
+            callbackSetter={datePicked}
           />
-
           <NumberInput
             id="enddatum"
             label="Enddatum"

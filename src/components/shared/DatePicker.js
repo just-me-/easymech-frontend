@@ -7,13 +7,19 @@ import { DateInput } from 'semantic-ui-calendar-react';
 import moment from 'moment';
 import 'moment/locale/de';
 
-import NumberInput from '../shared/NumberInput';
+import * as validation from './validation';
+import NumberInput from './NumberInput';
 
 import './DatePicker.css';
 
 export type Props = {
   value: ?string,
-  callbackSetter?: ({ target: { value: string, id: string } }, { validate: string }) => void,
+  callbackSetter?: (value: string, id: string) => void,
+  id: string,
+  label: string,
+  value: ?string,
+  error?: boolean,
+  handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
 };
 
 function DatePicker(props: Props) {
@@ -21,6 +27,9 @@ function DatePicker(props: Props) {
 
   function handleChange(e, { value }) {
     setValue(value);
+    if (props.callbackSetter && validation.checkDate(value)) {
+      props.callbackSetter(value, props.id);
+    }
   }
 
   return (
@@ -38,8 +47,10 @@ function DatePicker(props: Props) {
         className="DatePicker Button"
         localization="de"
         dateFormat="DD.MM.YYYY"
-        closable={true}
-        hideMobileKeyboard={true}
+        minDate="01.01.1900"
+        maxDate="31.12.2099"
+        closable
+        hideMobileKeyboard
         iconPosition="left"
         value={value}
         onChange={handleChange}
