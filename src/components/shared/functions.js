@@ -7,10 +7,7 @@ import * as apiMachinetype from '../../api/machinetype';
 import * as apiServiceSearch from '../../api/service_search';
 
 export function saveCustomer({
-  formIsValid = undefined,
-  customerData = undefined,
-  setKey = undefined,
-  setViewState = undefined,
+  formIsValid,customerData, setKey, setViewState = undefined,
   exists = false, // add or edit customer
 }: any = {}) {
   const action = exists ? apiCustomer.updateCustomer : apiCustomer.addCustomer;
@@ -44,9 +41,7 @@ export function saveCustomer({
 }
 
 export function getCustomers({
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
+  filterData, loadingSetter, dataSetter = undefined,
   deletedToo = false,
 }: any = {}) {
   const action = deletedToo ? apiCustomer.getCustomers : apiCustomer.getFilteredCustomers;
@@ -67,9 +62,7 @@ export function getCustomers({
 }
 
 export function getMachines({
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
+  filterData, loadingSetter,dataSetter = undefined,
   deletedToo = false,
 }: any = {}) {
   const action = deletedToo ? apiMachine.getMachines : apiMachine.getFilteredMachines;
@@ -90,9 +83,7 @@ export function getMachines({
 }
 
 export function getMachinetypes({
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
+  filterData, loadingSetter, dataSetter = undefined,
 }: any = {}) {
   const action = filterData
     ? apiMachinetype.getFilteredMachineTypes
@@ -115,9 +106,7 @@ export function getMachinetypes({
 export function getServices({
   type,
   state = 'all',
-  filterData = undefined,
-  loadingSetter = undefined,
-  dataSetter = undefined,
+  filterData, loadingSetter, dataSetter = undefined,
 }: any = {}) {
   let action;
   if (type === 'rentals') {
