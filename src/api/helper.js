@@ -12,8 +12,11 @@ export function checkStatus(response) {
 export function checkResponse(response) {
   if (response.status !== 'ok') {
     const errorCodes = {
+      100: 'Genereller Fehler',
+      101: 'Datenbank Fehler',
       200: 'Duplikat',
       201: 'Noch in Verwendung',
+      202: 'Inkonsistente IDs',
       203: 'Nicht vermietbar',
     };
     const errorCode = errorCodes
@@ -51,7 +54,9 @@ export function convertToDatabaseDates(dto, fieldsToConvert) {
     // support neasted fields
     const key_arr = fieldsToConvert[key].split('.');
     if (key_arr && key_arr[1]) {
-      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(convertedDto[key_arr[0]][key_arr[1]]);
+      convertedDto[key_arr[0]][key_arr[1]] = parseToDatabaseDate(
+        convertedDto[key_arr[0]][key_arr[1]],
+      );
     } else {
       convertedDto[fieldsToConvert[key]] = parseToDatabaseDate(convertedDto[fieldsToConvert[key]]);
     }
