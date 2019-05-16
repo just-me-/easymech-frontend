@@ -14,21 +14,29 @@ import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
 
-// import type { Service } from '../../api/service';
+import type {Material, Service, WorkStep} from '../../api/service';
 
 export type Props = {
-  data?: any, // 2do
-  setData?: any => void, // 2do
+  data?: Service,
+  setData?: Service => void,
+  material?: Array<Material>,
+  addMaterial?: Material => void,
+  workSteps?: WorkStep,
+  addWorkSteps?: WorkStep => void,
   setValidState?: boolean => void,
 };
 
 function ServiceFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
-    startdatum: (props.data && props.data.startdatum) || sharedCalls.getToday(),
-    enddatum: (props.data && props.data.enddatum) || '',
+    bezeichnung: (props.data && props.data.bezeichnung) || '',
+    beginn: (props.data && props.data.beginn) || sharedCalls.getToday(),
+    ende: (props.data && props.data.ende) || '',
+    status: (props.data && props.data.status) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
+    materialposten: (props.data && props.data.materialposten) || {},
+    arbeitsschritte: (props.data && props.data.arbeitsschritte) || {}
   };
 
   const [serviceData, setServiceData] = useState(initialData);
@@ -36,8 +44,8 @@ function ServiceFields(props: Props) {
   const [machineData, setMachineData] = useState();
 
   const [datesAreValid, setDatesAreValid] = useState({
-    startdatum: true,
-    enddatum: true,
+    beginn: true,
+    ende: true,
   });
 
   function handleMachineSelect(result) {
@@ -103,17 +111,17 @@ function ServiceFields(props: Props) {
           <DatePicker
             id="startdatum"
             label="Startdatum"
-            value={serviceData.startdatum}
+            value={serviceData.beginn}
             handleChange={handleChange}
-            error={!datesAreValid.startdatum}
+            error={!datesAreValid.beginn}
             callbackSetter={datePicked}
           />
           <DatePicker
             id="enddatum"
             label="Enddatum"
-            value={serviceData.enddatum}
+            value={serviceData.ende}
             handleChange={handleChange}
-            error={!datesAreValid.enddatum}
+            error={!datesAreValid.ende}
             callbackSetter={datePicked}
           />
         </Form.Group>

@@ -23,6 +23,7 @@ export type Service = {
     bezeichnung?: string,
     beginn?: string,
     ende?: string,
+    status?:number,
     maschinenId?: number,
     kundenId?: number,
     materialposten?: Array<Material>,
