@@ -143,8 +143,17 @@ function AppMenu(props: Props) {
 
           <Menu.Item>
             <Menu.Header>
-              <Icon name="cogs" />
-              Dienstleistungen
+              <div onClick={e => handleMenuClick(e, { name: 'search_service' })}>
+                <Link
+                  to={{
+                    pathname: '/service_search',
+                    state: { listRedirect: true },
+                  }}
+                >
+                  <Icon name="cogs" />
+                  Dienstleistungen
+                </Link>
+              </div>
             </Menu.Header>
             <Menu.Menu>
               <Menu.Item
