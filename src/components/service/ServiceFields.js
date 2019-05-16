@@ -14,15 +14,11 @@ import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
 
-import type {Material, Service, WorkStep} from '../../api/service';
+import type { Service } from '../../api/service';
 
 export type Props = {
   data?: Service,
   setData?: Service => void,
-  material?: Array<Material>,
-  addMaterial?: Material => void,
-  workSteps?: WorkStep,
-  addWorkSteps?: WorkStep => void,
   setValidState?: boolean => void,
 };
 
@@ -35,8 +31,8 @@ function ServiceFields(props: Props) {
     status: (props.data && props.data.status) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
-    materialposten: (props.data && props.data.materialposten) || {},
-    arbeitsschritte: (props.data && props.data.arbeitsschritte) || {}
+    materialposten: (props.data && props.data.materialposten) || [],
+    arbeitsschritte: (props.data && props.data.arbeitsschritte) || []
   };
 
   const [serviceData, setServiceData] = useState(initialData);
