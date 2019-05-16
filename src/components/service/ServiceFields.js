@@ -50,18 +50,16 @@ function ServiceFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate) {
-      if (validate === 'number') {
-        value = validation.toNumber(value);
-      }
-      if (validate === 'date') {
-        value = validation.toDate(value);
-        if (props.setValidState) {
-          setDatesAreValid({
-            ...datesAreValid,
-            [element.target.id]: value ? validation.checkDate(value) : true,
-          });
-        }
+    if (validate && (validate === 'number')) {
+      value = validation.toNumber(value);
+    }
+    if (validate && (validate === 'date')) {
+      value = validation.toDate(value);
+      if (props.setValidState) {
+        setDatesAreValid({
+          ...datesAreValid,
+          [element.target.id]: value ? validation.checkDate(value) : true,
+        });
       }
     }
     setServiceData({ ...serviceData, [element.target.id]: value });
@@ -76,11 +74,11 @@ function ServiceFields(props: Props) {
   }
 
   useEffect(() => {
-    const requiredIsValide = Object.values(datesAreValid).every(val => val === true)
+    const requiredIsValid = Object.values(datesAreValid).every(val => val === true)
       && parseInt(serviceData.maschinenId, 10) > 0
       && parseInt(serviceData.kundenId, 10) > 0;
     if (props.setValidState) {
-      props.setValidState(requiredIsValide);
+      props.setValidState(requiredIsValid);
     }
     if (props.setData) {
       props.setData(serviceData);
