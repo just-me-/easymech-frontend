@@ -87,7 +87,7 @@ function MachineFields(props: Props) {
   }, []);
 
   return (
-    <div>
+    <React.Fragment>
       <div className="Form-section">
         <Form.Group widths="equal">
           <Form.Input
@@ -174,7 +174,7 @@ function MachineFields(props: Props) {
           </Form.Group>
         )}
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 
