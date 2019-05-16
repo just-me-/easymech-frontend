@@ -44,7 +44,7 @@ function TransactionFields(props: Props) {
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
   const [dateIsValid, setDateIsValid] = useState(true);
-  const [machinmodalIsOpen, setMachinmodalIsOpen] = useState(false);
+  const [machineModalIsOpen, setMachineModalIsOpen] = useState(false);
 
   function handleMachineSelect(result) {
     setTransactionData({ ...transactionData, maschinenid: result.id });
@@ -55,11 +55,11 @@ function TransactionFields(props: Props) {
   }
 
   function showMachineModal() {
-    setMachinmodalIsOpen(true);
+    setMachineModalIsOpen(true);
   }
 
   function closeMachineModal() {
-    setMachinmodalIsOpen(false);
+    setMachineModalIsOpen(false);
     sharedCalls.getMachines({
       deletedToo: true,
       dataSetter: setMachineData,
@@ -68,10 +68,10 @@ function TransactionFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate === 'number') {
+    if (validate && (validate === 'number')) {
       value = validation.toNumber(value);
     }
-    if (validate === 'date') {
+    if (validate && (validate === 'date')) {
       value = validation.toDate(value);
       if (props.setValidState) {
         setDateIsValid(value ? validation.checkDate(value) : true);
@@ -130,7 +130,7 @@ function TransactionFields(props: Props) {
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
-            <Button icon positive disabled={machinmodalIsOpen} onClick={showMachineModal}>
+            <Button icon positive disabled={machineModalIsOpen} onClick={showMachineModal}>
               <Icon name="add" />
             </Button>
           </div>
@@ -175,7 +175,7 @@ function TransactionFields(props: Props) {
           />
         </Form.Group>
 
-        <Modal open={machinmodalIsOpen}>
+        <Modal open={machineModalIsOpen}>
           <Modal.Content as={Machine} isIncluded includerCallback={closeMachineModal} />
         </Modal>
       </div>
