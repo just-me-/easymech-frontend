@@ -56,5 +56,5 @@ export function getServices(
   state: string,
   serviceSearchObject: ServiceSearchObject,
 ): Promise<{ result: Array<any> }> {
-  return getAllTypesOfServices('service', state, serviceSearchObject);
+  return getAllTypesOfServices('services', state, serviceSearchObject);
 }
