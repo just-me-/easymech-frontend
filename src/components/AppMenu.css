@@ -1,0 +1,11 @@
+.MenuToggle {
+  display: inline;
+  position: absolute !important;
+  padding: 1rem;
+  right: 1rem;
+  top: 2rem;
+  z-index: 10;
+}
+.MenuToggle button {
+  border: 1px white solid !important;
+}
