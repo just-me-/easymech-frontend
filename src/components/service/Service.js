@@ -12,7 +12,7 @@ function Service() {
 
   function addService() {
     // tmp - use all varis for no warnings
-    console.log("2Do...", serviceData, formIsValid, key);
+    console.log('2Do...', serviceData, formIsValid, key);
     setKey(Math.random());
   }
 

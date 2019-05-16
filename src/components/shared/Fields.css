@@ -28,6 +28,9 @@
 .Form-section .field .input {
   width: 80% !important;
 }
+.Form-section .ui.checkbox.field label {
+  width: 100%;
+}
 @media (min-width: 768px) {
   .Form-section .field .input {
     width: 70% !important;
@@ -51,6 +54,9 @@
 }
 
 /* in case there has to be room for buttons */
+.Button input {
+  cursor: pointer !important;
+}
 .field.hasButton {
   position: relative;
 }

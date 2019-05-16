@@ -4,6 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import * as apiCustomer from '../../api/customer';
 import * as apiMachine from '../../api/machine';
 import * as apiMachinetype from '../../api/machinetype';
+import * as apiServiceSearch from '../../api/service_search';
 
 export function saveCustomer({
   formIsValid = undefined,
@@ -106,6 +107,38 @@ export function getMachinetypes({
       console.log('Ups, ein Fehler ist aufgetreten', error);
       NotificationManager.error(
         'Maschinentypen konnten nicht geladen werden',
+        'Bitte überprüfen Sie Ihre Verbindung!',
+      );
+    });
+}
+
+export function getServices({
+  type,
+  state = 'all',
+  filterData = undefined,
+  loadingSetter = undefined,
+  dataSetter = undefined,
+}: any = {}) {
+  let action;
+  if (type === 'rentals') {
+    action = apiServiceSearch.getRentals;
+  } else if (type === 'transactions') {
+    action = apiServiceSearch.getTransactions;
+  } else if (type === 'services') {
+    action = apiServiceSearch.getServices;
+  } else {
+    return null;
+  }
+  action(state, filterData)
+    .then((result) => {
+      result = apiServiceSearch.checkResponse(result);
+      if (loadingSetter) loadingSetter(false);
+      if (dataSetter) dataSetter(result);
+    })
+    .catch((error) => {
+      console.log('Ups, ein Fehler ist aufgetreten', error);
+      NotificationManager.error(
+        'Dienstleistungen konnten nicht geladen werden',
         'Bitte überprüfen Sie Ihre Verbindung!',
       );
     });
