@@ -19,24 +19,24 @@ function SmartInput(props: Props) {
   const [matchedResults, setMatchedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState('');
-  const [isValide, setIsValide] = useState(true);
+  const [isValid, setIsValid] = useState(true);
 
   function resetSearch() {
     setIsLoading(false);
-    setIsValide(true);
+    setIsValid(true);
     setMatchedResults([]);
     setValue('');
   }
 
   function handleSelect(e, { result }) {
     props.onResultSelect(result);
-    setIsValide(true);
+    setIsValid(true);
     setValue(result.title);
   }
 
   function handleChange(e, { value }) {
     props.onResultSelect({ id: "0" });
-    setIsValide(false);
+    setIsValid(false);
     setIsLoading(true);
     setValue(e.target.value);
     setTimeout(() => {
@@ -75,7 +75,7 @@ function SmartInput(props: Props) {
       loading={isLoading}
       noResultsMessage={props.noResultsMessage}
       placeholder={props.isRequired ? 'Pflichtfeld' : ''}
-      error={!isValide}
+      error={!isValid}
     />
   );
 }
