@@ -15,10 +15,11 @@ export type ServiceSearchObject = {
 };
 
 function prepareDto(serviceSearchObject: ServiceSearchObject) {
-  const numbertypes = ['besitzerId', 'maschinenId', 'maschinentypId'];
+  const numbertypes = ['kundenId', 'maschinenId', 'maschinentypId'];
   const datetypes = ['von', 'bis'];
-  serviceSearchObject = helper.convertToNumbers(serviceSearchObject, numbertypes);
-  return helper.convertToDatabaseDates(serviceSearchObject, datetypes);
+  let object = Object.assign({}, serviceSearchObject);
+  object = helper.convertToNumbers(object, numbertypes);
+  return helper.convertToDatabaseDates(object, datetypes);
 }
 
 function getAllTypesOfServices(
@@ -33,7 +34,7 @@ function getAllTypesOfServices(
     completed: 3,
   };
   const searchDto = Object.assign({ status: states[state] }, serviceSearchObject);
-  return helper.postJson(`/${type}`, prepareDto(searchDto), 'POST').then(helper.parseJSON);
+  return helper.postJson(`/${type}/suchen`, prepareDto(searchDto), 'POST').then(helper.parseJSON);
 }
 
 export function getRentals(
