@@ -15,7 +15,6 @@ export type Props = {
   callbackSetter?: (value: string, id: string) => void,
   id: string,
   label: string,
-  value: ?string,
   error?: boolean,
   handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
 };
