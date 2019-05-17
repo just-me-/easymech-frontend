@@ -3,8 +3,9 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import {
-  Header, Form, Table, Button, Icon, Input, Transition,
+  Header, Form, Table, Button, Icon, Input, Transition, Radio,
 } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
 // import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
@@ -31,7 +32,7 @@ function ServiceFields(props: Props) {
     bezeichnung: (props.data && props.data.bezeichnung) || '',
     beginn: (props.data && props.data.beginn) || sharedCalls.getToday(),
     ende: (props.data && props.data.ende) || '',
-    status: (props.data && props.data.status) || '',
+    status: (props.data && props.data.status) || 1, // geplant=1,  running=2, finished=3
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
     materialposten: (props.data && props.data.materialposten) || [],
@@ -52,8 +53,10 @@ function ServiceFields(props: Props) {
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
 
-  const [materialList, setMaterialList] = useState([]);
-  const [workstepList, setWorkstepList] = useState([]);
+  const [materialList, setMaterialList] = useState((props.data && props.data.materialposten) || []);
+  const [workstepList, setWorkstepList] = useState(
+    (props.data && props.data.arbeitsschritte) || [],
+  );
 
   const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
   const [workstepAddRow, setWorkstepAddRow] = useState(initialWorkstep);
@@ -86,6 +89,10 @@ function ServiceFields(props: Props) {
       }
     }
     setServiceData({ ...serviceData, [element.target.id]: value });
+  }
+
+  function handleRadio(element, {value}) {
+    setServiceData({ ...serviceData, "status": parseInt(value) });
   }
 
   function handleMaterial(e, { value }) {
@@ -150,7 +157,11 @@ function ServiceFields(props: Props) {
       props.setValidState(requiredIsValid);
     }
     if (props.setData) {
-      props.setData(serviceData);
+      props.setData({
+        ...serviceData,
+        materialposten: materialList,
+        arbeitsschritte: workstepList,
+      });
     }
   });
 
@@ -170,7 +181,7 @@ function ServiceFields(props: Props) {
       <div className="Form-section">
         <Form.Group widths="equal">
           <DatePicker
-            id="startdatum"
+            id="beginn"
             label="Startdatum"
             value={serviceData.beginn}
             handleChange={handleChange}
@@ -178,7 +189,7 @@ function ServiceFields(props: Props) {
             callbackSetter={datePicked}
           />
           <DatePicker
-            id="enddatum"
+            id="ende"
             label="Enddatum"
             value={serviceData.ende}
             handleChange={handleChange}
@@ -208,6 +219,33 @@ function ServiceFields(props: Props) {
             noResultsMessage="Kein Kunden gefunden"
             isRequired
           />
+        </Form.Group>
+
+        <Form.Group widths="equal">
+          <Form.Field>
+            <Radio
+              label="Geplant"
+              value="1"
+              checked={serviceData.status === 1}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="In Bearbeitung"
+              value="2"
+              checked={serviceData.status === 2}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Abgeschlossen"
+              value="3"
+              checked={serviceData.status === 3}
+              onChange={handleRadio}
+            />
+          </Form.Field>
         </Form.Group>
       </div>
 
