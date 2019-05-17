@@ -103,21 +103,22 @@ function ServiceFields(props: Props) {
     setWorkstepAddRow(initialWorkstep);
   }
 
+  function removeWorkstep(index) {
+    const arr = [...workstepList];
+    arr.splice(index, 1);
+    setWorkstepList(arr);
+  }
+
   function addMaterial() {
     // 2Do: if valid...
     setMaterialList(_.concat(materialList, materialAddRow));
     setMaterialAddRow(initialMaterial);
   }
 
-  function removeWorkstep(index) {
-    // setWorkstepList(_.pullAt(workstepList, index));
-    setWorkstepList(
-      _.remove(workstepList, (arr, i) => i === index),
-    );
-  }
-
   function removeMaterial(index) {
-    setMaterialList(_.pullAt(materialList, index));
+    const arr = [...materialList];
+    arr.splice(index, 1);
+    setMaterialList(arr);
   }
 
   function datePicked(value, id) {
@@ -150,13 +151,6 @@ function ServiceFields(props: Props) {
       dataSetter: setMachineData,
     });
   }, []);
-
-  useEffect(
-    () => {
-      console.log('List changed', workstepList);
-    },
-    [workstepList],
-  );
 
   return (
     <div>
