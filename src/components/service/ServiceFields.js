@@ -288,7 +288,7 @@ function ServiceFields(props: Props) {
               <Table.Cell>
                 <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} />
               </Table.Cell>
-              <Table.Cell>100.00 CHF</Table.Cell>
+              <Table.Cell></Table.Cell>
               <Table.Cell>
                 <Button icon onClick={addMaterial}>
                   <Icon name="add" />
@@ -344,7 +344,7 @@ function ServiceFields(props: Props) {
               <Table.Cell>
                 <Form.Input id="dauer" value={workstepAddRow.dauer} onChange={handleWorkstep} />
               </Table.Cell>
-              <Table.Cell>100.00 CHF</Table.Cell>
+              <Table.Cell></Table.Cell>
               <Table.Cell>
                 <Button icon onClick={addWorkstep}>
                   <Icon name="add" />
