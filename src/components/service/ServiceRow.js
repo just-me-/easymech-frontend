@@ -1,15 +1,11 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import {
-  Header, Form, Table, Button, Icon, Input,
-} from 'semantic-ui-react';
+import { Table, Button, Icon, Input } from 'semantic-ui-react';
 
 import * as validation from '../shared/validation';
 
 import '../shared/Fields.css';
-
-import type { Service } from '../../api/service';
 
 export type Props = {
   key: number,
