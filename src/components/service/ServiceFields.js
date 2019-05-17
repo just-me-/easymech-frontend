@@ -99,13 +99,8 @@ function ServiceFields(props: Props) {
 
   function addWorkstep() {
     // 2Do: if valid...
-    console.log("adding", workstepAddRow)
     setWorkstepList(_.concat(workstepList, workstepAddRow));
     setWorkstepAddRow(initialWorkstep);
-  }
-  function removeWorkstep(index) {
-    // 2Do...
-    console.log('remove');
   }
 
   function addMaterial() {
@@ -113,9 +108,16 @@ function ServiceFields(props: Props) {
     setMaterialList(_.concat(materialList, materialAddRow));
     setMaterialAddRow(initialMaterial);
   }
+
+  function removeWorkstep(index) {
+    // setWorkstepList(_.pullAt(workstepList, index));
+    setWorkstepList(
+      _.remove(workstepList, (arr, i) => i === index),
+    );
+  }
+
   function removeMaterial(index) {
-    // 2Do..
-    console.log('remove');
+    setMaterialList(_.pullAt(materialList, index));
   }
 
   function datePicked(value, id) {
@@ -148,6 +150,13 @@ function ServiceFields(props: Props) {
       dataSetter: setMachineData,
     });
   }, []);
+
+  useEffect(
+    () => {
+      console.log('List changed', workstepList);
+    },
+    [workstepList],
+  );
 
   return (
     <div>
@@ -230,11 +239,7 @@ function ServiceFields(props: Props) {
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input
-                  id="preis"
-                  value={materialAddRow.preis}
-                  onChange={handleMaterial}
-                />
+                <Form.Input id="preis" value={materialAddRow.preis} onChange={handleMaterial} />
               </Table.Cell>
               <Table.Cell>
                 <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} />

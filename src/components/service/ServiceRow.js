@@ -20,21 +20,23 @@ export type Props = {
 };
 
 function ServiceRow(props: Props) {
-  const initialData = props.type === 'workstep' ? {
-    desc: (props.data && props.data.bezeichnung) || '',
-    price: (props.data && props.data.stundensatz) || '',
-    unit: (props.data && props.data.dauer) || '',
-  } : {
-    desc: (props.data && props.data.bezeichnung) || '',
-    price: (props.data && props.data.preis) || '',
-    unit: (props.data && props.data.anzahl) || '',
-  };
+  const initialData = props.type === 'workstep'
+    ? {
+      desc: (props.data && props.data.bezeichnung) || '',
+      price: (props.data && props.data.stundensatz) || '',
+      unit: (props.data && props.data.dauer) || '',
+    }
+    : {
+      desc: (props.data && props.data.bezeichnung) || '',
+      price: (props.data && props.data.preis) || '',
+      unit: (props.data && props.data.anzahl) || '',
+    };
 
   const [rowData, setRowData] = useState(initialData);
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && (validate === 'number')) {
+    if (validate && validate === 'number') {
       value = validation.toNumber(value);
     }
     setRowData({ ...rowData, [element.target.id]: value });
@@ -61,7 +63,7 @@ function ServiceRow(props: Props) {
       </Table.Cell>
       <Table.Cell width="3">{rowData.price * rowData.unit}</Table.Cell>
       <Table.Cell>
-        <Button icon onClick={rowData.rmCall}>
+        <Button icon onClick={() => props.rmCall(props.index)}>
           <Icon name="trash alternate" />
         </Button>
       </Table.Cell>
