@@ -1,13 +1,12 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import {
-  Header, Form, Table, Button, Icon, Input,
-} from 'semantic-ui-react';
+import { Header, Form, Table, Button, Icon, Input } from 'semantic-ui-react';
 
 // import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
+import ServiceRow from './ServiceRow';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
@@ -32,28 +31,32 @@ function ServiceFields(props: Props) {
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
     materialposten: (props.data && props.data.materialposten) || [],
-    arbeitsschritte: (props.data && props.data.arbeitsschritte) || []
+    arbeitsschritte: (props.data && props.data.arbeitsschritte) || [],
   };
   const initialMaterial = {
-      id: undefined,
-      stueckpreis: '',
-      anzahl: '',
-      bezeichnung: '',
-      serviceId: '',
+    id: undefined,
+    stueckpreis: '',
+    anzahl: '',
+    bezeichnung: '',
+    serviceId: '',
   };
-  const initialWorkStep = {
-      id: undefined,
-      bezeichnung: '',
-      stundensatz: '',
-      arbeitsstunden: '',
-      serviceId: ''
+  const initialWorkstep = {
+    id: undefined,
+    bezeichnung: '',
+    stundensatz: '',
+    arbeitsstunden: '',
+    serviceId: '',
   };
 
   const [serviceData, setServiceData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
-  const [material, setMaterial] = useState(initialMaterial);
-  const [workStep, setWorkStep] = useState(initialWorkStep);
+
+  const [materialList, setMaterialList] = useState([]);
+  const [workstepList, setWorkstepList] = useState([]);
+
+  const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
+  const [workstepAddRow, setWorkstepAddRow] = useState(initialWorkstep);
 
   const [datesAreValid, setDatesAreValid] = useState({
     beginn: true,
@@ -70,10 +73,10 @@ function ServiceFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && (validate === 'number')) {
+    if (validate && validate === 'number') {
       value = validation.toNumber(value);
     }
-    if (validate && (validate === 'date')) {
+    if (validate && validate === 'date') {
       value = validation.toDate(value);
       if (props.setValidState) {
         setDatesAreValid({
@@ -85,21 +88,25 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, [element.target.id]: value });
   }
 
-  function handleMaterial(element, { validate }){
-    let value = element.target.value;
-    if (validate && (validate === 'number')) {
-        value = validation.toNumber(value);
-    }
-    setMaterial({ ...material,[element.target.id]:value});
+  function handleMaterial(e, {value}) {
+    // 2Do: if valid...
+    setMaterialAddRow({...materialAddRow, [e.target.id]: value})
   }
 
-    function handleWorkStep(element, { validate }){
-        let value = element.target.value;
-        if (validate && (validate === 'number')) {
-            value = validation.toNumber(value);
-        }
-        setWorkStep({ ...workStep,[element.target.id]:value});
-    }
+  function handleWorkstep(e, {value}) {
+    // 2Do: if valid...
+    setWorkstepAddRow({...workstepAddRow, [e.target.id]: value})
+  }
+
+  function addWorkstep() {
+    // 2Do: if valid...
+    setWorkstepList({ ...materialList, workstepAddRow });
+  }
+
+  function addMaterial() {
+    // 2Do: if valid...
+    setMaterialList({ ...materialList, materialAddRow });
+  }
 
   function datePicked(value, id) {
     setDatesAreValid({
@@ -110,9 +117,10 @@ function ServiceFields(props: Props) {
   }
 
   useEffect(() => {
-    const requiredIsValid = Object.values(datesAreValid).every(val => val === true)
-      && parseInt(serviceData.maschinenId, 10) > 0
-      && parseInt(serviceData.kundenId, 10) > 0;
+    const requiredIsValid =
+      Object.values(datesAreValid).every(val => val === true) &&
+      parseInt(serviceData.maschinenId, 10) > 0 &&
+      parseInt(serviceData.kundenId, 10) > 0;
     if (props.setValidState) {
       props.setValidState(requiredIsValid);
     }
@@ -193,49 +201,33 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
-              <Table.Cell width="1">1</Table.Cell>
-              <Table.Cell width="7">
-                <Input value="Motoröl" />
-              </Table.Cell>
-              <Table.Cell width="3">
-                <Input value="10.00" />
-              </Table.Cell>
-              <Table.Cell width="2">
-                <Input value="10" />
-              </Table.Cell>
-              <Table.Cell width="3">100.00 CHF</Table.Cell>
-              <Table.Cell>
-                <Button icon>
-                  <Icon name="trash alternate" />
-                </Button>
-              </Table.Cell>
-            </Table.Row>
+            <ServiceRow />
+
             <Table.Row>
               <Table.Cell />
               <Table.Cell>
-                  <Form.Input
-                      id="bezeichnung"
-                      value={material.bezeichnung}
-                      onChange={handleMaterial}
-                  />
+                <Form.Input
+                  id="bezeichnung"
+                  value={materialAddRow.bezeichnung}
+                  onChange={handleMaterial}
+                />
               </Table.Cell>
               <Table.Cell>
-                  <Form.Input
-                      id="stueckpreis"
-                      value={material.stueckpreis}
-                      onChange={handleMaterial}
-                  />
+                <Form.Input
+                  id="stueckpreis"
+                  value={materialAddRow.stueckpreis}
+                  onChange={handleMaterial}
+                />
               </Table.Cell>
               <Table.Cell>
-                  <Form.Input
-                      id="anzahl"
-                      value={material.anzahl}
-                      onChange={handleMaterial}
-                  />
+                <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} />
               </Table.Cell>
               <Table.Cell>100.00 CHF</Table.Cell>
-              <Table.Cell />
+              <Table.Cell>
+                <Button icon onClick={addMaterial}>
+                  <Icon name="add" />
+                </Button>
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
@@ -256,49 +248,33 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
-              <Table.Cell width="1">1</Table.Cell>
-              <Table.Cell width="7">
-                <Input value="Motoröl eingefüllt" />
-              </Table.Cell>
-              <Table.Cell width="3">
-                <Input value="10.00" />
-              </Table.Cell>
-              <Table.Cell width="2">
-                <Input value="10" />
-              </Table.Cell>
-              <Table.Cell width="3">100.00 CHF</Table.Cell>
-              <Table.Cell>
-                <Button icon>
-                  <Icon name="trash alternate" />
-                </Button>
-              </Table.Cell>
-            </Table.Row>
+            <ServiceRow />
+
             <Table.Row>
               <Table.Cell />
               <Table.Cell>
-                  <Form.Input
-                      id="bezeichnung"
-                      value={workStep.bezeichnung}
-                      onChange={handleWorkStep}
-                  />
+                <Form.Input
+                  id="bezeichnung"
+                  value={workstepAddRow.bezeichnung}
+                  onChange={handleWorkstep}
+                />
               </Table.Cell>
               <Table.Cell>
-                  <Form.Input
-                      id="stundensatz"
-                      value={workStep.stundensatz}
-                      onChange={handleWorkStep}
-                  />
+                <Form.Input
+                  id="stundensatz"
+                  value={workstepAddRow.stundensatz}
+                  onChange={handleWorkstep}
+                />
               </Table.Cell>
               <Table.Cell>
-                  <Form.Input
-                      id="stunden"
-                      value={workStep.stundensatz}
-                      onChange={handleWorkStep}
-                  />
+                <Form.Input id="stunden" value={workstepAddRow.stundensatz} onChange={handleWorkstep} />
               </Table.Cell>
               <Table.Cell>100.00 CHF</Table.Cell>
-              <Table.Cell />
+              <Table.Cell>
+                <Button icon>
+                  <Icon name="add" onClick={addWorkstep} />
+                </Button>
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
