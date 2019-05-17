@@ -3,19 +3,15 @@ import * as helper from './helper';
 export const checkResponse = helper.checkResponse;
 
 export type Material ={
-    id?: number,
-    stueckpreis?: string,
-    anzahl?: number,
     bezeichnung?: string,
-    serviceId?: number
+    preis?: number,
+    anzahl?: number,
 }
 
 export type WorkStep = {
-    id?: number,
     bezeichnung?: string,
-    stundensatz?: string,
-    arbeitsstunden?: string,
-    serviceId?: number
+    stundensatz?: number,
+    dauer?: number,
 }
 
 export type Service = {

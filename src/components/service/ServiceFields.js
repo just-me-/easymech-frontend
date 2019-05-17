@@ -1,7 +1,10 @@
 // @flow
 
+import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Header, Form, Table, Button, Icon, Input } from 'semantic-ui-react';
+import {
+  Header, Form, Table, Button, Icon, Input,
+} from 'semantic-ui-react';
 
 // import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
@@ -34,18 +37,14 @@ function ServiceFields(props: Props) {
     arbeitsschritte: (props.data && props.data.arbeitsschritte) || [],
   };
   const initialMaterial = {
-    id: undefined,
-    stueckpreis: '',
+    preis: '',
     anzahl: '',
     bezeichnung: '',
-    serviceId: '',
   };
   const initialWorkstep = {
-    id: undefined,
     bezeichnung: '',
     stundensatz: '',
-    arbeitsstunden: '',
-    serviceId: '',
+    dauer: '',
   };
 
   const [serviceData, setServiceData] = useState(initialData);
@@ -88,24 +87,35 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, [element.target.id]: value });
   }
 
-  function handleMaterial(e, {value}) {
+  function handleMaterial(e, { value }) {
     // 2Do: if valid...
-    setMaterialAddRow({...materialAddRow, [e.target.id]: value})
+    setMaterialAddRow({ ...materialAddRow, [e.target.id]: value });
   }
 
-  function handleWorkstep(e, {value}) {
+  function handleWorkstep(e, { value }) {
     // 2Do: if valid...
-    setWorkstepAddRow({...workstepAddRow, [e.target.id]: value})
+    setWorkstepAddRow({ ...workstepAddRow, [e.target.id]: value });
   }
 
   function addWorkstep() {
     // 2Do: if valid...
-    setWorkstepList({ ...materialList, workstepAddRow });
+    console.log("adding", workstepAddRow)
+    setWorkstepList(_.concat(workstepList, workstepAddRow));
+    setWorkstepAddRow(initialWorkstep);
+  }
+  function removeWorkstep(index) {
+    // 2Do...
+    console.log('remove');
   }
 
   function addMaterial() {
     // 2Do: if valid...
-    setMaterialList({ ...materialList, materialAddRow });
+    setMaterialList(_.concat(materialList, materialAddRow));
+    setMaterialAddRow(initialMaterial);
+  }
+  function removeMaterial(index) {
+    // 2Do..
+    console.log('remove');
   }
 
   function datePicked(value, id) {
@@ -117,10 +127,9 @@ function ServiceFields(props: Props) {
   }
 
   useEffect(() => {
-    const requiredIsValid =
-      Object.values(datesAreValid).every(val => val === true) &&
-      parseInt(serviceData.maschinenId, 10) > 0 &&
-      parseInt(serviceData.kundenId, 10) > 0;
+    const requiredIsValid = Object.values(datesAreValid).every(val => val === true)
+      && parseInt(serviceData.maschinenId, 10) > 0
+      && parseInt(serviceData.kundenId, 10) > 0;
     if (props.setValidState) {
       props.setValidState(requiredIsValid);
     }
@@ -201,7 +210,15 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
-            <ServiceRow />
+            {_.map(materialList, (row, index) => (
+              <ServiceRow
+                index={index}
+                key={index}
+                data={row}
+                rmCall={removeMaterial}
+                type="material"
+              />
+            ))}
 
             <Table.Row>
               <Table.Cell />
@@ -214,8 +231,8 @@ function ServiceFields(props: Props) {
               </Table.Cell>
               <Table.Cell>
                 <Form.Input
-                  id="stueckpreis"
-                  value={materialAddRow.stueckpreis}
+                  id="preis"
+                  value={materialAddRow.preis}
                   onChange={handleMaterial}
                 />
               </Table.Cell>
@@ -248,7 +265,15 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
-            <ServiceRow />
+            {_.map(workstepList, (row, index) => (
+              <ServiceRow
+                index={index}
+                key={index}
+                data={row}
+                rmCall={removeWorkstep}
+                type="workstep"
+              />
+            ))}
 
             <Table.Row>
               <Table.Cell />
@@ -267,12 +292,12 @@ function ServiceFields(props: Props) {
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="stunden" value={workstepAddRow.stundensatz} onChange={handleWorkstep} />
+                <Form.Input id="dauer" value={workstepAddRow.dauer} onChange={handleWorkstep} />
               </Table.Cell>
               <Table.Cell>100.00 CHF</Table.Cell>
               <Table.Cell>
-                <Button icon>
-                  <Icon name="add" onClick={addWorkstep} />
+                <Button icon onClick={addWorkstep}>
+                  <Icon name="add" />
                 </Button>
               </Table.Cell>
             </Table.Row>

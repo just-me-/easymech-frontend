@@ -12,15 +12,22 @@ import '../shared/Fields.css';
 import type { Service } from '../../api/service';
 
 export type Props = {
+  key: number,
+  type: string,
   data?: any,
-  setData?: any => void,
-  setValidState?: boolean => void,
+  rmCall: number => void,
+  setData: any => void,
 };
 
 function ServiceRow(props: Props) {
-  const initialData = {
-    id: (props.data && props.data.id) || undefined,
-    bezeichnung: (props.data && props.data.bezeichnung) || '',
+  const initialData = props.type === 'workstep' ? {
+    desc: (props.data && props.data.bezeichnung) || '',
+    price: (props.data && props.data.stundensatz) || '',
+    unit: (props.data && props.data.dauer) || '',
+  } : {
+    desc: (props.data && props.data.bezeichnung) || '',
+    price: (props.data && props.data.preis) || '',
+    unit: (props.data && props.data.anzahl) || '',
   };
 
   const [rowData, setRowData] = useState(initialData);
@@ -35,25 +42,26 @@ function ServiceRow(props: Props) {
 
   useEffect(() => {
     if (props.setData) {
+      // 2Do "rückparsing"...
       props.setData(rowData);
     }
   });
 
   return (
     <Table.Row>
-      <Table.Cell width="1">1</Table.Cell>
+      <Table.Cell width="1">{props.index + 1}</Table.Cell>
       <Table.Cell width="7">
-        <Input value="Motoröl" />
+        <Input value={rowData.desc} />
       </Table.Cell>
       <Table.Cell width="3">
-        <Input value="10.00" />
+        <Input value={rowData.price} />
       </Table.Cell>
       <Table.Cell width="2">
-        <Input value="10" />
+        <Input value={rowData.unit} />
       </Table.Cell>
-      <Table.Cell width="3">100.00 CHF</Table.Cell>
+      <Table.Cell width="3">{rowData.price * rowData.unit}</Table.Cell>
       <Table.Cell>
-        <Button icon>
+        <Button icon onClick={rowData.rmCall}>
           <Icon name="trash alternate" />
         </Button>
       </Table.Cell>
