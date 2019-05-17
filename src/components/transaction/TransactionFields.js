@@ -57,7 +57,7 @@ function TransactionFields(props: Props) {
     setMachineModalIsOpen(true);
   }
 
-  function closeMachineModal(machine: Machine) {
+  function closeMachineModal(machine) {
     setMachineModalIsOpen(false);
     sharedCalls.getMachines({
       deletedToo: true,
