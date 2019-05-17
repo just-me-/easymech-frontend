@@ -8,11 +8,12 @@ import * as validation from '../shared/validation';
 import '../shared/Fields.css';
 
 export type Props = {
-  key: number,
+  key?: number,
   type: string,
   data?: any,
-  rmCall: number => void,
-  setData: any => void,
+  rmCall: (number) => void,
+  setData: (any, ...any) => void,
+  index?: number
 };
 
 function ServiceRow(props: Props) {
@@ -71,11 +72,11 @@ function ServiceRow(props: Props) {
         <Input id="unit" value={rowData.unit} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="3">
-        {rowData.price * rowData.unit}
+        {parseFloat(rowData.price) * parseInt(rowData.unit)}
         {' CHF'}
       </Table.Cell>
       <Table.Cell>
-        <Button icon onClick={() => props.rmCall(props.index)}>
+        <Button icon onClick={() => props.rmCall(parseInt(props.index))}>
           <Icon name="trash alternate" />
         </Button>
       </Table.Cell>

@@ -41,7 +41,7 @@ function ServiceFields(props: Props) {
     anzahl: '',
     bezeichnung: '',
   };
-  const initialWorkstep = {
+  const initialWorkStep = {
     bezeichnung: '',
     stundensatz: '',
     dauer: '',
@@ -52,12 +52,12 @@ function ServiceFields(props: Props) {
   const [machineData, setMachineData] = useState();
 
   const [materialList, setMaterialList] = useState((props.data && props.data.materialposten) || []);
-  const [workstepList, setWorkstepList] = useState(
+  const [workStepList, setWorkStepList] = useState(
     (props.data && props.data.arbeitsschritte) || [],
   );
 
   const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
-  const [workstepAddRow, setWorkstepAddRow] = useState(initialWorkstep);
+  const [workStepAddRow, setWorkStepAddRow] = useState(initialWorkStep);
 
   const [datesAreValid, setDatesAreValid] = useState({
     beginn: true,
@@ -100,25 +100,25 @@ function ServiceFields(props: Props) {
 
   function handleWorkstep(e, { value }) {
     // 2Do: if valid...
-    setWorkstepAddRow({ ...workstepAddRow, [e.target.id]: value });
+    setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value });
   }
 
   function addWorkstep() {
     // 2Do: if valid...
-    setWorkstepList(_.concat(workstepList, workstepAddRow));
-    setWorkstepAddRow(initialWorkstep);
+    setWorkStepList(_.concat(workStepList, workStepAddRow));
+    setWorkStepAddRow(initialWorkStep);
   }
 
   function editWorkstep(index, data) {
-    const arr = [...workstepList];
+    const arr = [...workStepList];
     arr[index] = data;
-    setWorkstepList(arr);
+    setWorkStepList(arr);
   }
 
-  function removeWorkstep(index) {
-    const arr = [...workstepList];
+  function removeWorkstep(index: number) {
+    const arr = [...workStepList];
     arr.splice(index, 1);
-    setWorkstepList(arr);
+    setWorkStepList(arr);
   }
 
   function addMaterial() {
@@ -133,7 +133,7 @@ function ServiceFields(props: Props) {
     setMaterialList(arr);
   }
 
-  function removeMaterial(index) {
+  function removeMaterial(index: number) {
     const arr = [...materialList];
     arr.splice(index, 1);
     setMaterialList(arr);
@@ -158,7 +158,7 @@ function ServiceFields(props: Props) {
       props.setData({
         ...serviceData,
         materialposten: materialList,
-        arbeitsschritte: workstepList,
+        arbeitsschritte: workStepList,
       });
     }
   });
@@ -314,7 +314,7 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
-            {_.map(workstepList, (row, index) => (
+            {_.map(workStepList, (row, index) => (
               <ServiceRow
                 index={index}
                 key={index}
@@ -330,19 +330,19 @@ function ServiceFields(props: Props) {
               <Table.Cell>
                 <Form.Input
                   id="bezeichnung"
-                  value={workstepAddRow.bezeichnung}
+                  value={workStepAddRow.bezeichnung}
                   onChange={handleWorkstep}
                 />
               </Table.Cell>
               <Table.Cell>
                 <Form.Input
                   id="stundensatz"
-                  value={workstepAddRow.stundensatz}
+                  value={workStepAddRow.stundensatz}
                   onChange={handleWorkstep}
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="dauer" value={workstepAddRow.dauer} onChange={handleWorkstep} />
+                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkstep} />
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
