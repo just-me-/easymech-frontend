@@ -42,12 +42,25 @@ function ServiceRow(props: Props) {
     setRowData({ ...rowData, [element.target.id]: value });
   }
 
-  useEffect(() => {
-    if (props.setData) {
-      // 2Do "rückparsing"...
-      props.setData(rowData);
-    }
-  });
+  useEffect(
+    () => {
+      if (props.setData) {
+        const data = props.type === 'workstep'
+          ? {
+            desc: rowData.desc,
+            price: rowData.price,
+            unit: rowData.unit,
+          }
+          : {
+            desc: rowData.desc,
+            price: rowData.price,
+            unit: rowData.unit,
+          };
+        props.setData(props.index, data);
+      }
+    },
+    [rowData],
+  );
 
   return (
     <Table.Row>
@@ -61,7 +74,10 @@ function ServiceRow(props: Props) {
       <Table.Cell width="2">
         <Input id="unit" value={rowData.unit} onChange={handleChange} />
       </Table.Cell>
-      <Table.Cell width="3">{rowData.price * rowData.unit}</Table.Cell>
+      <Table.Cell width="3">
+        {rowData.price * rowData.unit}
+        {' CHF'}
+      </Table.Cell>
       <Table.Cell>
         <Button icon onClick={() => props.rmCall(props.index)}>
           <Icon name="trash alternate" />

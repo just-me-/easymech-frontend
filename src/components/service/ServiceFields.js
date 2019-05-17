@@ -104,6 +104,12 @@ function ServiceFields(props: Props) {
     setWorkstepAddRow(initialWorkstep);
   }
 
+  function editWorkstep(index, data) {
+    const arr = [...workstepList];
+    arr[index] = data;
+    setWorkstepList(arr);
+  }
+
   function removeWorkstep(index) {
     const arr = [...workstepList];
     arr.splice(index, 1);
@@ -114,6 +120,12 @@ function ServiceFields(props: Props) {
     // 2Do: if valid...
     setMaterialList(_.concat(materialList, materialAddRow));
     setMaterialAddRow(initialMaterial);
+  }
+
+  function editMaterial(index, data) {
+    const arr = [...materialList];
+    arr[index] = data;
+    setMaterialList(arr);
   }
 
   function removeMaterial(index) {
@@ -220,6 +232,7 @@ function ServiceFields(props: Props) {
                 key={index}
                 data={row}
                 rmCall={removeMaterial}
+                setData={editMaterial}
                 type="material"
               />
             ))}
@@ -271,6 +284,7 @@ function ServiceFields(props: Props) {
                 key={index}
                 data={row}
                 rmCall={removeWorkstep}
+                setData={editWorkstep}
                 type="workstep"
               />
             ))}
