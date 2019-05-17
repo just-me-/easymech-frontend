@@ -29,7 +29,7 @@ function Machine(props: Props) {
           );
           setKey(Math.random()); // clear data - fresh form for next entry
           if (props.includerCallback) {
-            props.includerCallback(); // 2Do: id / seriennr zurückgeben...
+            props.includerCallback(result);
           }
         })
         .catch((error) => {

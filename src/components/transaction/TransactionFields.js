@@ -37,11 +37,13 @@ function TransactionFields(props: Props) {
     maschinenid: (props.data && props.data.maschinenid) || '',
     kundenid: (props.data && props.data.kundenid) || '',
   };
+
   const [transactionData, setTransactionData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
   const [dateIsValid, setDateIsValid] = useState(true);
   const [machineModalIsOpen, setMachineModalIsOpen] = useState(false);
+  const [tempVal,setTempVal] = useState(undefined);
 
   function handleMachineSelect(result) {
     setTransactionData({ ...transactionData, maschinenid: result.id });
@@ -55,12 +57,14 @@ function TransactionFields(props: Props) {
     setMachineModalIsOpen(true);
   }
 
-  function closeMachineModal() {
+  function closeMachineModal(machine: Machine) {
     setMachineModalIsOpen(false);
     sharedCalls.getMachines({
       deletedToo: true,
       dataSetter: setMachineData,
     });
+    handleMachineSelect(machine);
+    setTempVal(machine.id);
   }
 
   function handleChange(element, { validate }) {
@@ -124,7 +128,7 @@ function TransactionFields(props: Props) {
               matchingKey="seriennummer"
               onResultSelect={handleMachineSelect}
               elements={machineData}
-              setElementId={props.data ? props.data.maschinenid : 0}
+              setElementId={tempVal ?  tempVal : ( props.data ? props.data.maschinenid : 0 ) }
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
@@ -132,7 +136,6 @@ function TransactionFields(props: Props) {
               <Icon name="add" />
             </Button>
           </div>
-
           <SmartInput
             id="kunde"
             label="Kunde"
