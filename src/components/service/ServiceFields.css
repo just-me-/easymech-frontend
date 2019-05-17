@@ -1,0 +1,6 @@
+.Form-section table .ui.input {
+  width: 100% !important;
+}
+.Form-section table .ui.input input {
+  background-color: var(--opacity-white);
+}

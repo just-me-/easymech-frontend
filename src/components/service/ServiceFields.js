@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import {
-  Header, Form, Table, Button, Icon, Input,
+  Header, Form, Table, Button, Icon, Input, Transition,
 } from 'semantic-ui-react';
 
 // import NumberInput from '../shared/NumberInput';
@@ -15,6 +15,7 @@ import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
+import './ServiceFields.css';
 
 import type { Service } from '../../api/service';
 

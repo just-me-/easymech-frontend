@@ -53,13 +53,13 @@ function ServiceRow(props: Props) {
     <Table.Row>
       <Table.Cell width="1">{props.index + 1}</Table.Cell>
       <Table.Cell width="7">
-        <Input value={rowData.desc} />
+        <Input id="desc" value={rowData.desc} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="3">
-        <Input value={rowData.price} />
+        <Input id="price" value={rowData.price} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="2">
-        <Input value={rowData.unit} />
+        <Input id="unit" value={rowData.unit} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="3">{rowData.price * rowData.unit}</Table.Cell>
       <Table.Cell>
