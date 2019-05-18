@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Dropdown, Form, Icon, Modal, Button,
+  Form, Icon, Modal, Button,
 } from 'semantic-ui-react';
 
 import Machine from '../machine/Machine';
@@ -17,6 +17,7 @@ import type { TypeMachine } from '../../api/machine';
 
 import '../shared/Fields.css';
 import './TransactionFields.css';
+import Radio from "semantic-ui-react/dist/commonjs/addons/Radio/Radio";
 
 export type Props = {
   data?: Transaction,
@@ -27,10 +28,6 @@ export type Props = {
 };
 
 function TransactionFields(props: Props) {
-  const options = [
-    { key: 'Verkauf', text: 'Verkauf einer Maschine erfassen', value: '0' },
-    { key: 'Ankauf', text: 'Ankauf einer Maschine erfassen', value: '1' },
-  ];
 
   const initialData = {
     id: (props.data && props.data.id) || undefined,
@@ -40,11 +37,13 @@ function TransactionFields(props: Props) {
     maschinenid: (props.data && props.data.maschinenid) || '',
     kundenid: (props.data && props.data.kundenid) || '',
   };
+
   const [transactionData, setTransactionData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
   const [dateIsValid, setDateIsValid] = useState(true);
   const [machineModalIsOpen, setMachineModalIsOpen] = useState(false);
+  const [tempVal,setTempVal] = useState(undefined);
 
   function handleMachineSelect(result) {
     setTransactionData({ ...transactionData, maschinenid: result.id });
@@ -58,12 +57,14 @@ function TransactionFields(props: Props) {
     setMachineModalIsOpen(true);
   }
 
-  function closeMachineModal() {
+  function closeMachineModal(machine) {
     setMachineModalIsOpen(false);
     sharedCalls.getMachines({
       deletedToo: true,
       dataSetter: setMachineData,
     });
+    handleMachineSelect(machine);
+    setTempVal(machine.id);
   }
 
   function handleChange(element, { validate }) {
@@ -85,11 +86,12 @@ function TransactionFields(props: Props) {
     setTransactionData({ ...transactionData, [id]: value });
   }
 
-  function handleDropDown(element) {
-    const value = element.target.innerHTML;
-    if (value.includes('Ankauf')) {
-      setTransactionData({ ...transactionData, typ: 1 });
-    }
+  function handleRadio(element, {label}) {
+      if(label.includes('Verkauf')){
+          setTransactionData({ ...transactionData, "typ": 0 });
+      } else {
+          setTransactionData({ ...transactionData, "typ": 1 });
+      }
   }
 
   useEffect(() => {
@@ -126,7 +128,7 @@ function TransactionFields(props: Props) {
               matchingKey="seriennummer"
               onResultSelect={handleMachineSelect}
               elements={machineData}
-              setElementId={props.data ? props.data.maschinenid : 0}
+              setElementId={tempVal ?  tempVal : ( props.data ? props.data.maschinenid : 0 ) }
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
@@ -134,7 +136,6 @@ function TransactionFields(props: Props) {
               <Icon name="add" />
             </Button>
           </div>
-
           <SmartInput
             id="kunde"
             label="Kunde"
@@ -164,17 +165,22 @@ function TransactionFields(props: Props) {
             callbackSetter={datePicked}
           />
         </Form.Group>
-        <Form.Group>
-          <Dropdown
-            id="typ"
-            placeholder="Auswahl Transaktion"
-            fluid
-            selection
-            options={options}
-            onChange={handleDropDown}
-          />
+        <Form.Group widths="equal">
+            <Form.Field>
+                <Radio
+                    label='Verkauf einer Maschine erfassen'
+                    checked={transactionData.typ === 0}
+                    onChange={handleRadio}
+                />
+            </Form.Field>
+            <Form.Field>
+                <Radio
+                    label='Ankauf einer Maschine erfassen'
+                    checked={transactionData.typ === 1}
+                    onChange={handleRadio}
+                />
+            </Form.Field>
         </Form.Group>
-
         <Modal open={machineModalIsOpen}>
           <Modal.Content as={Machine} isIncluded includerCallback={closeMachineModal} />
         </Modal>

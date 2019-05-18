@@ -84,6 +84,28 @@ test('To big is invalid', () => {
   expect(validation.checkDate('01.01.2100')).toBe(false);
 });
 
+// check float
+test('Valid Float - 1', () => {
+    expect(validation.checkFloat('1.50')).toBe(true);
+});
+test('Valid Float - 2', () => {
+    expect(validation.checkFloat('1.9')).toBe(true);
+});
+test('Valid Float - 3', () => {
+    expect(validation.checkFloat('1.99')).toBe(true);
+});
+test('Invalid Float - 1', () =>{
+    expect(validation.checkFloat('1ead123')).toBe(false);
+});
+test('Invalid Float - 2', () =>{
+    expect(validation.checkFloat('eawdA')).toBe(false);
+});
+test('Invalid Float - 3', () =>{
+    expect(validation.checkFloat('1.999')).toBe(false);
+});
+
+
+
 test('Delete to empty string', () => {
   expect(validation.toNumber('bjnejkr')).toBe('');
 });

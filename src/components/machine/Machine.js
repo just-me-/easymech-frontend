@@ -6,10 +6,11 @@ import { NotificationManager } from 'react-notifications';
 
 import * as api from '../../api/machine';
 import MachineFields from './MachineFields';
+import type {MachineType} from "../../api/machine";
 
 export type Props = {
   isIncluded?: boolean,
-  includerCallback?: () => void,
+  includerCallback?: (MachineType) => void,
 };
 
 function Machine(props: Props) {
@@ -29,7 +30,7 @@ function Machine(props: Props) {
           );
           setKey(Math.random()); // clear data - fresh form for next entry
           if (props.includerCallback) {
-            props.includerCallback(); // 2Do: id / seriennr zurückgeben...
+            props.includerCallback(result);
           }
         })
         .catch((error) => {

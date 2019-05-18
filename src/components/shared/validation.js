@@ -21,9 +21,26 @@ export function checkDate(str) {
     && date.getDate() === parseInt(dmy[0], 10)
   );
 }
+
+export function checkFloat(val) {
+    var floatRegex = /^-?\d+(?:[.]\d{0,2}?)?$/;
+    if (!floatRegex.test(val))
+        return false;
+
+    val = parseFloat(val);
+    if (isNaN(val))
+        return false;
+    return true;
+}
+
 export function toNumber(str) {
   return str.toString().replace(/\D/g, '');
 }
+
 export function toDate(str) {
   return str.toString().replace(/[^0-9.]/g, '');
+}
+
+export function toFloat(str){
+    return str.toString().replace(/\D/g, '');
 }
