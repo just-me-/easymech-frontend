@@ -125,9 +125,33 @@ test('Can handle 0 (as number)', () => {
   expect(validation.toNumber(0)).toBe('0');
 });
 
+
+test('Delete to empty string', () => {
+    expect(validation.toFloat('bjnejkr')).toBe('');
+});
+test('Convert to number', () => {
+    expect(validation.toFloat('m!vf3efv12efv3M?l')).toBe('3123');
+});
+test('Convert to number - 2', () => {
+    expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.9');
+});
+test('Dont change number', () => {
+    expect(validation.toFloat('1234.3')).toBe('1234.3');
+});
+test('Dont change empty string', () => {
+    expect(validation.toFloat('')).toBe('');
+});
+test('Can handle numbers', () => {
+    expect(validation.toFloat(123)).toBe('123');
+});
+test('Can handle 0 (as number)', () => {
+    expect(validation.toFloat(0)).toBe('0');
+});
+
 test('Delete to empty string', () => {
   expect(validation.toDate('bjnejkr')).toBe('');
 });
 test('Convert to date', () => {
   expect(validation.toDate('2wv0.0!r jv3.2mk01rv9')).toBe('20.03.2019');
 });
+
