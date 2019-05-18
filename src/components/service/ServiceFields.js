@@ -117,7 +117,7 @@ function ServiceFields(props: Props) {
     if (validate === 'currency') {
         value = validation.toFloat(value);
     }
-    if (validate === 'currency') {
+    if (validate === 'number') {
         value = validation.toNumber(value);
     }
     return value;
