@@ -125,7 +125,6 @@ test('Can handle 0 (as number)', () => {
   expect(validation.toNumber(0)).toBe('0');
 });
 
-
 test('Delete to empty string', () => {
     expect(validation.toFloat('bjnejkr')).toBe('');
 });

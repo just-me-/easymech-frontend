@@ -95,16 +95,32 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, "status": parseInt(value) });
   }
 
-  function handleMaterial(e, { value }) {
+  function handleMaterial(e, { value,validate }) {
+    if(validate){
+        value = rowValidation(value,validate);
+    }
     if(setMaterialAddRow({ ...materialAddRow, [e.target.id]: value })){
         setMaterialValid(true);
     }
   }
 
-  function handleWorkStep(e, { value }) {
+  function handleWorkStep(e, { value,validate }) {
+    if(validate){
+       value = rowValidation(value,validate);
+    }
     if(setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value })){
         setWorkStepValid(true);
     }
+  }
+
+  function rowValidation(value,validate){
+    if (validate === 'currency') {
+        value = validation.toFloat(value);
+    }
+    if (validate === 'currency') {
+        value = validation.toNumber(value);
+    }
+    return value;
   }
 
   function addWorkStep() {
@@ -293,10 +309,10 @@ function ServiceFields(props: Props) {
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="preis" value={materialAddRow.preis} onChange={handleMaterial} />
+                <Form.Input id="preis" value={materialAddRow.preis} onChange={handleMaterial} validate='currency'/>
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} />
+                <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} validate='number'/>
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
@@ -349,10 +365,11 @@ function ServiceFields(props: Props) {
                   id="stundensatz"
                   value={workStepAddRow.stundensatz}
                   onChange={handleWorkStep}
+                  validate='currency'
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkStep} />
+                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkStep} validate='currency'/>
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
