@@ -58,6 +58,8 @@ function ServiceFields(props: Props) {
 
   const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
   const [workStepAddRow, setWorkStepAddRow] = useState(initialWorkStep);
+  const [materialValid,setMaterialValid] = useState(false);
+  const [workStepValid,setWorkStepValid] = useState(false);
 
   const [datesAreValid, setDatesAreValid] = useState({
     beginn: true,
@@ -94,37 +96,45 @@ function ServiceFields(props: Props) {
   }
 
   function handleMaterial(e, { value }) {
-    // 2Do: if valid...
-    setMaterialAddRow({ ...materialAddRow, [e.target.id]: value });
+    if(setMaterialAddRow({ ...materialAddRow, [e.target.id]: value })){
+        setMaterialValid(true);
+    }
   }
 
-  function handleWorkstep(e, { value }) {
-    // 2Do: if valid...
-    setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value });
+  function handleWorkStep(e, { value }) {
+    if(setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value })){
+        setWorkStepValid(true);
+    }
   }
 
-  function addWorkstep() {
-    // 2Do: if valid...
-    setWorkStepList(_.concat(workStepList, workStepAddRow));
-    setWorkStepAddRow(initialWorkStep);
+  function addWorkStep() {
+    if(workStepValid){
+        if(setWorkStepList(_.concat(workStepList, workStepAddRow))){
+            setWorkStepAddRow(initialWorkStep);
+            setWorkStepValid(false);
+        }
+    }
   }
 
-  function editWorkstep(index, data) {
+  function editWorkStep(index, data) {
     const arr = [...workStepList];
     arr[index] = data;
     setWorkStepList(arr);
   }
 
-  function removeWorkstep(index: number) {
+  function removeWorkStep(index: number) {
     const arr = [...workStepList];
     arr.splice(index, 1);
     setWorkStepList(arr);
   }
 
   function addMaterial() {
-    // 2Do: if valid...
-    setMaterialList(_.concat(materialList, materialAddRow));
-    setMaterialAddRow(initialMaterial);
+    if(materialValid){
+        if(setMaterialList(_.concat(materialList, materialAddRow))){
+            setMaterialAddRow(initialMaterial);
+            setMaterialValid(false);
+        }
+    }
   }
 
   function editMaterial(index, data) {
@@ -319,8 +329,8 @@ function ServiceFields(props: Props) {
                 index={index}
                 key={index}
                 data={row}
-                rmCall={removeWorkstep}
-                setData={editWorkstep}
+                rmCall={removeWorkStep}
+                setData={editWorkStep}
                 type="workstep"
               />
             ))}
@@ -331,22 +341,22 @@ function ServiceFields(props: Props) {
                 <Form.Input
                   id="bezeichnung"
                   value={workStepAddRow.bezeichnung}
-                  onChange={handleWorkstep}
+                  onChange={handleWorkStep}
                 />
               </Table.Cell>
               <Table.Cell>
                 <Form.Input
                   id="stundensatz"
                   value={workStepAddRow.stundensatz}
-                  onChange={handleWorkstep}
+                  onChange={handleWorkStep}
                 />
               </Table.Cell>
               <Table.Cell>
-                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkstep} />
+                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkStep} />
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
-                <Button icon onClick={addWorkstep}>
+                <Button icon onClick={addWorkStep}>
                   <Icon name="add" />
                 </Button>
               </Table.Cell>
