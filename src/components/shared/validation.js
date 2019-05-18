@@ -42,5 +42,9 @@ export function toDate(str) {
 }
 
 export function toFloat(str){
-    return str.toString().replace(/\D/g, '');
+   return str.toString().replace(/[^\d.]/g, '');
+}
+
+export function toCurrency(num){
+   return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }

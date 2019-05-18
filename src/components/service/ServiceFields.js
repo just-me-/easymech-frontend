@@ -1,18 +1,20 @@
 // @flow
 
+import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import {
-  Header, Form, Table, Button, Icon, Input,
+  Header, Form, Table, Button, Icon, Radio
 } from 'semantic-ui-react';
 
-// import NumberInput from '../shared/NumberInput';
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
+import ServiceRow from './ServiceRow';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
 
 import '../shared/Fields.css';
+import './ServiceFields.css';
 
 import type { Service } from '../../api/service';
 
@@ -28,32 +30,36 @@ function ServiceFields(props: Props) {
     bezeichnung: (props.data && props.data.bezeichnung) || '',
     beginn: (props.data && props.data.beginn) || sharedCalls.getToday(),
     ende: (props.data && props.data.ende) || '',
-    status: (props.data && props.data.status) || '',
+    status: (props.data && props.data.status) || 1, // geplant=1,  running=2, finished=3
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
     materialposten: (props.data && props.data.materialposten) || [],
-    arbeitsschritte: (props.data && props.data.arbeitsschritte) || []
+    arbeitsschritte: (props.data && props.data.arbeitsschritte) || [],
   };
   const initialMaterial = {
-      id: undefined,
-      stueckpreis: '',
-      anzahl: '',
-      bezeichnung: '',
-      serviceId: '',
+    preis: '',
+    anzahl: '',
+    bezeichnung: '',
   };
   const initialWorkStep = {
-      id: undefined,
-      bezeichnung: '',
-      stundensatz: '',
-      arbeitsstunden: '',
-      serviceId: ''
+    bezeichnung: '',
+    stundensatz: '',
+    dauer: '',
   };
 
   const [serviceData, setServiceData] = useState(initialData);
   const [customerData, setCustomerData] = useState();
   const [machineData, setMachineData] = useState();
-  const [material, setMaterial] = useState(initialMaterial);
-  const [workStep, setWorkStep] = useState(initialWorkStep);
+
+  const [materialList, setMaterialList] = useState((props.data && props.data.materialposten) || []);
+  const [workStepList, setWorkStepList] = useState(
+    (props.data && props.data.arbeitsschritte) || [],
+  );
+
+  const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
+  const [workStepAddRow, setWorkStepAddRow] = useState(initialWorkStep);
+  const [materialValid,setMaterialValid] = useState(false);
+  const [workStepValid,setWorkStepValid] = useState(false);
 
   const [datesAreValid, setDatesAreValid] = useState({
     beginn: true,
@@ -70,10 +76,10 @@ function ServiceFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && (validate === 'number')) {
+    if (validate && validate === 'number') {
       value = validation.toNumber(value);
     }
-    if (validate && (validate === 'date')) {
+    if (validate && validate === 'date') {
       value = validation.toDate(value);
       if (props.setValidState) {
         setDatesAreValid({
@@ -85,21 +91,79 @@ function ServiceFields(props: Props) {
     setServiceData({ ...serviceData, [element.target.id]: value });
   }
 
-  function handleMaterial(element, { validate }){
-    let value = element.target.value;
-    if (validate && (validate === 'number')) {
-        value = validation.toNumber(value);
-    }
-    setMaterial({ ...material,[element.target.id]:value});
+  function handleRadio(element, {value}) {
+    setServiceData({ ...serviceData, "status": parseInt(value) });
   }
 
-    function handleWorkStep(element, { validate }){
-        let value = element.target.value;
-        if (validate && (validate === 'number')) {
-            value = validation.toNumber(value);
-        }
-        setWorkStep({ ...workStep,[element.target.id]:value});
+  function handleMaterial(e, { value,validate }) {
+    if(validate){
+        value = rowValidation(value,validate);
     }
+    if(setMaterialAddRow({ ...materialAddRow, [e.target.id]: value })){
+        setMaterialValid(true);
+    }
+  }
+
+  function handleWorkStep(e, { value,validate }) {
+    if(validate){
+       value = rowValidation(value,validate);
+    }
+    if(setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value })){
+        setWorkStepValid(true);
+    }
+  }
+
+  function rowValidation(value,validate){
+    if (validate === 'currency') {
+        value = validation.toFloat(value);
+    }
+    if (validate === 'number') {
+        value = validation.toNumber(value);
+    }
+    return value;
+  }
+
+  function addWorkStep() {
+    if(workStepValid){
+        if(setWorkStepList(_.concat(workStepList, workStepAddRow))){
+            setWorkStepAddRow(initialWorkStep);
+            setWorkStepValid(false);
+        }
+    }
+  }
+
+  function editWorkStep(index, data) {
+    const arr = [...workStepList];
+    arr[index] = data;
+    setWorkStepList(arr);
+  }
+
+  function removeWorkStep(index: number) {
+    const arr = [...workStepList];
+    arr.splice(index, 1);
+    setWorkStepList(arr);
+  }
+
+  function addMaterial() {
+    if(materialValid){
+        if(setMaterialList(_.concat(materialList, materialAddRow))){
+            setMaterialAddRow(initialMaterial);
+            setMaterialValid(false);
+        }
+    }
+  }
+
+  function editMaterial(index, data) {
+    const arr = [...materialList];
+    arr[index] = data;
+    setMaterialList(arr);
+  }
+
+  function removeMaterial(index: number) {
+    const arr = [...materialList];
+    arr.splice(index, 1);
+    setMaterialList(arr);
+  }
 
   function datePicked(value, id) {
     setDatesAreValid({
@@ -117,7 +181,11 @@ function ServiceFields(props: Props) {
       props.setValidState(requiredIsValid);
     }
     if (props.setData) {
-      props.setData(serviceData);
+      props.setData({
+        ...serviceData,
+        materialposten: materialList,
+        arbeitsschritte: workStepList,
+      });
     }
   });
 
@@ -137,7 +205,7 @@ function ServiceFields(props: Props) {
       <div className="Form-section">
         <Form.Group widths="equal">
           <DatePicker
-            id="startdatum"
+            id="beginn"
             label="Startdatum"
             value={serviceData.beginn}
             handleChange={handleChange}
@@ -145,7 +213,7 @@ function ServiceFields(props: Props) {
             callbackSetter={datePicked}
           />
           <DatePicker
-            id="enddatum"
+            id="ende"
             label="Enddatum"
             value={serviceData.ende}
             handleChange={handleChange}
@@ -176,6 +244,33 @@ function ServiceFields(props: Props) {
             isRequired
           />
         </Form.Group>
+
+        <Form.Group widths="equal">
+          <Form.Field>
+            <Radio
+              label="Geplant"
+              value="1"
+              checked={serviceData.status === 1}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="In Bearbeitung"
+              value="2"
+              checked={serviceData.status === 2}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Abgeschlossen"
+              value="3"
+              checked={serviceData.status === 3}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+        </Form.Group>
       </div>
 
       <Header as="h2">Material</Header>
@@ -193,49 +288,38 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
+            {_.map(materialList, (row, index) => (
+              <ServiceRow
+                index={index}
+                key={index}
+                data={row}
+                rmCall={removeMaterial}
+                setData={editMaterial}
+                type="material"
+              />
+            ))}
+
             <Table.Row>
-              <Table.Cell width="1">1</Table.Cell>
-              <Table.Cell width="7">
-                <Input value="Motoröl" />
-              </Table.Cell>
-              <Table.Cell width="3">
-                <Input value="10.00" />
-              </Table.Cell>
-              <Table.Cell width="2">
-                <Input value="10" />
-              </Table.Cell>
-              <Table.Cell width="3">100.00 CHF</Table.Cell>
+              <Table.Cell />
               <Table.Cell>
-                <Button icon>
-                  <Icon name="trash alternate" />
+                <Form.Input
+                  id="bezeichnung"
+                  value={materialAddRow.bezeichnung}
+                  onChange={handleMaterial}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input id="preis" value={materialAddRow.preis} onChange={handleMaterial} validate='currency'/>
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input id="anzahl" value={materialAddRow.anzahl} onChange={handleMaterial} validate='number'/>
+              </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell>
+                <Button icon onClick={addMaterial}>
+                  <Icon name="add" />
                 </Button>
               </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell>
-                  <Form.Input
-                      id="bezeichnung"
-                      value={material.bezeichnung}
-                      onChange={handleMaterial}
-                  />
-              </Table.Cell>
-              <Table.Cell>
-                  <Form.Input
-                      id="stueckpreis"
-                      value={material.stueckpreis}
-                      onChange={handleMaterial}
-                  />
-              </Table.Cell>
-              <Table.Cell>
-                  <Form.Input
-                      id="anzahl"
-                      value={material.anzahl}
-                      onChange={handleMaterial}
-                  />
-              </Table.Cell>
-              <Table.Cell>100.00 CHF</Table.Cell>
-              <Table.Cell />
             </Table.Row>
           </Table.Body>
         </Table>
@@ -256,49 +340,43 @@ function ServiceFields(props: Props) {
           </Table.Header>
 
           <Table.Body>
+            {_.map(workStepList, (row, index) => (
+              <ServiceRow
+                index={index}
+                key={index}
+                data={row}
+                rmCall={removeWorkStep}
+                setData={editWorkStep}
+                type="workstep"
+              />
+            ))}
+
             <Table.Row>
-              <Table.Cell width="1">1</Table.Cell>
-              <Table.Cell width="7">
-                <Input value="Motoröl eingefüllt" />
-              </Table.Cell>
-              <Table.Cell width="3">
-                <Input value="10.00" />
-              </Table.Cell>
-              <Table.Cell width="2">
-                <Input value="10" />
-              </Table.Cell>
-              <Table.Cell width="3">100.00 CHF</Table.Cell>
+              <Table.Cell />
               <Table.Cell>
-                <Button icon>
-                  <Icon name="trash alternate" />
+                <Form.Input
+                  id="bezeichnung"
+                  value={workStepAddRow.bezeichnung}
+                  onChange={handleWorkStep}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input
+                  id="stundensatz"
+                  value={workStepAddRow.stundensatz}
+                  onChange={handleWorkStep}
+                  validate='currency'
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input id="dauer" value={workStepAddRow.dauer} onChange={handleWorkStep} validate='currency'/>
+              </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell>
+                <Button icon onClick={addWorkStep}>
+                  <Icon name="add" />
                 </Button>
               </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell>
-                  <Form.Input
-                      id="bezeichnung"
-                      value={workStep.bezeichnung}
-                      onChange={handleWorkStep}
-                  />
-              </Table.Cell>
-              <Table.Cell>
-                  <Form.Input
-                      id="stundensatz"
-                      value={workStep.stundensatz}
-                      onChange={handleWorkStep}
-                  />
-              </Table.Cell>
-              <Table.Cell>
-                  <Form.Input
-                      id="stunden"
-                      value={workStep.stundensatz}
-                      onChange={handleWorkStep}
-                  />
-              </Table.Cell>
-              <Table.Cell>100.00 CHF</Table.Cell>
-              <Table.Cell />
             </Table.Row>
           </Table.Body>
         </Table>

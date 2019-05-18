@@ -24,14 +24,14 @@ export type Props = {
 
 function ServiceSearchFields(props: Props) {
   const initialData = {
-    maschinenId: '',
-    kundenId: '',
-    maschinentypId: '',
-    von: '',
-    bis: '',
-    searchTransaction: true,
-    searchRental: true,
-    searchService: true,
+    kundenId: (props.data && props.data.kundenId) || '',
+    maschinenId: (props.data && props.data.maschinenId) || '',
+    maschinentypId: (props.data && props.data.maschinentypId) || '',
+    von: (props.data && props.data.von) || '',
+    bis: (props.data && props.data.bis) || '',
+    searchTransaction: (props.data && props.data.searchTransaction) || true,
+    searchRental: (props.data && props.data.searchRental) || true,
+    searchService: (props.data && props.data.searchService) || true,
   };
 
   const [searchData, setSearchData] = useState(initialData);
