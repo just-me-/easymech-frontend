@@ -10,7 +10,7 @@ import * as serviceCalls from '../shared/functions';
 
 
 export type Props = {
-    editItem: (id: string, type: string) => void,
+    editItem: (id: string, type: string, data: any) => void,
     filterData: any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
