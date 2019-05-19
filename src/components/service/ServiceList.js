@@ -9,7 +9,7 @@ import RentalSearchList from "../transaction/RentalSearchList";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
-  filterData: ?any,
+  filterData: any,
 };
 
 function ServiceList(props: Props) {

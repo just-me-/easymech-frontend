@@ -11,7 +11,7 @@ import * as serviceCalls from '../shared/functions';
 
 export type Props = {
     editItem: (id: string, type: string) => void,
-    filterData: ?any,
+    filterData: any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
     title: string,
@@ -77,7 +77,7 @@ function ServiceSearchList(props: Props) {
                                     {id}
                                 </Table.Cell>
                                 <Table.Cell>{bezeichnung}</Table.Cell>
-                                <Table.Cell>{beginn | ''}</Table.Cell>
+                                <Table.Cell>{beginn || ''}</Table.Cell>
                                 <Table.Cell>{ende || ''}</Table.Cell>
                                 <Table.Cell>{status|| ''}</Table.Cell>
                                 <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
