@@ -27,7 +27,7 @@ function TransactionSearchList(props: Props) {
             loadingSetter: setIsLoading,
         };
 
-        if(props.filterData.searchService){
+        if(props.filterData.searchTransaction){
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'transactions',

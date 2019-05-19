@@ -27,7 +27,7 @@ function RentalSearchList(props: Props) {
             loadingSetter: setIsLoading,
         };
 
-        if(props.filterData.searchService){
+        if(props.filterData.searchRental){
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'rentals',
@@ -91,6 +91,7 @@ function RentalSearchList(props: Props) {
                     </Dimmer>
                 </Segment>
             )}
+
         </div>
     );
 }

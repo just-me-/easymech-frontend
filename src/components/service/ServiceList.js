@@ -56,24 +56,34 @@ function ServiceList(props: Props) {
 
   return (
     <div>
-      <ServiceSearchList
-          editItem={onEditItem}
-          filterData={props.filterData}
-          resolveCustomer={getCustomerText}
-          resolveMachine={getMachineText}
-      />
-      <TransactionSearchList
-          editItem={onEditItem}
-          filterData={props.filterData}
-          resolveCustomer={getCustomerText}
-          resolveMachine={getMachineText}
-      />
-      <RentalSearchList
-          editItem={onEditItem}
-          filterData={props.filterData}
-          resolveCustomer={getCustomerText}
-          resolveMachine={getMachineText}
-      />
+
+      {props.filterData.searchService && (
+        <ServiceSearchList
+           editItem={onEditItem}
+           filterData={props.filterData}
+           resolveCustomer={getCustomerText}
+           resolveMachine={getMachineText}
+        />
+      )}
+
+      {props.filterData.searchTransaction && (
+        <TransactionSearchList
+            editItem={onEditItem}
+            filterData={props.filterData}
+            resolveCustomer={getCustomerText}
+            resolveMachine={getMachineText}
+        />
+      )}
+
+      {props.filterData.searchRental && (
+          <RentalSearchList
+              editItem={onEditItem}
+              filterData={props.filterData}
+              resolveCustomer={getCustomerText}
+              resolveMachine={getMachineText}
+          />
+      )}
+
     </div>
   );
 }
