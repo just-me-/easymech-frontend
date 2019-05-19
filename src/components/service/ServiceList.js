@@ -10,6 +10,8 @@ import RentalSearchList from "../transaction/RentalSearchList";
 import ServiceFields from "./ServiceFields";
 import {Button, Form, Header} from "semantic-ui-react";
 import {NotificationManager} from "react-notifications";
+import RentalFields from "../transaction/RentalFields";
+import TransactionFields from "../transaction/TransactionFields";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -163,6 +165,12 @@ function ServiceList(props: Props) {
                     Transaktion bearbeiten
                 </Header>
                 <Form>
+                    <TransactionFields
+                        key={key}
+                        data={editData}
+                        setData={setEditData}
+                        setValidState={setFormIsValid}
+                    />
                 </Form>
             </div>
         )}
@@ -173,6 +181,11 @@ function ServiceList(props: Props) {
                     Reservation bearbeiten
                 </Header>
                 <Form>
+                    <RentalFields
+                        data={editData}
+                        setData={setEditData}
+                        setValidState={setFormIsValid}
+                    />
                 </Form>
             </div>
         )}
