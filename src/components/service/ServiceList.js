@@ -2,13 +2,12 @@
 
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import {
-  Header, Table, Loader, Dimmer, Segment, Icon,
-} from 'semantic-ui-react';
+import { Loader, Dimmer, Segment } from 'semantic-ui-react';
 
 import * as serviceCalls from '../shared/functions';
 import ServiceSearchList from "./ServiceSearchList";
 import TransactionSearchList from "../transaction/TransactionSearchList";
+import RentalSearchList from "../transaction/RentalSearchList";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -150,6 +149,13 @@ function ServiceList(props: Props) {
       />
 
       <TransactionSearchList
+          editItem={onEditItem}
+          filterData={props.filterData}
+          resolveCustomer={getCustomerText}
+          resolveMachine={getMachineText}
+      />
+
+      <RentalSearchList
           editItem={onEditItem}
           filterData={props.filterData}
           resolveCustomer={getCustomerText}
