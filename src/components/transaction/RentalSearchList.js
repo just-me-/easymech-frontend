@@ -14,6 +14,7 @@ export type Props = {
     filterData: ?any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
+    title: string,
 };
 
 function RentalSearchList(props: Props) {
@@ -39,7 +40,7 @@ function RentalSearchList(props: Props) {
     return (
         <div>
             <Header as="h1" textAlign="center">
-                Gefundene Reservationen
+                {props.title}
             </Header>
 
             <Table celled selectable striped>

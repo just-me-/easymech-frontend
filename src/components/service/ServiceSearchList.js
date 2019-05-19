@@ -14,6 +14,7 @@ export type Props = {
     filterData: ?any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
+    title: string,
 };
 
 function ServiceSearchList(props: Props) {
@@ -39,13 +40,13 @@ function ServiceSearchList(props: Props) {
     return (
         <div>
             <Header as="h1" textAlign="center">
-                Gefundene Services
+                {props.title}
             </Header>
 
             <Table celled selectable striped>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell>Reservationsnr.</Table.HeaderCell>
+                        <Table.HeaderCell>Servicenr.</Table.HeaderCell>
                         <Table.HeaderCell>Bezeichnung</Table.HeaderCell>
                         <Table.HeaderCell>Beginn</Table.HeaderCell>
                         <Table.HeaderCell>Ende</Table.HeaderCell>

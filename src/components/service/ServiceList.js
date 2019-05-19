@@ -63,6 +63,7 @@ function ServiceList(props: Props) {
            filterData={props.filterData}
            resolveCustomer={getCustomerText}
            resolveMachine={getMachineText}
+           title='Gefundene Dienstleistungen'
         />
       )}
 
@@ -72,6 +73,7 @@ function ServiceList(props: Props) {
             filterData={props.filterData}
             resolveCustomer={getCustomerText}
             resolveMachine={getMachineText}
+            title='Gefundene An - und Verkäufe'
         />
       )}
 
@@ -81,6 +83,7 @@ function ServiceList(props: Props) {
               filterData={props.filterData}
               resolveCustomer={getCustomerText}
               resolveMachine={getMachineText}
+              title='Gefundene Reservationen'
           />
       )}
 
