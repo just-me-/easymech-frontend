@@ -18,7 +18,6 @@ export type Props = {
   filterData: any,
 };
 
-
 function ServiceList(props: Props) {
   const [machineData, setMachineData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
@@ -104,6 +103,10 @@ function ServiceList(props: Props) {
                   .catch((error) => {
                       errorHandler(error, setViewState);
                   });
+          } else if (editType === 'transaction'){
+            console.log("2Do - transaction API Call");
+          } else if (editType === 'rental'){
+              console.log("2Do - rental API Call");
           }
       } else {
           NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
@@ -112,7 +115,6 @@ function ServiceList(props: Props) {
 
   return (
     <div>
-
         {(viewState === 'list' && props.filterData.searchService) && (
           <ServiceSearchList
             editItem={onEditItem}
