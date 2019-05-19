@@ -8,6 +8,7 @@ import {
 
 import * as serviceCalls from '../shared/functions';
 import ServiceSearchList from "./ServiceSearchList";
+import TransactionSearchList from "../transaction/TransactionSearchList";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -175,6 +176,10 @@ function ServiceList(props: Props) {
 
       <ServiceSearchList editItem={onEditItem} filterData={props.filterData}
                          resolveCustomer={getCustomerText} resolveMachine={getMachineText}/>
+
+      <TransactionSearchList editItem={onEditItem} filterData={props.filterData}
+                         resolveCustomer={getCustomerText} resolveMachine={getMachineText}/>
+
 
       {isLoading && (
         <Segment>
