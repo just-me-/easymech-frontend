@@ -141,44 +141,20 @@ function ServiceList(props: Props) {
 
   return (
     <div>
-      <Header as="h1" textAlign="center">
-        Gefundene Dienstleistungen / Transaktionen
-      </Header>
 
-      <Table celled selectable striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Typ</Table.HeaderCell>
-            <Table.HeaderCell>Startdatum</Table.HeaderCell>
-            <Table.HeaderCell>Enddatum</Table.HeaderCell>
-            <Table.HeaderCell>Maschine</Table.HeaderCell>
-            <Table.HeaderCell>Kunde</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {_.map(mergedData, ({
-            id, type, startdatum, enddatum, maschinenId, kundenId,
-          }, index) => (
-            <Table.Row key={index}>
-              <Table.Cell onClick={() => props.editEntry(id, type)} className="Hover-effect link">
-                <Icon name="external" size="tiny" className="Inline-icon" />
-                &nbsp;
-                {type}
-              </Table.Cell>
-              <Table.Cell>{startdatum}</Table.Cell>
-              <Table.Cell>{enddatum}</Table.Cell>
-              <Table.Cell>{maschinenId}</Table.Cell>
-              <Table.Cell>{kundenId}</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+      <ServiceSearchList
+          editItem={onEditItem}
+          filterData={props.filterData}
+          resolveCustomer={getCustomerText}
+          resolveMachine={getMachineText}
+      />
 
-      <ServiceSearchList editItem={onEditItem} filterData={props.filterData}
-                         resolveCustomer={getCustomerText} resolveMachine={getMachineText}/>
-
-      <TransactionSearchList editItem={onEditItem} filterData={props.filterData}
-                         resolveCustomer={getCustomerText} resolveMachine={getMachineText}/>
+      <TransactionSearchList
+          editItem={onEditItem}
+          filterData={props.filterData}
+          resolveCustomer={getCustomerText}
+          resolveMachine={getMachineText}
+      />
 
 
       {isLoading && (
