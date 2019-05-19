@@ -6,34 +6,19 @@ import {
     Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
 
-import * as sharedCalls from '../shared/functions';
 import * as serviceCalls from '../shared/functions';
 
 
 export type Props = {
     editItem: (id: string, type: string) => void,
     filterData: ?any,
+    resolveMachine: (id: number) => string,
+    resolveCustomer: (id: number) => string,
 };
 
 function ServiceSearchList(props: Props) {
     const [serviceData, setServiceData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    const [machineData, setMachineData] = useState([]);
-    const [customerData, setCustomerData] = useState([]);
-
-
-    useEffect(() => {
-        sharedCalls.getCustomers({
-            deletedToo: true,
-            dataSetter: setCustomerData,
-        });
-
-        sharedCalls.getMachines({
-            deletedToo: true,
-            dataSetter: setMachineData,
-        });
-    }, []);
 
     useEffect(() => {
         const baseParameters = {
@@ -50,29 +35,6 @@ function ServiceSearchList(props: Props) {
             });
         }
     }, []);
-
-
-    function getCustomerText(id) {
-        if (id) {
-            const customer = customerData.find(x => x.id === id);
-            if (customer) {
-                return customer.firma;
-            }
-            return 'Nicht gefunden';
-        }
-        return 'Kunde hinterlegt';
-    }
-
-    function getMachineText(id) {
-        if (id) {
-            const machine = machineData.find(x => x.id === id);
-            if (machine) {
-                return machine.seriennummer;
-            }
-            return 'Nicht gefunden';
-        }
-        return 'Keine Maschine hinterlegt';
-    }
 
     return (
         <div>
@@ -117,8 +79,8 @@ function ServiceSearchList(props: Props) {
                                 <Table.Cell>{beginn | ''}</Table.Cell>
                                 <Table.Cell>{ende || ''}</Table.Cell>
                                 <Table.Cell>{status|| ''}</Table.Cell>
-                                <Table.Cell>{getCustomerText(kundenId)}</Table.Cell>
-                                <Table.Cell>{getMachineText(maschinenId)}</Table.Cell>
+                                <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
+                                <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
                             </Table.Row>
                         ),
                     )}
