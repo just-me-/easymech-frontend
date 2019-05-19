@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react';
 
 import * as serviceCalls from '../shared/functions';
+import ServiceSearchList from "./ServiceSearchList";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -95,10 +96,15 @@ function ServiceList(props: Props) {
     [serviceData],
   );
 
+
+  function onEditItem(itemId, type) {
+      console.log("2do - " + itemId + " Type: " + type);
+  }
+
   return (
     <div>
       <Header as="h1" textAlign="center">
-        Gefundene Dienstleistung
+        Gefundene Dienstleistungen / Transaktionen
       </Header>
 
       <Table celled selectable striped>
@@ -129,6 +135,8 @@ function ServiceList(props: Props) {
           ))}
         </Table.Body>
       </Table>
+
+      <ServiceSearchList editItem={onEditItem} filterData={props.filterData} />
 
       {isLoading && (
         <Segment>
