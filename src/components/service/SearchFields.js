@@ -22,7 +22,7 @@ export type Props = {
   machine?: TypeMachine,
 };
 
-function ServiceSearchFields(props: Props) {
+function SearchFields(props: Props) {
   const initialData = {
     kundenId: (props.data && props.data.kundenId) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
@@ -195,4 +195,4 @@ function ServiceSearchFields(props: Props) {
   );
 }
 
-export default ServiceSearchFields;
+export default SearchFields;

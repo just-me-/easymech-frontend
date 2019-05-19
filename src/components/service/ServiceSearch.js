@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button, Form, Header } from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
-import ServiceSearchFields from './ServiceSearchFields';
+import SearchFields from './SearchFields';
 import ServiceList from './ServiceList';
 
 export type Props = {
@@ -23,6 +23,7 @@ function ServiceSearch(props: Props) {
 
   function listData() {
     if (formIsValid) {
+      console.log(searchData);
       setViewState('list');
     } else {
       NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
@@ -41,7 +42,7 @@ function ServiceSearch(props: Props) {
             Dienstleistung suchen
           </Header>
           <Form>
-            <ServiceSearchFields
+            <SearchFields
               data={searchData}
               setData={setSearchData}
               setValidState={setFormIsValid}

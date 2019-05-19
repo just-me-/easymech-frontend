@@ -34,6 +34,7 @@ function getAllTypesOfServices(
     completed: 3,
   };
   const searchDto = Object.assign({ status: states[state] }, serviceSearchObject);
+  console.log(searchDto);
   return helper.postJson(`/${type}/suchen`, prepareDto(searchDto), 'POST').then(helper.parseJSON);
 }
 
