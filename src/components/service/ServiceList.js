@@ -27,21 +27,27 @@ function ServiceList(props: Props) {
       filterData: props.filterData,
       loadingSetter: setIsLoading,
     };
-    serviceCalls.getServices({
-      ...baseParameters,
-      type: 'rentals',
-      dataSetter: setRentalData,
-    });
-    serviceCalls.getServices({
-      ...baseParameters,
-      type: 'transactions',
-      dataSetter: setTransactionData,
-    });
-    serviceCalls.getServices({
-      ...baseParameters,
-      type: 'services',
-      dataSetter: setServiceData,
-    });
+    if(props.filterData.searchRental){
+        serviceCalls.getServices({
+            ...baseParameters,
+            type: 'rentals',
+            dataSetter: setRentalData,
+        });
+    }
+    if(props.filterData.searchTransaction){
+        serviceCalls.getServices({
+            ...baseParameters,
+            type: 'transactions',
+            dataSetter: setTransactionData,
+        });
+    }
+    if(props.filterData.searchService){
+        serviceCalls.getServices({
+            ...baseParameters,
+            type: 'services',
+            dataSetter: setServiceData,
+        });
+    }
   }, []);
 
   useEffect(
