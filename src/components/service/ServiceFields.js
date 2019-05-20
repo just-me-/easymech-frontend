@@ -58,8 +58,6 @@ function ServiceFields(props: Props) {
 
   const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
   const [workStepAddRow, setWorkStepAddRow] = useState(initialWorkStep);
-  const [materialValid,setMaterialValid] = useState(false);
-  const [workStepValid,setWorkStepValid] = useState(false);
 
   const [datesAreValid, setDatesAreValid] = useState({
     beginn: true,
@@ -99,18 +97,14 @@ function ServiceFields(props: Props) {
     if(validate){
         value = rowValidation(value,validate);
     }
-    if(setMaterialAddRow({ ...materialAddRow, [e.target.id]: value })){
-        setMaterialValid(true);
-    }
+    setMaterialAddRow({ ...materialAddRow, [e.target.id]: value });
   }
 
   function handleWorkStep(e, { value,validate }) {
     if(validate){
        value = rowValidation(value,validate);
     }
-    if(setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value })){
-        setWorkStepValid(true);
-    }
+    setWorkStepAddRow({ ...workStepAddRow, [e.target.id]: value });
   }
 
   function rowValidation(value,validate){
@@ -124,11 +118,8 @@ function ServiceFields(props: Props) {
   }
 
   function addWorkStep() {
-    if(workStepValid){
-        if(setWorkStepList(_.concat(workStepList, workStepAddRow))){
-            setWorkStepAddRow(initialWorkStep);
-            setWorkStepValid(false);
-        }
+    if(setWorkStepList(_.concat(workStepList, workStepAddRow))){
+        setWorkStepAddRow(initialWorkStep);
     }
   }
 
@@ -145,12 +136,8 @@ function ServiceFields(props: Props) {
   }
 
   function addMaterial() {
-    if(materialValid){
-        if(setMaterialList(_.concat(materialList, materialAddRow))){
-            setMaterialAddRow(initialMaterial);
-            setMaterialValid(false);
-        }
-    }
+    setMaterialList(_.concat(materialList, materialAddRow));
+    setMaterialAddRow(initialMaterial);
   }
 
   function editMaterial(index, data) {
