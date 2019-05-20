@@ -157,7 +157,7 @@ export function parseIsoDate(date: string) {
   return date;
 }
 
-function errorHandler(error, setViewState) {
+export function errorHandler(error, setViewState) {
   console.log('Ups, ein Fehler ist aufgetreten', error);
   setViewState('edit');
   if (error.code && error.code > 0) {
@@ -170,7 +170,7 @@ function errorHandler(error, setViewState) {
   }
 }
 
-function succesfulChange(result, setViewState) {
+export function succesfulChange(result, setViewState) {
   result = apiService.checkResponse(result);
   setViewState('list');
   NotificationManager.success(

@@ -1,16 +1,7 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Header } from 'semantic-ui-react';
-import * as sharedFunctions from './shared/functions';
-import ServiceSearchList from './service/ServiceSearchList';
-import ServiceFields from './service/ServiceFields';
-import { saveEntry } from './shared/functions';
-
-/* import ServiceSearchList from "./ServiceSearchList";
-import RentalSearchList from "../transaction/RentalSearchList";
-*/
-
+import { Form, Header } from 'semantic-ui-react';
 import * as sharedCalls from './shared/functions';
 
 import ServiceSearchList from './service/ServiceSearchList';

@@ -147,9 +147,9 @@ function ServiceFields(props: Props) {
 
   function addMaterial() {
     if (
-      workStepAddRow.bezeichnung.length > 0
-      && workStepAddRow.stundensatz.length > 0
-      && workStepAddRow.dauer.length > 0
+      materialAddRow.bezeichnung.length > 0
+      && materialAddRow.preis.length > 0
+      && materialAddRow.anzahl.length > 0
     ) {
       setMaterialList(_.concat(materialList, materialAddRow));
       setMaterialAddRow(initialMaterial);
@@ -326,7 +326,7 @@ function ServiceFields(props: Props) {
                   id="preis"
                   value={materialAddRow.preis}
                   onChange={handleMaterial}
-                  validate="currency"
+                  validate="float"
                 />
               </Table.Cell>
               <Table.Cell>
@@ -388,7 +388,7 @@ function ServiceFields(props: Props) {
                   id="stundensatz"
                   value={workStepAddRow.stundensatz}
                   onChange={handleWorkStep}
-                  validate="currency"
+                  validate="float"
                 />
               </Table.Cell>
               <Table.Cell>
@@ -396,7 +396,7 @@ function ServiceFields(props: Props) {
                   id="dauer"
                   value={workStepAddRow.dauer}
                   onChange={handleWorkStep}
-                  validate="currency"
+                  validate="float"
                 />
               </Table.Cell>
               <Table.Cell />
