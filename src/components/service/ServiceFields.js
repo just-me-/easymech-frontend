@@ -29,8 +29,8 @@ function ServiceFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
     bezeichnung: (props.data && props.data.bezeichnung) || '',
-    beginn: (props.data && props.data.beginn) || sharedCalls.getToday(),
-    ende: (props.data && props.data.ende) || '',
+    beginn: (props.data && sharedCalls.parseIsoDate(props.data.beginn)) || sharedCalls.getToday(),
+    ende: (props.data && sharedCalls.parseIsoDate(props.data.ende)) || '',
     status: (props.data && props.data.status) || 1, // geplant=1,  running=2, finished=3
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',

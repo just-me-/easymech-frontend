@@ -26,16 +26,25 @@ function RentalFields(props: Props) {
   const initialData = {
     id: (props.data && props.data.id) || undefined,
     standort: (props.data && props.data.standort) || '',
-    startdatum: (props.data && props.data.startdatum) || sharedCalls.getToday(),
-    enddatum: (props.data && props.data.enddatum) || '',
+    startdatum:
+      (props.data && sharedCalls.parseIsoDate(props.data.startdatum)) || sharedCalls.getToday(),
+    enddatum: (props.data && sharedCalls.parseIsoDate(props.data.enddatum)) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
     uebergabe: {
-      datum: (props.data && props.data.uebergabe && props.data.uebergabe.datum) || '',
+      datum:
+        (props.data
+          && props.data.uebergabe
+          && sharedCalls.parseIsoDate(props.data.uebergabe.datum))
+        || '',
       notiz: (props.data && props.data.uebergabe && props.data.uebergabe.notiz) || '',
     },
     ruecknahme: {
-      datum: (props.data && props.data.ruecknahme && props.data.ruecknahme.datum) || '',
+      datum:
+        (props.data
+          && props.data.ruecknahme
+          && sharedCalls.parseIsoDate(props.data.ruecknahme.datum))
+        || '',
       notiz: (props.data && props.data.ruecknahme && props.data.ruecknahme.notiz) || '',
     },
   };

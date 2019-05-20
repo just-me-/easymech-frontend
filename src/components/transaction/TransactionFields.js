@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Form, Icon, Modal, Button,
+  Form, Icon, Modal, Button, Radio,
 } from 'semantic-ui-react';
 
 import Machine from '../machine/Machine';
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
 import NumberInput from '../shared/NumberInput';
+
 import * as sharedCalls from '../shared/functions';
 import * as validation from '../shared/validation';
 
@@ -17,7 +18,6 @@ import type { TypeMachine } from '../../api/machine';
 
 import '../shared/Fields.css';
 import './TransactionFields.css';
-import Radio from 'semantic-ui-react/dist/commonjs/addons/Radio/Radio';
 
 export type Props = {
   data?: Transaction,
@@ -32,7 +32,7 @@ function TransactionFields(props: Props) {
     id: (props.data && props.data.id) || undefined,
     preis: (props.data && props.data.preis) || '',
     typ: (props.data && props.data.typ) || 0,
-    datum: (props.data && props.data.datum) || sharedCalls.getToday(),
+    datum: (props.data && sharedCalls.parseIsoDate(props.data.datum)) || sharedCalls.getToday(),
     maschinenId: (props.data && props.data.maschinenId) || '',
     kundenId: (props.data && props.data.kundenId) || '',
   };
