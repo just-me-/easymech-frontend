@@ -80,7 +80,7 @@ function ServiceSearchList(props: Props) {
                                 <Table.Cell>{beginn || ''}</Table.Cell>
                                 <Table.Cell>{ende || ''}</Table.Cell>
                                 <Table.Cell>{status|| ''}</Table.Cell>
-                                <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
+                                <Table.Cell>{props.resolveCustomer(kundenId, )}</Table.Cell>
                                 <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
                             </Table.Row>
                         ),

@@ -2,18 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 
-import * as serviceApi from '../../api/service'
-import * as transactionApi from '../../api/transaction'
-import * as rentalApi from '../../api/rental'
 import * as serviceCalls from '../shared/functions';
 import ServiceSearchList from "./ServiceSearchList";
 import TransactionSearchList from "../transaction/TransactionSearchList";
 import RentalSearchList from "../transaction/RentalSearchList";
 import ServiceFields from "./ServiceFields";
 import {Button, Form, Header} from "semantic-ui-react";
-import {NotificationManager} from "react-notifications";
 import RentalFields from "../transaction/RentalFields";
 import TransactionFields from "../transaction/TransactionFields";
+import {saveEntry} from "../shared/functions";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -28,28 +25,6 @@ function ServiceList(props: Props) {
   const [editData, setEditData] = useState();
   const [key, setKey] = useState(Math.random());
   const [formIsValid, setFormIsValid] = useState(false);
-
-  function errorHandler(error, setViewState) {
-      console.log('Ups, ein Fehler ist aufgetreten', error);
-      setViewState('edit');
-      if (error.code && error.code > 0) {
-          NotificationManager.error(error.msg, error.codeMsg);
-      } else {
-          NotificationManager.error(
-              'Beim Speichern des Eintrags ist ein Fehler aufgetreten.',
-              'Bitte erneut versuchen!',
-          );
-      }
-  }
-
-  function succesfulChange(result, setViewState) {
-      result = serviceApi.checkResponse(result);
-      setViewState('list');
-      NotificationManager.success(
-          'Der Eintrag wurde erfolgreich gespeichert.',
-          `${result.id} aktualisiert`,
-      );
-  }
 
   useEffect(() => {
       serviceCalls.getCustomers({
@@ -92,42 +67,6 @@ function ServiceList(props: Props) {
       setViewState('edit');
       setKey(Math.random());
       console.log(data);
-  }
-
-  function saveEntry() {
-      if (formIsValid) {
-          setViewState('loader');
-          if(editType === 'service'){
-              serviceApi
-                  .updateService(editData)
-                  .then((result) => {
-                      succesfulChange(result, setViewState);
-                  })
-                  .catch((error) => {
-                      errorHandler(error, setViewState);
-                  });
-          } else if (editType === 'transaction'){
-              transactionApi
-                  .updateTransaction(editData)
-                  .then((result) => {
-                      succesfulChange(result, setViewState)
-                  })
-                  .catch((error) => {
-                      errorHandler(error,setViewState)
-                  })
-          } else if (editType === 'rental'){
-              rentalApi
-                  .updateRental(editData)
-                  . then((result) => {
-                      succesfulChange(result, setViewState)
-                  })
-                  .catch((error) => {
-                      errorHandler(error,setViewState)
-                  })
-          }
-      } else {
-          NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
-      }
   }
 
   return (
@@ -217,7 +156,7 @@ function ServiceList(props: Props) {
                 icon="save"
                 labelPosition="left"
                 floated="right"
-                onClick={() => saveEntry()}
+                onClick={() => saveEntry(formIsValid, setViewState, editType,editData)}
             />
          )}
     </div>

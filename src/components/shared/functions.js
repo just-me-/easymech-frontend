@@ -5,6 +5,9 @@ import * as apiCustomer from '../../api/customer';
 import * as apiMachine from '../../api/machine';
 import * as apiMachinetype from '../../api/machinetype';
 import * as apiServiceSearch from '../../api/service_search';
+import * as apiService from "../../api/service";
+import * as apiTransaction from "../../api/transaction";
+import * as rentalApi from "../../api/rental";
 
 export function saveCustomer({
   formIsValid,customerData, setKey, setViewState = undefined,
@@ -145,4 +148,64 @@ function parseIsoDate(date) {
     date = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}.${arr[2]}.${arr[1]}` : '';
   }
   return date;
+}
+
+function errorHandler(error, setViewState) {
+    console.log('Ups, ein Fehler ist aufgetreten', error);
+    setViewState('edit');
+    if (error.code && error.code > 0) {
+        NotificationManager.error(error.msg, error.codeMsg);
+    } else {
+        NotificationManager.error(
+            'Beim Speichern des Eintrags ist ein Fehler aufgetreten.',
+            'Bitte erneut versuchen!',
+        );
+    }
+}
+
+function succesfulChange(result, setViewState) {
+    result = apiService.checkResponse(result);
+    setViewState('list');
+    NotificationManager.success(
+        'Der Eintrag wurde erfolgreich gespeichert.',
+        `${result.id} aktualisiert`,
+    );
+}
+
+export function saveEntry(formIsValid, setViewState, editType,editData) {
+    if (formIsValid) {
+        setViewState('loader');
+        if(editType === 'service'){
+            apiService
+                .updateService(editData)
+                .then((result) => {
+                    succesfulChange(result, setViewState);
+                })
+                .catch((error) => {
+                    errorHandler(error, setViewState);
+                });
+        } else if (editType === 'transaction'){
+            apiTransaction
+                .updateTransaction(editData)
+                .then((result) => {
+                    succesfulChange(result, setViewState)
+                })
+                .catch((error) => {
+                    errorHandler(error,setViewState)
+                })
+        } else if (editType === 'rental'){
+            console.log("Reservationsobejkt");
+            console.log(editData);
+            rentalApi
+                .updateRental(editData)
+                . then((result) => {
+                    succesfulChange(result, setViewState)
+                })
+                .catch((error) => {
+                    errorHandler(error,setViewState)
+                })
+        }
+    } else {
+        NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
+    }
 }
