@@ -13,7 +13,6 @@ import RentalFields from '../transaction/RentalFields';
 import TransactionFields from '../transaction/TransactionFields';
 
 export type Props = {
-  editEntry: (id: string, type: string) => void,
   filterData: any,
 };
 
