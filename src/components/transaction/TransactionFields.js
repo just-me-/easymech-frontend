@@ -95,8 +95,10 @@ function TransactionFields(props: Props) {
 
   useEffect(() => {
     const requiredIsValid = validation.checkRequired(transactionData.preis)
-      && validation.checkDate(transactionData.datum);
-    console.log(validation.checkDate(transactionData.datum));
+      && validation.checkDate(transactionData.datum)
+      && parseInt(transactionData.maschinenId, 10) > 0
+      && parseInt(transactionData.kundenId, 10) > 0;
+
     if (props.setValidState) {
       props.setValidState(requiredIsValid);
     }
@@ -154,6 +156,7 @@ function TransactionFields(props: Props) {
             value={transactionData.preis}
             validate="number"
             handleChange={handleChange}
+            isRequired
           />
           <DatePicker
             id="datum"

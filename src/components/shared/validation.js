@@ -10,8 +10,8 @@ export function checkYear(str) {
 }
 export function checkDate(str) {
   const validFormat1 = !!str && /^\d{1,2}\.\d{1,2}\.(19|20)\d{2}$/i.test(str);
-  if(str.includes('-')){
-      return checkDateISO(str);
+  if (str.includes('-')) {
+    return checkDateISO(str);
   }
   if (!validFormat1) return false;
 
@@ -25,22 +25,20 @@ export function checkDate(str) {
   );
 }
 
-export function checkDateISO(str){
-    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str)){
-        return false;
-    }
-    return true;
+export function checkDateISO(str) {
+  if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str)) {
+    return false;
+  }
+  return true;
 }
 
 export function checkFloat(val) {
-    var floatRegex = /^-?\d+(?:[.]\d{0,2}?)?$/;
-    if (!floatRegex.test(val))
-        return false;
+  const floatRegex = /^-?\d+(?:[.]\d{0,2}?)?$/;
+  if (!floatRegex.test(val)) return false;
 
-    val = parseFloat(val);
-    if (isNaN(val))
-        return false;
-    return true;
+  val = parseFloat(val);
+  if (isNaN(val)) return false;
+  return true;
 }
 
 export function toNumber(str) {
@@ -51,10 +49,10 @@ export function toDate(str) {
   return str.toString().replace(/[^0-9.]/g, '');
 }
 
-export function toFloat(str){
-   return str.toString().replace(/[^\d.]/g, '');
+export function toFloat(str) {
+  return str.toString().replace(/[^\d.]/g, '');
 }
 
-export function toCurrency(num){
-   return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+export function toCurrency(num) {
+  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

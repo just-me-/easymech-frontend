@@ -5,9 +5,15 @@ import * as apiCustomer from '../../api/customer';
 import * as apiMachine from '../../api/machine';
 import * as apiMachinetype from '../../api/machinetype';
 import * as apiServiceSearch from '../../api/service_search';
+import * as apiService from '../../api/service';
+import * as apiTransaction from '../../api/transaction';
+import * as rentalApi from '../../api/rental';
 
 export function saveCustomer({
-  formIsValid,customerData, setKey, setViewState = undefined,
+  formIsValid,
+  customerData,
+  setKey,
+  setViewState = undefined,
   exists = false, // add or edit customer
 }: any = {}) {
   const action = exists ? apiCustomer.updateCustomer : apiCustomer.addCustomer;
@@ -41,7 +47,9 @@ export function saveCustomer({
 }
 
 export function getCustomers({
-  filterData, loadingSetter, dataSetter = undefined,
+  filterData,
+  loadingSetter,
+  dataSetter = undefined,
   deletedToo = false,
 }: any = {}) {
   const action = deletedToo ? apiCustomer.getCustomers : apiCustomer.getFilteredCustomers;
@@ -62,7 +70,9 @@ export function getCustomers({
 }
 
 export function getMachines({
-  filterData, loadingSetter,dataSetter = undefined,
+  filterData,
+  loadingSetter,
+  dataSetter = undefined,
   deletedToo = false,
 }: any = {}) {
   const action = deletedToo ? apiMachine.getMachines : apiMachine.getFilteredMachines;
@@ -82,9 +92,7 @@ export function getMachines({
     });
 }
 
-export function getMachinetypes({
-  filterData, loadingSetter, dataSetter = undefined,
-}: any = {}) {
+export function getMachinetypes({ filterData, loadingSetter, dataSetter = undefined }: any = {}) {
   const action = filterData
     ? apiMachinetype.getFilteredMachineTypes
     : apiMachinetype.getMachineTypes;
@@ -106,7 +114,9 @@ export function getMachinetypes({
 export function getServices({
   type,
   state = 'all',
-  filterData, loadingSetter, dataSetter = undefined,
+  filterData,
+  loadingSetter,
+  dataSetter = undefined,
 }: any = {}) {
   let action;
   if (type === 'rentals') {
@@ -145,4 +155,69 @@ export function parseIsoDate(date: string) {
     date = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}.${arr[2]}.${arr[1]}` : '';
   }
   return date;
+}
+
+export function errorHandler(error: any, setViewState: string => void) {
+  console.log('Ups, ein Fehler ist aufgetreten', error);
+  setViewState('edit');
+  if (error.code && error.code > 0) {
+    NotificationManager.error(error.msg, error.codeMsg);
+  } else {
+    NotificationManager.error(
+      'Beim Speichern des Eintrags ist ein Fehler aufgetreten.',
+      'Bitte erneut versuchen!',
+    );
+  }
+}
+
+export function succesfulChange(result: any, setViewState: string => void) {
+  result = apiService.checkResponse(result);
+  setViewState('list');
+  NotificationManager.success(
+    'Der Eintrag wurde erfolgreich gespeichert.',
+    `${result.id} aktualisiert`,
+  );
+}
+
+export function saveEntry(
+  formIsValid: boolean,
+  setViewState: string => void,
+  editType: any,
+  editData: any,
+) {
+  if (formIsValid) {
+    setViewState('loader');
+    if (editType === 'service') {
+      apiService
+        .updateService(editData)
+        .then((result) => {
+          succesfulChange(result, setViewState);
+        })
+        .catch((error) => {
+          errorHandler(error, setViewState);
+        });
+    } else if (editType === 'transaction') {
+      apiTransaction
+        .updateTransaction(editData)
+        .then((result) => {
+          succesfulChange(result, setViewState);
+        })
+        .catch((error) => {
+          errorHandler(error, setViewState);
+        });
+    } else if (editType === 'rental') {
+      console.log('Reservationsobejkt');
+      console.log(editData);
+      rentalApi
+        .updateRental(editData)
+        .then((result) => {
+          succesfulChange(result, setViewState);
+        })
+        .catch((error) => {
+          errorHandler(error, setViewState);
+        });
+    }
+  } else {
+    NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
+  }
 }

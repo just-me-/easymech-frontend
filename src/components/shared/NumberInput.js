@@ -10,6 +10,7 @@ export type Props = {
   value: ?string,
   error?: boolean,
   validate?: string,
+  isRequired?: boolean,
   handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
 };
 
@@ -24,6 +25,7 @@ function NumberInput(props: Props) {
         value={props.value}
         validate={props.validate}
         onChange={props.handleChange}
+        placeholder={props.isRequired ? 'Pflichtfeld' : ''}
       />
     </Form.Field>
   );

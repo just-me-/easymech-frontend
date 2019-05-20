@@ -16,6 +16,7 @@ export type Props = {
   id: string,
   label: string,
   error?: boolean,
+  isRequired?: boolean,
   handleChange?: ({ target: { value: string, id: string } }, { validate: string }) => void,
 };
 
@@ -39,6 +40,7 @@ function DatePicker(props: Props) {
         value={props.value}
         handleChange={props.handleChange}
         error={props.error}
+        isRequired={props.isRequired}
       />
       <DateInput
         className="DatePicker Button"

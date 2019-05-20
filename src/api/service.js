@@ -1,4 +1,5 @@
 import * as helper from './helper';
+import type {Rental} from "./rental";
 
 export const checkResponse = helper.checkResponse;
 
@@ -41,6 +42,12 @@ export function updateService(serviceObject: Service): Promise<SaveResult> {
   return helper
     .postJson(`/services/${serviceObject.id}`, prepareDto(serviceObject), 'PUT')
     .then(helper.parseJSON);
+}
+
+export function updateRental(rentalObject: Rental): Promise<SaveResult> {
+    return helper
+        .postJson(`/reservationen/${rentalObject.id}`, prepareDto(rentalObject), 'PUT')
+        .then(helper.parseJSON);
 }
 
 export function deleteService(id: string): Promise<SaveResult> {

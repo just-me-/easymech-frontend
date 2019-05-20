@@ -35,7 +35,7 @@ function SmartInput(props: Props) {
   }
 
   function handleChange(e, { value }) {
-    props.onResultSelect({ id: "0" });
+    props.onResultSelect({ id: '0' });
     setIsValid(false);
     setIsLoading(true);
     setValue(e.target.value);
@@ -50,12 +50,15 @@ function SmartInput(props: Props) {
     }, 300);
   }
 
-  useEffect(() => {
-    if (props.elements && props.elements.length > 0 && props.setElementId) {
-      const match = props.elements.find(x => x.id === props.setElementId);
-      setValue(match ? match[props.matchingKey] : '');
-    }
-  }, [props.elements]);
+  useEffect(
+    () => {
+      if (props.elements && props.elements.length > 0 && props.setElementId) {
+        const match = props.elements.find(x => x.id === props.setElementId);
+        setValue(match ? match[props.matchingKey] : '');
+      }
+    },
+    [props.elements],
+  );
 
   return (
     <Form.Field
