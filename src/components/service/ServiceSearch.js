@@ -18,7 +18,11 @@ export type Props = {
 function ServiceSearch(props: Props) {
   const initState = props.location.state && props.location.state.listRedirect ? 'list' : 'search';
   const [viewState, setViewState] = useState(initState);
-  const [searchData, setSearchData] = useState({});
+  const [searchData, setSearchData] = useState(
+    initState === 'list'
+      ? { searchService: true, searchRental: true, searchTransaction: true }
+      : {},
+  );
   const [formIsValid, setFormIsValid] = useState(true);
 
   function listData() {
