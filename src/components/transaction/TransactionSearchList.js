@@ -69,7 +69,7 @@ function TransactionSearchList(props: Props) {
                 </Table.Cell>
                 <Table.Cell>{preis}</Table.Cell>
                 <Table.Cell>{typ}</Table.Cell>
-                <Table.Cell>{datum || ''}</Table.Cell>
+                <Table.Cell>{serviceCalls.parseIsoDate(datum)}</Table.Cell>
                 <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
                 <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
               </Table.Row>
