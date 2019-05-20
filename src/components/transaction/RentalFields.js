@@ -221,7 +221,12 @@ function RentalFields(props: Props) {
             </Message>
           </div>
         </Form.Group>
-        <Transition visible={visibility.uebergabe_notiz} animation="scale" duration={500} unmountOnHide>
+        <Transition
+          visible={visibility.uebergabe_notiz}
+          animation="scale"
+          duration={500}
+          unmountOnHide
+        >
           <Form.Group widths="equal" className="OneField">
             <Form.Field
               control={TextareaAutosize}

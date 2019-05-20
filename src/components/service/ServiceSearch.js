@@ -31,7 +31,7 @@ function ServiceSearch(props: Props) {
   }
 
   function editEntry(id, type) {
-    console.log("2Do", id, type); 
+    console.log('2Do', id, type);
   }
 
   return (
