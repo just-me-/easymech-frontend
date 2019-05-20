@@ -9,11 +9,11 @@ import {
 import * as serviceCalls from '../shared/functions';
 
 export type Props = {
-  editItem: (id: string, type: string, data: any) => void,
+  editItem?: (id: string, type: string, data: any) => void,
   filterData: any,
   resolveMachine: (id: number) => string,
   resolveCustomer: (id: number) => string,
-  title: string,
+  title?: string,
   searchState?: string,
 };
 
@@ -23,7 +23,7 @@ function RentalSearchList(props: Props) {
 
   useEffect(() => {
     const baseParameters = {
-      state: props.searchState || 'all',
+      state: props.searchState || 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
     };
@@ -39,11 +39,11 @@ function RentalSearchList(props: Props) {
 
   return (
     <div>
-      {props.title &&
+      {props.title && (
         <Header as="h1" textAlign="center">
           {props.title}
         </Header>
-      }
+      )}
 
       <Table celled selectable striped>
         <Table.Header>
@@ -63,14 +63,19 @@ function RentalSearchList(props: Props) {
               id, standort, startdatum, enddatum, maschinenId, kundenId,
             }, index) => (
               <Table.Row key={index}>
-                <Table.Cell
-                  onClick={() => props.editItem(id, 'rental', rentalData[index])}
-                  className="Hover-effect link"
-                >
-                  <Icon name="external" size="tiny" className="Inline-icon" />
-                  &nbsp;
-                  {id}
-                </Table.Cell>
+                {props.editItem ? (
+                  <Table.Cell
+                    onClick={() => props.editItem(id, 'rental', rentalData[index])}
+                    className="Hover-effect link"
+                  >
+                    <Icon name="external" size="tiny" className="Inline-icon" />
+                    &nbsp;
+                    {id}
+                  </Table.Cell>
+                ) : (
+                  <Table.Cell>{id}</Table.Cell>
+                )}
+
                 <Table.Cell>{standort}</Table.Cell>
                 <Table.Cell>{startdatum}</Table.Cell>
                 <Table.Cell>{enddatum}</Table.Cell>

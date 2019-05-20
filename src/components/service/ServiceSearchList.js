@@ -9,7 +9,7 @@ import {
 import * as serviceCalls from '../shared/functions';
 
 export type Props = {
-  editItem: (id: string, type: string, data: any) => void,
+  editItem?: (id: string, type: string, data: any) => void,
   filterData: any,
   resolveMachine: (id: number) => string,
   resolveCustomer: (id: number) => string,
@@ -23,7 +23,7 @@ function ServiceSearchList(props: Props) {
 
   useEffect(() => {
     const baseParameters = {
-      state: props.searchState || 'all',
+      state: props.searchState || 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
     };
@@ -39,9 +39,11 @@ function ServiceSearchList(props: Props) {
 
   return (
     <div>
-      <Header as="h1" textAlign="center">
-        {props.title}
-      </Header>
+      {props.title && (
+        <Header as="h1" textAlign="center">
+          {props.title}
+        </Header>
+      )}
 
       <Table celled selectable striped>
         <Table.Header>
@@ -62,14 +64,18 @@ function ServiceSearchList(props: Props) {
               id, bezeichnung, beginn, ende, status, maschinenId, kundenId,
             }, index) => (
               <Table.Row key={index}>
-                <Table.Cell
-                  onClick={() => props.editItem(id, 'service', serviceData[index])}
-                  className="Hover-effect link"
-                >
-                  <Icon name="external" size="tiny" className="Inline-icon" />
-                  &nbsp;
-                  {id}
-                </Table.Cell>
+                {props.editItem ? (
+                  <Table.Cell
+                    onClick={() => props.editItem(id, 'service', serviceData[index])}
+                    className="Hover-effect link"
+                  >
+                    <Icon name="external" size="tiny" className="Inline-icon" />
+                    &nbsp;
+                    {id}
+                  </Table.Cell>
+                ) : (
+                  <Table.Cell>{id}</Table.Cell>
+                )}
                 <Table.Cell>{bezeichnung}</Table.Cell>
                 <Table.Cell>{beginn || ''}</Table.Cell>
                 <Table.Cell>{ende || ''}</Table.Cell>
