@@ -13,8 +13,8 @@ function Dashboard() {
   const [customerData, setCustomerData] = useState([]);
 
   const dateFilter = {
-    startdatum: sharedCalls.getToday(-1),
-    enddatum: sharedCalls.getToday(10),
+    von: sharedCalls.getToday(-1),
+    bis: sharedCalls.getToday(10),
   };
 
   function getCustomerText(id: number) {
