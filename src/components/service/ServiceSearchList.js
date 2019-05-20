@@ -13,7 +13,8 @@ export type Props = {
   filterData: any,
   resolveMachine: (id: number) => string,
   resolveCustomer: (id: number) => string,
-  title: string,
+  title?: string,
+  searchState?: string,
 };
 
 function ServiceSearchList(props: Props) {
@@ -22,7 +23,7 @@ function ServiceSearchList(props: Props) {
 
   useEffect(() => {
     const baseParameters = {
-      state: 'all',
+      state: props.searchState || 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
     };

@@ -14,6 +14,7 @@ export type Props = {
   resolveMachine: (id: number) => string,
   resolveCustomer: (id: number) => string,
   title: string,
+  searchState?: string,
 };
 
 function RentalSearchList(props: Props) {
@@ -22,7 +23,7 @@ function RentalSearchList(props: Props) {
 
   useEffect(() => {
     const baseParameters = {
-      state: 'all',
+      state: props.searchState || 'all',
       filterData: props.filterData,
       loadingSetter: setIsLoading,
     };
@@ -38,9 +39,11 @@ function RentalSearchList(props: Props) {
 
   return (
     <div>
-      <Header as="h1" textAlign="center">
-        {props.title}
-      </Header>
+      {props.title &&
+        <Header as="h1" textAlign="center">
+          {props.title}
+        </Header>
+      }
 
       <Table celled selectable striped>
         <Table.Header>

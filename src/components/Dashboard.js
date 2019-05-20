@@ -57,20 +57,32 @@ function Dashboard() {
         filterData={{}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
-        title="Gefundene Dienstleistungen"
+        searchState="pending"
       />
 
       <Header as="h2">Laufende Reparaturen und Servicearbeiten</Header>
+      <ServiceSearchList
+        filterData={{}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="running"
+      />
 
       <Header as="h2">Aktuelle Vermietungen - ausgehende Maschinen</Header>
       <RentalSearchList
         filterData={{}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
-        title="Gefundene Reservationen"
+        searchState="pending"
       />
 
       <Header as="h2">Aktuelle Vermitungen - eingehende Maschinen</Header>
+      <RentalSearchList
+        filterData={{}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="running"
+      />
     </React.Fragment>
   );
 }
