@@ -35,8 +35,11 @@ function ServiceRow(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && validate === 'number') {
-      value = validation.toNumber(value);
+    if (validate && validate === 'float') {
+      value = validation.toFloat(value);
+    }
+    if (validate && validate === 'currency') {
+      value = validation.toCurrency(value);
     }
     setRowData({ ...rowData, [element.target.id]: value });
   }
@@ -68,13 +71,13 @@ function ServiceRow(props: Props) {
         <Input id="desc" value={rowData.desc} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="3">
-        <Input id="price" value={rowData.price} onChange={handleChange} />
+        <Input id="price" value={rowData.price} onChange={handleChange} validate="currency" />
       </Table.Cell>
       <Table.Cell width="2">
-        <Input id="unit" value={rowData.unit} onChange={handleChange} />
+        <Input id="unit" value={rowData.unit} onChange={handleChange} validate="float" />
       </Table.Cell>
       <Table.Cell width="3">
-        {parseFloat(rowData.price) * parseInt(rowData.unit)}
+        {validation.toCurrency(parseFloat(rowData.price) * parseInt(rowData.unit))}
         {' CHF'}
       </Table.Cell>
       <Table.Cell>

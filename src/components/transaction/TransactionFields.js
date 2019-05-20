@@ -70,8 +70,8 @@ function TransactionFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && validate === 'number') {
-      value = validation.toNumber(value);
+    if (validate && validate === 'currency') {
+      value = validation.toCurrency(value);
     }
     if (validate && validate === 'date') {
       value = validation.toDate(value);
@@ -156,7 +156,7 @@ function TransactionFields(props: Props) {
             label="Preis"
             innerLabel="CHF"
             value={transactionData.preis}
-            validate="number"
+            validate="currency"
             handleChange={handleChange}
             isRequired
           />

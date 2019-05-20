@@ -326,7 +326,7 @@ function ServiceFields(props: Props) {
                   id="preis"
                   value={materialAddRow.preis}
                   onChange={handleMaterial}
-                  validate="float"
+                  validate="currency"
                 />
               </Table.Cell>
               <Table.Cell>
@@ -334,7 +334,7 @@ function ServiceFields(props: Props) {
                   id="anzahl"
                   value={materialAddRow.anzahl}
                   onChange={handleMaterial}
-                  validate="number"
+                  validate="float"
                 />
               </Table.Cell>
               <Table.Cell />
@@ -388,7 +388,7 @@ function ServiceFields(props: Props) {
                   id="stundensatz"
                   value={workStepAddRow.stundensatz}
                   onChange={handleWorkStep}
-                  validate="float"
+                  validate="currency"
                 />
               </Table.Cell>
               <Table.Cell>
