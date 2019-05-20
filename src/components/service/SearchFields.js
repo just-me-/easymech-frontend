@@ -150,7 +150,7 @@ function SearchFields(props: Props) {
 
         <Form.Group widths="equal">
           <DatePicker
-            id="von"
+            id="beginn"
             label="Von"
             value={searchData.beginn}
             handleChange={handleChange}
@@ -158,7 +158,7 @@ function SearchFields(props: Props) {
             callbackSetter={datePicked}
           />
           <DatePicker
-            id="bis"
+            id="ende"
             label="Bis"
             value={searchData.ende}
             handleChange={handleChange}
