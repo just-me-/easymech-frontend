@@ -5,6 +5,7 @@ import React, {useState, useEffect} from 'react';
 import {
     Header, Form, Table, Button, Icon, Radio
 } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
 
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
@@ -74,9 +75,6 @@ function ServiceFields(props: Props) {
 
     function handleChange(element, {validate}) {
         let value = element.target.value;
-        if (validate && validate === 'number') {
-            value = validation.toNumber(value);
-        }
         if (validate && validate === 'date') {
             value = validation.toDate(value);
             if (props.setValidState) {
@@ -108,19 +106,32 @@ function ServiceFields(props: Props) {
     }
 
     function rowValidation(value, validate) {
-        if (validate === 'currency') {
+        if (validate === 'float') {
             value = validation.toFloat(value);
         }
-        if (validate === 'number') {
-            value = validation.toNumber(value);
+        if (validate === 'currency') {
+            value = validation.toCurrency(value);
         }
+        // 2Do: row must not be empty (or set to default values "-" / 0)
         return value;
     }
 
     function addWorkStep() {
-        if (setWorkStepList(_.concat(workStepList, workStepAddRow))) {
-            setWorkStepAddRow(initialWorkStep);
-        }
+      if(workStepAddRow.bezeichnung.length > 0
+         && workStepAddRow.stundensatz.length > 0
+         && workStepAddRow.dauer.length > 0) {
+        setWorkStepList(_.concat(workStepList, workStepAddRow));
+        setWorkStepAddRow(initialWorkStep);
+        NotificationManager.success(
+          'Arbeitsposition erfasst',
+          `Hinzugefügt`,
+        );
+      } else {
+        NotificationManager.error(
+          'Es müssen alle Arbeitspositionsfelder ausgefüllt werden.',
+          'Fehlende Angaben',
+        );
+      }
     }
 
     function editWorkStep(index, data) {
@@ -136,8 +147,21 @@ function ServiceFields(props: Props) {
     }
 
     function addMaterial() {
-        setMaterialList(_.concat(materialList, materialAddRow));
-        setMaterialAddRow(initialMaterial);
+        if(workStepAddRow.bezeichnung.length > 0
+           && workStepAddRow.stundensatz.length > 0
+           && workStepAddRow.dauer.length > 0) {
+           setMaterialList(_.concat(materialList, materialAddRow));
+           setMaterialAddRow(initialMaterial);
+          NotificationManager.success(
+            'Materialposition erfasst',
+            `Hinzugefügt`,
+          );
+        } else {
+          NotificationManager.error(
+            'Es müssen alle Materialpositionsfelder ausgefüllt werden.',
+            'Fehlende Angaben',
+          );
+        }
     }
 
     function editMaterial(index, data) {
