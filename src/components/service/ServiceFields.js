@@ -115,7 +115,6 @@ function ServiceFields(props: Props) {
     if (validate === 'currency') {
       value = validation.toCurrency(value);
     }
-    // 2Do: row must not be empty (or set to default values "-" / 0)
     return value;
   }
 

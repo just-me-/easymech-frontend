@@ -23,15 +23,10 @@ function ServiceSearch(props: Props) {
 
   function listData() {
     if (formIsValid) {
-      console.log(searchData);
       setViewState('list');
     } else {
       NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
     }
-  }
-
-  function editEntry(id, type) {
-    console.log('2Do', id, type);
   }
 
   return (
@@ -62,7 +57,7 @@ function ServiceSearch(props: Props) {
 
       {viewState === 'list' && (
         <div>
-          <ServiceList filterData={searchData} editEntry={editEntry} />
+          <ServiceList filterData={searchData} />
           <Button
             content="Zurück"
             icon="arrow left"

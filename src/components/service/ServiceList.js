@@ -13,7 +13,6 @@ import RentalFields from '../transaction/RentalFields';
 import TransactionFields from '../transaction/TransactionFields';
 
 export type Props = {
-  editEntry: (id: string, type: string) => void,
   filterData: any,
 };
 
@@ -150,7 +149,10 @@ function ServiceList(props: Props) {
           icon="save"
           labelPosition="left"
           floated="right"
-          onClick={() => serviceCalls.saveEntry(formIsValid, setViewState, editType, editData)}
+          onClick={() => {
+              console.log(editData);
+              serviceCalls.saveEntry(formIsValid, setViewState, editType, editData);
+          }}
         />
       )}
     </div>
