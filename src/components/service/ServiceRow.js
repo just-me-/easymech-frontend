@@ -46,14 +46,14 @@ function ServiceRow(props: Props) {
       if (props.setData) {
         const data = props.type === 'workstep'
           ? {
-            desc: rowData.desc,
-            price: rowData.price,
-            unit: rowData.unit,
+            desc: rowData.bezeichnung,
+            price: rowData.stundensatz,
+            unit: rowData.dauer,
           }
           : {
-            desc: rowData.desc,
-            price: rowData.price,
-            unit: rowData.unit,
+            desc: rowData.bezeichnung,
+            price: rowData.preis,
+            unit: rowData.anzahl,
           };
         props.setData(props.index, data);
       }
@@ -62,27 +62,28 @@ function ServiceRow(props: Props) {
   );
 
   return (
-    <Table.Row>
-      <Table.Cell width="1">{props.index + 1}</Table.Cell>
-      <Table.Cell width="7">
-        <Input id="desc" value={rowData.desc} onChange={handleChange} />
-      </Table.Cell>
-      <Table.Cell width="3">
-        <Input id="price" value={rowData.price} onChange={handleChange} />
-      </Table.Cell>
-      <Table.Cell width="2">
-        <Input id="unit" value={rowData.unit} onChange={handleChange} />
-      </Table.Cell>
-      <Table.Cell width="3">
-        {parseFloat(rowData.price) * parseInt(rowData.unit)}
-        {' CHF'}
-      </Table.Cell>
-      <Table.Cell>
-        <Button icon onClick={() => props.rmCall(parseInt(props.index))}>
-          <Icon name="trash alternate" />
-        </Button>
-      </Table.Cell>
-    </Table.Row>
+            <Table.Row>
+                <Table.Cell width="1">{props.index + 1}</Table.Cell>
+                <Table.Cell width="7">
+                    <Input id="desc" value={rowData.desc} onChange={handleChange} />
+                </Table.Cell>
+                <Table.Cell width="3">
+                    <Input id="price" value={rowData.price} onChange={handleChange} />
+                </Table.Cell>
+                <Table.Cell width="2">
+                    <Input id="unit" value={rowData.unit} onChange={handleChange} />
+                </Table.Cell>
+                <Table.Cell width="3">
+                    {parseFloat(rowData.price) * parseInt(rowData.unit)}
+                    {' CHF'}
+                </Table.Cell>
+                <Table.Cell>
+                    <Button icon onClick={() => props.rmCall(parseInt(props.index))}>
+                        <Icon name="trash alternate" />
+                    </Button>
+                </Table.Cell>
+            </Table.Row>
+
   );
 }
 

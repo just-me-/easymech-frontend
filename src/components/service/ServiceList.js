@@ -149,7 +149,10 @@ function ServiceList(props: Props) {
           icon="save"
           labelPosition="left"
           floated="right"
-          onClick={() => serviceCalls.saveEntry(formIsValid, setViewState, editType, editData)}
+          onClick={() => {
+              console.log(editData);
+              serviceCalls.saveEntry(formIsValid, setViewState, editType, editData);
+          }}
         />
       )}
     </div>

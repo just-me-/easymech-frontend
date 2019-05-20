@@ -23,7 +23,6 @@ function ServiceSearch(props: Props) {
 
   function listData() {
     if (formIsValid) {
-      console.log(searchData);
       setViewState('list');
     } else {
       NotificationManager.info('Bitte prüfen Sie Ihre Eingabe!');
