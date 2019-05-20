@@ -162,6 +162,8 @@ function ServiceFields(props: Props) {
 
     useEffect(() => {
         const requiredIsValid = Object.values(datesAreValid).every(val => val === true)
+            && validation.checkRequired(serviceData.beginn)
+            && validation.checkRequired(serviceData.ende)
             && parseInt(serviceData.maschinenId, 10) > 0
             && parseInt(serviceData.kundenId, 10) > 0;
         if (props.setValidState) {
@@ -198,6 +200,7 @@ function ServiceFields(props: Props) {
                         handleChange={handleChange}
                         error={!datesAreValid.beginn}
                         callbackSetter={datePicked}
+                        isRequired={true}
                     />
                     <DatePicker
                         id="ende"
@@ -206,6 +209,7 @@ function ServiceFields(props: Props) {
                         handleChange={handleChange}
                         error={!datesAreValid.ende}
                         callbackSetter={datePicked}
+                        isRequired
                     />
                 </Form.Group>
 
