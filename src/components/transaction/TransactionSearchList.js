@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
@@ -28,7 +28,7 @@ function TransactionSearchList(props: Props) {
             loadingSetter: setIsLoading,
         };
 
-        if(props.filterData.searchTransaction){
+        if (props.filterData.searchTransaction) {
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'transactions',
@@ -69,8 +69,9 @@ function TransactionSearchList(props: Props) {
                             index,
                         ) => (
                             <Table.Row key={index}>
-                                <Table.Cell onClick={() => props.editItem(id,"transaction",transactionData[index])} className="Hover-effect link">
-                                    <Icon name="external" size="tiny" className="Inline-icon" />
+                                <Table.Cell onClick={() => props.editItem(id, "transaction", transactionData[index])}
+                                            className="Hover-effect link">
+                                    <Icon name="external" size="tiny" className="Inline-icon"/>
                                     &nbsp;
                                     {id}
                                 </Table.Cell>

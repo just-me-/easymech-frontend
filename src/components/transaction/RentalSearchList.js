@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
@@ -28,7 +28,7 @@ function RentalSearchList(props: Props) {
             loadingSetter: setIsLoading,
         };
 
-        if(props.filterData.searchRental){
+        if (props.filterData.searchRental) {
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'rentals',
@@ -52,7 +52,7 @@ function RentalSearchList(props: Props) {
                         <Table.HeaderCell>Ende</Table.HeaderCell>
                         <Table.HeaderCell>Maschine</Table.HeaderCell>
                         <Table.HeaderCell>Kunde</Table.HeaderCell>
-                     </Table.Row>
+                    </Table.Row>
                 </Table.Header>
                 <Table.Body>
                     {_.map(
@@ -69,8 +69,9 @@ function RentalSearchList(props: Props) {
                             index,
                         ) => (
                             <Table.Row key={index}>
-                                <Table.Cell onClick={() => props.editItem(id,"rental",rentalData[index])} className="Hover-effect link">
-                                    <Icon name="external" size="tiny" className="Inline-icon" />
+                                <Table.Cell onClick={() => props.editItem(id, "rental", rentalData[index])}
+                                            className="Hover-effect link">
+                                    <Icon name="external" size="tiny" className="Inline-icon"/>
                                     &nbsp;
                                     {id}
                                 </Table.Cell>

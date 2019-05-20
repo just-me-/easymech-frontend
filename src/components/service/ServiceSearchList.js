@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Header, Table, Loader, Dimmer, Segment, Icon,
 } from 'semantic-ui-react';
@@ -10,7 +10,7 @@ import * as serviceCalls from '../shared/functions';
 
 
 export type Props = {
-    editItem: (id: string, type: string, data: any ) => void,
+    editItem: (id: string, type: string, data: any) => void,
     filterData: any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
@@ -28,7 +28,7 @@ function ServiceSearchList(props: Props) {
             loadingSetter: setIsLoading,
         };
 
-        if(props.filterData.searchService){
+        if (props.filterData.searchService) {
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'services',
@@ -71,16 +71,17 @@ function ServiceSearchList(props: Props) {
                             index,
                         ) => (
                             <Table.Row key={index}>
-                                <Table.Cell onClick={() => props.editItem(id,"service",serviceData[index])} className="Hover-effect link">
-                                    <Icon name="external" size="tiny" className="Inline-icon" />
+                                <Table.Cell onClick={() => props.editItem(id, "service", serviceData[index])}
+                                            className="Hover-effect link">
+                                    <Icon name="external" size="tiny" className="Inline-icon"/>
                                     &nbsp;
                                     {id}
                                 </Table.Cell>
                                 <Table.Cell>{bezeichnung}</Table.Cell>
                                 <Table.Cell>{beginn || ''}</Table.Cell>
                                 <Table.Cell>{ende || ''}</Table.Cell>
-                                <Table.Cell>{status|| ''}</Table.Cell>
-                                <Table.Cell>{props.resolveCustomer(kundenId, )}</Table.Cell>
+                                <Table.Cell>{status || ''}</Table.Cell>
+                                <Table.Cell>{props.resolveCustomer(kundenId,)}</Table.Cell>
                                 <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
                             </Table.Row>
                         ),
