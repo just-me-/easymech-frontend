@@ -79,8 +79,8 @@ function ServiceSearchList(props: Props) {
                     <Table.Cell>{id}</Table.Cell>
                   )}
                   <Table.Cell>{bezeichnung}</Table.Cell>
-                  <Table.Cell>{beginn || ''}</Table.Cell>
-                  <Table.Cell>{ende || ''}</Table.Cell>
+                  <Table.Cell>{serviceCalls.parseIsoDate(beginn)}</Table.Cell>
+                  <Table.Cell>{serviceCalls.parseIsoDate(ende)}</Table.Cell>
                   <Table.Cell>{status || ''}</Table.Cell>
                   <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
                   <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>

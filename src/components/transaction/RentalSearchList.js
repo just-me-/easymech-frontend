@@ -79,8 +79,8 @@ function RentalSearchList(props: Props) {
                   )}
 
                   <Table.Cell>{standort}</Table.Cell>
-                  <Table.Cell>{startdatum}</Table.Cell>
-                  <Table.Cell>{enddatum}</Table.Cell>
+                  <Table.Cell>{serviceCalls.parseIsoDate(startdatum)}</Table.Cell>
+                  <Table.Cell>{serviceCalls.parseIsoDate(enddatum)}</Table.Cell>
                   <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
                   <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
                 </Table.Row>
