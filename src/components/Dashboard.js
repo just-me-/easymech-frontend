@@ -12,6 +12,11 @@ function Dashboard() {
   const [machineData, setMachineData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
 
+  const dateFilter = {
+    von: sharedCalls.getToday(-1),
+    bis: sharedCalls.getToday(10),
+  };
+
   function getCustomerText(id: number) {
     if (id) {
       const customer = customerData.find(x => x.id === id);
@@ -54,7 +59,7 @@ function Dashboard() {
 
       <Header as="h2">Anstehende Reparaturen und Servicearbeiten</Header>
       <ServiceSearchList
-        filterData={{}}
+        filterData={{...dateFilter, searchService: true}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="pending"
@@ -62,7 +67,7 @@ function Dashboard() {
 
       <Header as="h2">Laufende Reparaturen und Servicearbeiten</Header>
       <ServiceSearchList
-        filterData={{}}
+        filterData={{...dateFilter, searchService: true}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="running"
@@ -70,7 +75,7 @@ function Dashboard() {
 
       <Header as="h2">Aktuelle Vermietungen - ausgehende Maschinen</Header>
       <RentalSearchList
-        filterData={{}}
+        filterData={{...dateFilter, searchRental: true}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="pending"
@@ -78,7 +83,7 @@ function Dashboard() {
 
       <Header as="h2">Aktuelle Vermitungen - eingehende Maschinen</Header>
       <RentalSearchList
-        filterData={{}}
+        filterData={{...dateFilter, searchRental: true}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="running"

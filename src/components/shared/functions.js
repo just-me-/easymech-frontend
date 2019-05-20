@@ -133,8 +133,9 @@ export function getServices({
     });
 }
 
-export function getToday() {
+export function getToday(shift: number = 0) {
   const today = new Date();
+  today.setDate(today.getDate() + shift);
   return parseIsoDate(today.toISOString().substring(0, 10));
 }
 /* 2Do: sobald suche funktioniert und wir diese Funktion
