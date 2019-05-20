@@ -139,7 +139,7 @@ export function getToday(shift: number = 0) {
   return parseIsoDate(today.toISOString().substring(0, 10));
 }
 
-export function parseIsoDate(date) {
+export function parseIsoDate(date: string) {
   if (date && date.length > 0) {
     const arr = date.match(/^(\d{4})-(\d{1,2})-(\d{1,2}).*/);
     date = arr && arr[1] && arr[2] && arr[3] ? `${arr[3]}.${arr[2]}.${arr[1]}` : '';
