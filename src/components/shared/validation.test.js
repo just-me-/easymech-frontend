@@ -144,12 +144,6 @@ test('Can handle numbers', () => {
 test('Can handle 0 (as number)', () => {
     expect(validation.toFloat(0)).toBe('0.00');
 });
-test('Handle negatives', () => {
-    expect(validation.toFloat("-1")).toBe('-1.00');
-});
-test('Handle negatives as numbers', () => {
-    expect(validation.toFloat(-1)).toBe('-1.00');
-});
 
 test('Currency 0', () => {
     expect(validation.toCurrency('0')).toBe('0.00');
