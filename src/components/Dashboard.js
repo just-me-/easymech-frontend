@@ -12,6 +12,11 @@ function Dashboard() {
   const [machineData, setMachineData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
 
+  const dateFilter = {
+    startdatum: sharedCalls.getToday(-1),
+    enddatum: sharedCalls.getToday(10),
+  };
+
   function getCustomerText(id: number) {
     if (id) {
       const customer = customerData.find(x => x.id === id);
@@ -54,7 +59,7 @@ function Dashboard() {
 
       <Header as="h2">Anstehende Reparaturen und Servicearbeiten</Header>
       <ServiceSearchList
-        filterData={{}}
+        filterData={{...dateFilter, searchService: true}}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="pending"
