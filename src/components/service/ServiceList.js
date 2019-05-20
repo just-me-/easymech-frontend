@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 
 import * as serviceApi from '../../api/service'
+import * as transactionApi from '../../api/transaction'
+import * as rentalApi from '../../api/rental'
 import * as serviceCalls from '../shared/functions';
 import ServiceSearchList from "./ServiceSearchList";
 import TransactionSearchList from "../transaction/TransactionSearchList";
@@ -34,7 +36,7 @@ function ServiceList(props: Props) {
           NotificationManager.error(error.msg, error.codeMsg);
       } else {
           NotificationManager.error(
-              'Beim Speichern der Maschine ist ein Fehler aufgetreten.',
+              'Beim Speichern des Eintrags ist ein Fehler aufgetreten.',
               'Bitte erneut versuchen!',
           );
       }
@@ -44,8 +46,8 @@ function ServiceList(props: Props) {
       result = serviceApi.checkResponse(result);
       setViewState('list');
       NotificationManager.success(
-          'Die Maschine wurde erfolgreich gespeichert.',
-          `${result.seriennummer} aktualisiert`,
+          'Der Eintrag wurde erfolgreich gespeichert.',
+          `${result.id} aktualisiert`,
       );
   }
 
@@ -89,6 +91,7 @@ function ServiceList(props: Props) {
       setEditData(data);
       setViewState('edit');
       setKey(Math.random());
+      console.log(data);
   }
 
   function saveEntry() {
@@ -104,9 +107,23 @@ function ServiceList(props: Props) {
                       errorHandler(error, setViewState);
                   });
           } else if (editType === 'transaction'){
-            console.log("2Do - transaction API Call");
+              transactionApi
+                  .updateTransaction(editData)
+                  .then((result) => {
+                      succesfulChange(result, setViewState)
+                  })
+                  .catch((error) => {
+                      errorHandler(error,setViewState)
+                  })
           } else if (editType === 'rental'){
-              console.log("2Do - rental API Call");
+              rentalApi
+                  .updateRental(editData)
+                  . then((result) => {
+                      succesfulChange(result, setViewState)
+                  })
+                  .catch((error) => {
+                      errorHandler(error,setViewState)
+                  })
           }
       } else {
           NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');

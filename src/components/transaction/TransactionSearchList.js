@@ -18,7 +18,7 @@ export type Props = {
 };
 
 function TransactionSearchList(props: Props) {
-    const [transactionData, setServiceData] = useState([]);
+    const [transactionData, setTransactionData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ function TransactionSearchList(props: Props) {
             serviceCalls.getServices({
                 ...baseParameters,
                 type: 'transactions',
-                dataSetter: setServiceData,
+                dataSetter: setTransactionData,
             });
         }
     }, []);
