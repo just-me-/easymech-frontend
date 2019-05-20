@@ -21,7 +21,7 @@ function Service() {
           result = api.checkResponse(result);
           NotificationManager.success(
             'Die Dienstleistung wurde erfolgreich gespeichert.',
-            `Erfasst`,
+            'Erfasst',
           );
           setKey(Math.random()); // clear data - fresh form for next entry
         })

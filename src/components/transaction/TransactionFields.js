@@ -17,7 +17,7 @@ import type { TypeMachine } from '../../api/machine';
 
 import '../shared/Fields.css';
 import './TransactionFields.css';
-import Radio from "semantic-ui-react/dist/commonjs/addons/Radio/Radio";
+import Radio from 'semantic-ui-react/dist/commonjs/addons/Radio/Radio';
 
 export type Props = {
   data?: Transaction,
@@ -28,14 +28,13 @@ export type Props = {
 };
 
 function TransactionFields(props: Props) {
-
   const initialData = {
     id: (props.data && props.data.id) || undefined,
     preis: (props.data && props.data.preis) || '',
     typ: (props.data && props.data.typ) || 0,
     datum: (props.data && props.data.datum) || sharedCalls.getToday(),
-    maschinenid: (props.data && props.data.maschinenid) || '',
-    kundenid: (props.data && props.data.kundenid) || '',
+    maschinenId: (props.data && props.data.maschinenId) || '',
+    kundenId: (props.data && props.data.kundenId) || '',
   };
 
   const [transactionData, setTransactionData] = useState(initialData);
@@ -43,14 +42,14 @@ function TransactionFields(props: Props) {
   const [machineData, setMachineData] = useState();
   const [dateIsValid, setDateIsValid] = useState(true);
   const [machineModalIsOpen, setMachineModalIsOpen] = useState(false);
-  const [tempVal,setTempVal] = useState(undefined);
+  const [tempVal, setTempVal] = useState(undefined);
 
   function handleMachineSelect(result) {
-    setTransactionData({ ...transactionData, maschinenid: result.id });
+    setTransactionData({ ...transactionData, maschinenId: result.id });
   }
 
   function handleCustomerSelect(result) {
-    setTransactionData({ ...transactionData, kundenid: result.id });
+    setTransactionData({ ...transactionData, kundenId: result.id });
   }
 
   function showMachineModal() {
@@ -69,10 +68,10 @@ function TransactionFields(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
-    if (validate && (validate === 'number')) {
+    if (validate && validate === 'number') {
       value = validation.toNumber(value);
     }
-    if (validate && (validate === 'date')) {
+    if (validate && validate === 'date') {
       value = validation.toDate(value);
       if (props.setValidState) {
         setDateIsValid(value ? validation.checkDate(value) : true);
@@ -86,18 +85,18 @@ function TransactionFields(props: Props) {
     setTransactionData({ ...transactionData, [id]: value });
   }
 
-  function handleRadio(element, {label}) {
-      if(label.includes('Verkauf')){
-          setTransactionData({ ...transactionData, "typ": 0 });
-      } else {
-          setTransactionData({ ...transactionData, "typ": 1 });
-      }
+  function handleRadio(element, { label }) {
+    if (label.includes('Verkauf')) {
+      setTransactionData({ ...transactionData, typ: 0 });
+    } else {
+      setTransactionData({ ...transactionData, typ: 1 });
+    }
   }
 
   useEffect(() => {
     const requiredIsValid = validation.checkRequired(transactionData.preis)
       && validation.checkDate(transactionData.datum);
-
+    console.log(validation.checkDate(transactionData.datum));
     if (props.setValidState) {
       props.setValidState(requiredIsValid);
     }
@@ -128,7 +127,7 @@ function TransactionFields(props: Props) {
               matchingKey="seriennummer"
               onResultSelect={handleMachineSelect}
               elements={machineData}
-              setElementId={tempVal ?  tempVal : ( props.data ? props.data.maschinenid : 0 ) }
+              setElementId={tempVal || (props.data ? props.data.maschinenId : 0)}
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
@@ -142,7 +141,7 @@ function TransactionFields(props: Props) {
             matchingKey="firma"
             onResultSelect={handleCustomerSelect}
             elements={customerData}
-            setElementId={props.data ? props.data.kundenid : 0}
+            setElementId={props.data ? props.data.kundenId : 0}
             noResultsMessage="Keine Kunden gefunden"
             isRequired={!props.searchView}
           />
@@ -166,20 +165,20 @@ function TransactionFields(props: Props) {
           />
         </Form.Group>
         <Form.Group widths="equal">
-            <Form.Field>
-                <Radio
-                    label='Verkauf einer Maschine erfassen'
-                    checked={transactionData.typ === 0}
-                    onChange={handleRadio}
-                />
-            </Form.Field>
-            <Form.Field>
-                <Radio
-                    label='Ankauf einer Maschine erfassen'
-                    checked={transactionData.typ === 1}
-                    onChange={handleRadio}
-                />
-            </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Verkauf einer Maschine erfassen"
+              checked={transactionData.typ === 0}
+              onChange={handleRadio}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Ankauf einer Maschine erfassen"
+              checked={transactionData.typ === 1}
+              onChange={handleRadio}
+            />
+          </Form.Field>
         </Form.Group>
         <Modal open={machineModalIsOpen}>
           <Modal.Content as={Machine} isIncluded includerCallback={closeMachineModal} />

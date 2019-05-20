@@ -9,8 +9,11 @@ export function checkYear(str) {
   return !!str && /^(19|20)\d{2}$/i.test(str);
 }
 export function checkDate(str) {
-  const validFormat = !!str && /^\d{1,2}\.\d{1,2}\.(19|20)\d{2}$/i.test(str);
-  if (!validFormat) return false;
+  const validFormat1 = !!str && /^\d{1,2}\.\d{1,2}\.(19|20)\d{2}$/i.test(str);
+  if(str.includes('-')){
+      return checkDateISO(str);
+  }
+  if (!validFormat1) return false;
 
   // does date exist?
   const dmy = str.split('.');
@@ -20,6 +23,13 @@ export function checkDate(str) {
     && date.getMonth() === parseInt(dmy[1], 10) - 1
     && date.getDate() === parseInt(dmy[0], 10)
   );
+}
+
+export function checkDateISO(str){
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str)){
+        return false;
+    }
+    return true;
 }
 
 export function checkFloat(val) {

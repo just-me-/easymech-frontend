@@ -1,7 +1,9 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Icon, Input } from 'semantic-ui-react';
+import {
+  Table, Button, Icon, Input,
+} from 'semantic-ui-react';
 
 import * as validation from '../shared/validation';
 
@@ -11,9 +13,9 @@ export type Props = {
   key?: number,
   type: string,
   data?: any,
-  rmCall: (number) => void,
+  rmCall: number => void,
   setData: (any, ...any) => void,
-  index?: number
+  index?: number,
 };
 
 function ServiceRow(props: Props) {

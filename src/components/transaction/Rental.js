@@ -18,10 +18,7 @@ function Rental() {
         .addRental(rentalData)
         .then((result) => {
           result = api.checkResponse(result);
-          NotificationManager.success(
-            'Die Vermietung wurde erfolgreich gespeichert.',
-            `Erfasst`,
-          );
+          NotificationManager.success('Die Vermietung wurde erfolgreich gespeichert.', 'Erfasst');
           setKey(Math.random()); // clear data - fresh form for next entry
         })
         .catch((error) => {
