@@ -71,7 +71,6 @@ function TransactionFields(props: Props) {
     if (validate && validate === 'number') {
       value = validation.toNumber(value);
     }
-    // 2Do: currency fehlt... number kann weg
     if (validate && validate === 'date') {
       value = validation.toDate(value);
       if (props.setValidState) {

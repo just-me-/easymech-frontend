@@ -11,30 +11,19 @@ import { saveEntry } from './shared/functions';
 import RentalSearchList from "../transaction/RentalSearchList";
 */
 
+import * as sharedCalls from './shared/functions';
+
+import ServiceSearchList from './service/ServiceSearchList';
+import RentalSearchList from './transaction/RentalSearchList';
+
 function Dashboard() {
-  const filterPlannedServices = {
-    searchService: true,
-    von: sharedFunctions.getToday(),
-  };
   const [machineData, setMachineData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
-  const [viewState, setViewState] = useState('list');
-  const [editType, setEditType] = useState();
-  const [editData, setEditData] = useState();
-  const [key, setKey] = useState(Math.random());
-  const [formIsValid, setFormIsValid] = useState(false);
 
-  useEffect(() => {
-    sharedFunctions.getCustomers({
-      deletedToo: true,
-      dataSetter: setCustomerData,
-    });
-
-    sharedFunctions.getMachines({
-      deletedToo: true,
-      dataSetter: setMachineData,
-    });
-  }, []);
+  const dateFilter = {
+    von: sharedCalls.getToday(-1),
+    bis: sharedCalls.getToday(10),
+  };
 
   function getCustomerText(id: number) {
     if (id) {
@@ -58,53 +47,56 @@ function Dashboard() {
     return 'Keine Maschine hinterlegt';
   }
 
-  function onEditItem(itemId, type, data) {
-    setEditType(type);
-    setEditData(data);
-    setViewState('edit');
-    setKey(Math.random());
-    console.log(data);
-  }
+  useEffect(() => {
+    sharedCalls.getCustomers({
+      deletedToo: true,
+      dataSetter: setCustomerData,
+    });
+
+    sharedCalls.getMachines({
+      deletedToo: true,
+      dataSetter: setMachineData,
+    });
+  }, []);
 
   return (
-    <div>
-      {viewState === 'list' && (
-        <ServiceSearchList
-          editItem={onEditItem}
-          filterData={filterPlannedServices}
-          resolveCustomer={getCustomerText}
-          resolveMachine={getMachineText}
-          title="Anstehende Services"
-        />
-      )}
+    <React.Fragment>
+      <Header as="h1" textAlign="center">
+        Aktuelles in der Übersicht
+      </Header>
 
-      {viewState === 'edit' && editType === 'service' && (
-        <div>
-          <Header as="h1" textAlign="center">
-            Service editieren
-          </Header>
-          <Form>
-            <ServiceFields
-              key={key}
-              data={editData}
-              setData={setEditData}
-              setValidState={setFormIsValid}
-            />
-          </Form>
-        </div>
-      )}
+      <Header as="h2">Anstehende Reparaturen und Servicearbeiten</Header>
+      <ServiceSearchList
+        filterData={{...dateFilter, searchService: true}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="pending"
+      />
 
-      {viewState === 'edit' && (
-        <Button
-          primary
-          content="Speichern"
-          icon="save"
-          labelPosition="left"
-          floated="right"
-          onClick={() => saveEntry(formIsValid, setViewState, editType, editData)}
-        />
-      )}
-    </div>
+      <Header as="h2">Laufende Reparaturen und Servicearbeiten</Header>
+      <ServiceSearchList
+        filterData={{...dateFilter, searchService: true}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="running"
+      />
+
+      <Header as="h2">Aktuelle Vermietungen - ausgehende Maschinen</Header>
+      <RentalSearchList
+        filterData={{...dateFilter, searchRental: true}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="pending"
+      />
+
+      <Header as="h2">Aktuelle Vermitungen - eingehende Maschinen</Header>
+      <RentalSearchList
+        filterData={{...dateFilter, searchRental: true}}
+        resolveCustomer={getCustomerText}
+        resolveMachine={getMachineText}
+        searchState="running"
+      />
+    </React.Fragment>
   );
 }
 

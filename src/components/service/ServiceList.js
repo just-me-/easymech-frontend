@@ -3,14 +3,19 @@
 import React, { useState, useEffect } from 'react';
 
 import { Button, Form, Header } from 'semantic-ui-react';
+import { NotificationManager } from 'react-notifications';
+
+import * as serviceApi from '../../api/service';
+import * as transactionApi from '../../api/transaction';
+import * as rentalApi from '../../api/rental';
 import * as serviceCalls from '../shared/functions';
+
 import ServiceSearchList from './ServiceSearchList';
 import TransactionSearchList from '../transaction/TransactionSearchList';
 import RentalSearchList from '../transaction/RentalSearchList';
 import ServiceFields from './ServiceFields';
 import RentalFields from '../transaction/RentalFields';
 import TransactionFields from '../transaction/TransactionFields';
-import { saveEntry } from '../shared/functions';
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -66,6 +71,42 @@ function ServiceList(props: Props) {
     setViewState('edit');
     setKey(Math.random());
     console.log(data);
+  }
+
+  function saveEntry() {
+    if (formIsValid) {
+      setViewState('loader');
+      if (editType === 'service') {
+        serviceApi
+          .updateService(editData)
+          .then((result) => {
+            succesfulChange(result, setViewState);
+          })
+          .catch((error) => {
+            errorHandler(error, setViewState);
+          });
+      } else if (editType === 'transaction') {
+        transactionApi
+          .updateTransaction(editData)
+          .then((result) => {
+            succesfulChange(result, setViewState);
+          })
+          .catch((error) => {
+            errorHandler(error, setViewState);
+          });
+      } else if (editType === 'rental') {
+        rentalApi
+          .updateRental(editData)
+          .then((result) => {
+            succesfulChange(result, setViewState);
+          })
+          .catch((error) => {
+            errorHandler(error, setViewState);
+          });
+      }
+    } else {
+      NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
+    }
   }
 
   return (
