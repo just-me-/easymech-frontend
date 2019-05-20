@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import {
-  Header, Table, Loader, Dimmer, Segment, Icon,
+  Header, Table, Loader, Dimmer, Segment, Icon, Message,
 } from 'semantic-ui-react';
 
 import * as serviceCalls from '../shared/functions';
@@ -89,9 +89,7 @@ function RentalSearchList(props: Props) {
           </Table.Body>
         </Table>
       ) : (
-        <div className="ui visible message">
-          <p>Keine Reservationen gefunden</p>
-        </div>
+        <Message visible>Keine Reservationen gefunden</Message>
       )}
 
       {isLoading && (

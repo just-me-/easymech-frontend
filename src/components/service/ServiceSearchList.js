@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import {
-  Header, Table, Loader, Dimmer, Segment, Icon,
+  Header, Table, Loader, Dimmer, Segment, Icon, Message,
 } from 'semantic-ui-react';
 
 import * as serviceCalls from '../shared/functions';
@@ -90,9 +90,7 @@ function ServiceSearchList(props: Props) {
           </Table.Body>
         </Table>
       ) : (
-        <div className="ui visible message">
-          <p>Keine Services gefunden</p>
-        </div>
+        <Message visible>Keine Services gefunden</Message>
       )}
 
       {isLoading && (
