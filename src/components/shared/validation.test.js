@@ -104,8 +104,6 @@ test('Invalid Float - 3', () =>{
     expect(validation.checkFloat('1.999')).toBe(false);
 });
 
-
-
 test('Delete to empty string', () => {
   expect(validation.toNumber('bjnejkr')).toBe('');
 });
@@ -129,22 +127,38 @@ test('Delete to empty string', () => {
     expect(validation.toFloat('bjnejkr')).toBe('');
 });
 test('Convert to number', () => {
-    expect(validation.toFloat('m!vf3efv12efv3M?l')).toBe('3123');
+    expect(validation.toFloat('m!vf3efv12efv3M?l')).toBe('3123.00');
 });
 test('Convert to number - 2', () => {
-    expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.9');
+    expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.90');
 });
 test('Dont change number', () => {
-    expect(validation.toFloat('1234.3')).toBe('1234.3');
+    expect(validation.toFloat('1234.3')).toBe('1234.30');
 });
 test('Dont change empty string', () => {
     expect(validation.toFloat('')).toBe('');
 });
 test('Can handle numbers', () => {
-    expect(validation.toFloat(123)).toBe('123');
+    expect(validation.toFloat(123)).toBe('123.00');
 });
 test('Can handle 0 (as number)', () => {
-    expect(validation.toFloat(0)).toBe('0');
+    expect(validation.toFloat(0)).toBe('0.00');
+});
+test('Handle negatives', () => {
+    expect(validation.toFloat("-1")).toBe('-1.00');
+});
+test('Handle negatives as numbers', () => {
+    expect(validation.toFloat(-1)).toBe('-1.00');
+});
+
+test('Currency 0', () => {
+    expect(validation.toCurrency('0')).toBe('0.00');
+});
+test('Currency 1\'000', () => {
+    expect(validation.toCurrency('1000')).toBe('1\'0000.00');
+});
+test('Currency 1\'000\'000', () => {
+    expect(validation.toCurrency('1000000')).toBe('1\'000\'000.00');
 });
 
 test('Delete to empty string', () => {
@@ -153,4 +167,3 @@ test('Delete to empty string', () => {
 test('Convert to date', () => {
   expect(validation.toDate('2wv0.0!r jv3.2mk01rv9')).toBe('20.03.2019');
 });
-
