@@ -10,7 +10,7 @@ import * as serviceCalls from '../shared/functions';
 
 
 export type Props = {
-    editItem: (id: string, type: string) => void,
+    editItem: (id: string, type: string, data: any ) => void,
     filterData: any,
     resolveMachine: (id: number) => string,
     resolveCustomer: (id: number) => string,
@@ -71,7 +71,7 @@ function ServiceSearchList(props: Props) {
                             index,
                         ) => (
                             <Table.Row key={index}>
-                                <Table.Cell onClick={() => props.editItem(id,"services")} className="Hover-effect link">
+                                <Table.Cell onClick={() => props.editItem(id,"service",serviceData[index])} className="Hover-effect link">
                                     <Icon name="external" size="tiny" className="Inline-icon" />
                                     &nbsp;
                                     {id}

@@ -2,10 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 
+import * as serviceApi from '../../api/service'
+import * as transactionApi from '../../api/transaction'
+import * as rentalApi from '../../api/rental'
 import * as serviceCalls from '../shared/functions';
 import ServiceSearchList from "./ServiceSearchList";
 import TransactionSearchList from "../transaction/TransactionSearchList";
 import RentalSearchList from "../transaction/RentalSearchList";
+import ServiceFields from "./ServiceFields";
+import {Button, Form, Header} from "semantic-ui-react";
+import {NotificationManager} from "react-notifications";
+import RentalFields from "../transaction/RentalFields";
+import TransactionFields from "../transaction/TransactionFields";
 
 export type Props = {
   editEntry: (id: string, type: string) => void,
@@ -15,6 +23,33 @@ export type Props = {
 function ServiceList(props: Props) {
   const [machineData, setMachineData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
+  const [viewState, setViewState] = useState('list');
+  const [editType, setEditType] = useState();
+  const [editData, setEditData] = useState();
+  const [key, setKey] = useState(Math.random());
+  const [formIsValid, setFormIsValid] = useState(false);
+
+  function errorHandler(error, setViewState) {
+      console.log('Ups, ein Fehler ist aufgetreten', error);
+      setViewState('edit');
+      if (error.code && error.code > 0) {
+          NotificationManager.error(error.msg, error.codeMsg);
+      } else {
+          NotificationManager.error(
+              'Beim Speichern des Eintrags ist ein Fehler aufgetreten.',
+              'Bitte erneut versuchen!',
+          );
+      }
+  }
+
+  function succesfulChange(result, setViewState) {
+      result = serviceApi.checkResponse(result);
+      setViewState('list');
+      NotificationManager.success(
+          'Der Eintrag wurde erfolgreich gespeichert.',
+          `${result.id} aktualisiert`,
+      );
+  }
 
   useEffect(() => {
       serviceCalls.getCustomers({
@@ -27,6 +62,7 @@ function ServiceList(props: Props) {
           dataSetter: setMachineData,
       });
   }, []);
+
 
   function getCustomerText(id: number) {
       if (id) {
@@ -50,43 +86,140 @@ function ServiceList(props: Props) {
       return 'Keine Maschine hinterlegt';
   }
 
-  function onEditItem(itemId, type) {
-      console.log("2do - " + itemId + " Type: " + type);
+  function onEditItem(itemId, type, data) {
+      setEditType(type);
+      setEditData(data);
+      setViewState('edit');
+      setKey(Math.random());
+      console.log(data);
+  }
+
+  function saveEntry() {
+      if (formIsValid) {
+          setViewState('loader');
+          if(editType === 'service'){
+              serviceApi
+                  .updateService(editData)
+                  .then((result) => {
+                      succesfulChange(result, setViewState);
+                  })
+                  .catch((error) => {
+                      errorHandler(error, setViewState);
+                  });
+          } else if (editType === 'transaction'){
+              transactionApi
+                  .updateTransaction(editData)
+                  .then((result) => {
+                      succesfulChange(result, setViewState)
+                  })
+                  .catch((error) => {
+                      errorHandler(error,setViewState)
+                  })
+          } else if (editType === 'rental'){
+              rentalApi
+                  .updateRental(editData)
+                  . then((result) => {
+                      succesfulChange(result, setViewState)
+                  })
+                  .catch((error) => {
+                      errorHandler(error,setViewState)
+                  })
+          }
+      } else {
+          NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
+      }
   }
 
   return (
     <div>
-
-      {props.filterData.searchService && (
-        <ServiceSearchList
-           editItem={onEditItem}
-           filterData={props.filterData}
-           resolveCustomer={getCustomerText}
-           resolveMachine={getMachineText}
-           title='Gefundene Dienstleistungen'
-        />
-      )}
-
-      {props.filterData.searchTransaction && (
-        <TransactionSearchList
+        {(viewState === 'list' && props.filterData.searchService) && (
+          <ServiceSearchList
             editItem={onEditItem}
             filterData={props.filterData}
             resolveCustomer={getCustomerText}
             resolveMachine={getMachineText}
-            title='Gefundene An - und Verkäufe'
-        />
-      )}
+            title='Gefundene Dienstleistungen'
+          />
+        )}
 
-      {props.filterData.searchRental && (
-          <RentalSearchList
+        {(viewState === 'list' && props.filterData.searchTransaction) && (
+          <TransactionSearchList
               editItem={onEditItem}
               filterData={props.filterData}
               resolveCustomer={getCustomerText}
               resolveMachine={getMachineText}
-              title='Gefundene Reservationen'
+              title='Gefundene An - und Verkäufe'
           />
-      )}
+        )}
 
+        {(viewState === 'list' && props.filterData.searchRental) && (
+            <RentalSearchList
+               editItem={onEditItem}
+               filterData={props.filterData}
+               resolveCustomer={getCustomerText}
+               resolveMachine={getMachineText}
+               title='Gefundene Reservationen'
+            />
+        )}
+
+        {viewState === 'edit' && editType === 'service' && (
+            <div>
+                <Header as="h1" textAlign="center">
+                    Service bearbeiten
+                </Header>
+                <Form>
+                    <ServiceFields
+                        key={key}
+                        data={editData}
+                        setData={setEditData}
+                        setValidState={setFormIsValid}
+                    />
+                </Form>
+            </div>
+        )}
+
+        {viewState === 'edit' && editType === 'transaction' && (
+            <div>
+                <Header as="h1" textAlign="center">
+                    Transaktion bearbeiten
+                </Header>
+                <Form>
+                    <TransactionFields
+                        key={key}
+                        data={editData}
+                        setData={setEditData}
+                        setValidState={setFormIsValid}
+                    />
+                </Form>
+            </div>
+        )}
+
+        {viewState === 'edit' && editType === 'rental' && (
+            <div>
+                <Header as="h1" textAlign="center">
+                    Reservation bearbeiten
+                </Header>
+                <Form>
+                    <RentalFields
+                        data={editData}
+                        setData={setEditData}
+                        setValidState={setFormIsValid}
+                    />
+                </Form>
+            </div>
+        )}
+
+
+      {viewState === 'edit' && (
+            <Button
+                primary
+                content="Speichern"
+                icon="save"
+                labelPosition="left"
+                floated="right"
+                onClick={() => saveEntry()}
+            />
+         )}
     </div>
   );
 }

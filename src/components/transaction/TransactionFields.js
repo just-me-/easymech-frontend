@@ -34,8 +34,8 @@ function TransactionFields(props: Props) {
     preis: (props.data && props.data.preis) || '',
     typ: (props.data && props.data.typ) || 0,
     datum: (props.data && props.data.datum) || sharedCalls.getToday(),
-    maschinenid: (props.data && props.data.maschinenid) || '',
-    kundenid: (props.data && props.data.kundenid) || '',
+    maschinenId: (props.data && props.data.maschinenId) || '',
+    kundenId: (props.data && props.data.kundenId) || '',
   };
 
   const [transactionData, setTransactionData] = useState(initialData);
@@ -46,11 +46,11 @@ function TransactionFields(props: Props) {
   const [tempVal,setTempVal] = useState(undefined);
 
   function handleMachineSelect(result) {
-    setTransactionData({ ...transactionData, maschinenid: result.id });
+    setTransactionData({ ...transactionData, maschinenId: result.id });
   }
 
   function handleCustomerSelect(result) {
-    setTransactionData({ ...transactionData, kundenid: result.id });
+    setTransactionData({ ...transactionData, kundenId: result.id });
   }
 
   function showMachineModal() {
@@ -97,7 +97,7 @@ function TransactionFields(props: Props) {
   useEffect(() => {
     const requiredIsValid = validation.checkRequired(transactionData.preis)
       && validation.checkDate(transactionData.datum);
-
+    console.log(validation.checkDate(transactionData.datum));
     if (props.setValidState) {
       props.setValidState(requiredIsValid);
     }
@@ -128,7 +128,7 @@ function TransactionFields(props: Props) {
               matchingKey="seriennummer"
               onResultSelect={handleMachineSelect}
               elements={machineData}
-              setElementId={tempVal ?  tempVal : ( props.data ? props.data.maschinenid : 0 ) }
+              setElementId={tempVal ?  tempVal : ( props.data ? props.data.maschinenId : 0 ) }
               noResultsMessage="Keine Maschinen gefunden"
               isRequired={!props.searchView}
             />
@@ -142,7 +142,7 @@ function TransactionFields(props: Props) {
             matchingKey="firma"
             onResultSelect={handleCustomerSelect}
             elements={customerData}
-            setElementId={props.data ? props.data.kundenid : 0}
+            setElementId={props.data ? props.data.kundenId : 0}
             noResultsMessage="Keine Kunden gefunden"
             isRequired={!props.searchView}
           />
