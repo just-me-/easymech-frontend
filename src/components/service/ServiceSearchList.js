@@ -66,7 +66,7 @@ function ServiceSearchList(props: Props) {
               <Table.Row key={index}>
                 {props.editItem ? (
                   <Table.Cell
-                    onClick={() => props.editItem(id, 'service', serviceData[index])}
+                    onClick={() => props.editItem && props.editItem(id, 'service', serviceData[index])}
                     className="Hover-effect link"
                   >
                     <Icon name="external" size="tiny" className="Inline-icon" />

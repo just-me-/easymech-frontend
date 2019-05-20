@@ -65,7 +65,7 @@ function RentalSearchList(props: Props) {
               <Table.Row key={index}>
                 {props.editItem ? (
                   <Table.Cell
-                    onClick={() => props.editItem(id, 'rental', rentalData[index])}
+                    onClick={() => props.editItem && props.editItem(id, 'rental', rentalData[index])}
                     className="Hover-effect link"
                   >
                     <Icon name="external" size="tiny" className="Inline-icon" />
