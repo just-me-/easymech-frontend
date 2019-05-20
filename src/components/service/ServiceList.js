@@ -1,13 +1,8 @@
 // @flow
 
 import React, {useState, useEffect} from 'react';
-
 import {Button, Form, Header} from 'semantic-ui-react';
-import {NotificationManager} from 'react-notifications';
 
-import * as serviceApi from '../../api/service';
-import * as transactionApi from '../../api/transaction';
-import * as rentalApi from '../../api/rental';
 import * as serviceCalls from '../shared/functions';
 
 import ServiceSearchList from './ServiceSearchList';
@@ -71,42 +66,6 @@ function ServiceList(props: Props) {
         setViewState('edit');
         setKey(Math.random());
         console.log(data);
-    }
-
-    function saveEntry() {
-        if (formIsValid) {
-            setViewState('loader');
-            if (editType === 'service') {
-                serviceApi
-                    .updateService(editData)
-                    .then((result) => {
-                        serviceCalls.succesfulChange(result, setViewState);
-                    })
-                    .catch((error) => {
-                        serviceCalls.errorHandler(error, setViewState);
-                    });
-            } else if (editType === 'transaction') {
-                transactionApi
-                    .updateTransaction(editData)
-                    .then((result) => {
-                        serviceCalls.succesfulChange(result, setViewState);
-                    })
-                    .catch((error) => {
-                        serviceCalls.errorHandler(error, setViewState);
-                    });
-            } else if (editType === 'rental') {
-                rentalApi
-                    .updateRental(editData)
-                    .then((result) => {
-                        serviceCalls.succesfulChange(result, setViewState);
-                    })
-                    .catch((error) => {
-                        serviceCalls.errorHandler(error, setViewState);
-                    });
-            }
-        } else {
-            NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
-        }
     }
 
     return (
@@ -191,7 +150,7 @@ function ServiceList(props: Props) {
                     icon="save"
                     labelPosition="left"
                     floated="right"
-                    onClick={() => saveEntry(formIsValid, setViewState, editType, editData)}
+                    onClick={() => serviceCalls.saveEntry(formIsValid, setViewState, editType, editData)}
                 />
             )}
         </div>

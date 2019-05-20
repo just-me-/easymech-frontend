@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { Form, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import * as sharedCalls from './shared/functions';
 
 import ServiceSearchList from './service/ServiceSearchList';
