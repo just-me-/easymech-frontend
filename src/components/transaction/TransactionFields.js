@@ -62,8 +62,10 @@ function TransactionFields(props: Props) {
       deletedToo: true,
       dataSetter: setMachineData,
     });
-    handleMachineSelect(machine);
-    setTempVal(machine.id);
+    if (machine && machine.id) {
+      handleMachineSelect(machine);
+      setTempVal(machine.id);
+    }
   }
 
   function handleChange(element, { validate }) {
