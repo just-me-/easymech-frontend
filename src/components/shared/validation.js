@@ -50,7 +50,11 @@ export function toDate(str) {
 }
 
 export function toFloat(str) {
-  return str.toString().replace(/[^\d.]/g, '');
+  const cleanStr = str.toString().replace(/^([^-]?)([^\d.]*)/g, '');
+  console.log(str, cleanStr, Number(cleanStr));
+  if(cleanStr === "")
+    return "";
+  return Number(cleanStr).toFixed(2).toString();
 }
 
 export function toCurrency(num) {

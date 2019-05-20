@@ -127,7 +127,7 @@ test('Delete to empty string', () => {
     expect(validation.toFloat('bjnejkr')).toBe('');
 });
 test('Convert to number', () => {
-    expect(validation.toFloat('m!vf3efv12efv3M?l')).toBe('3123.00');
+    expect(validation.toFloat('m!vf3efv-12efv3M?l')).toBe('3123.00');
 });
 test('Convert to number - 2', () => {
     expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.90');
