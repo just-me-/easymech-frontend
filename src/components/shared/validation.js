@@ -51,12 +51,13 @@ export function toDate(str) {
 
 export function toFloat(str) {
   const cleanStr = str.toString().replace(/[^\d.]/g, '');
-  console.log(str, cleanStr, Number(cleanStr));
-  if(cleanStr === "")
-    return "";
-  return Number(cleanStr).toFixed(2).toString();
+  if (cleanStr === '') return '';
+  return Number(cleanStr)
+    .toFixed(2)
+    .toString();
 }
 
 export function toCurrency(num) {
-  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  num = Number(toFloat(num));
+  return isNaN(num) ? '' : num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1'");
 }

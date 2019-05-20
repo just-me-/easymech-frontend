@@ -149,10 +149,13 @@ test('Currency 0', () => {
     expect(validation.toCurrency('0')).toBe('0.00');
 });
 test('Currency 1\'000', () => {
-    expect(validation.toCurrency('1000')).toBe('1\'0000.00');
+    expect(validation.toCurrency('1000')).toBe('1\'000.00');
 });
 test('Currency 1\'000\'000', () => {
     expect(validation.toCurrency('1000000')).toBe('1\'000\'000.00');
+});
+test('Currency - Multiple Dots', () => {
+    expect(validation.toCurrency('3.3.3')).toBe('');
 });
 
 test('Delete to empty string', () => {
