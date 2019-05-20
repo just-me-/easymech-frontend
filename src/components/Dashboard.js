@@ -16,9 +16,8 @@ function Dashboard() {
 
     const filterPlannedServices = {
         searchService: true,
-        startdatum: sharedFunctions.getToday(),
-        enddatum: "2099-01-01"
-    }
+        von: sharedFunctions.getToday()
+    };
     const [machineData, setMachineData] = useState([]);
     const [customerData, setCustomerData] = useState([]);
     const [viewState, setViewState] = useState('list');
