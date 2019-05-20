@@ -45,47 +45,54 @@ function RentalSearchList(props: Props) {
         </Header>
       )}
 
-      <Table celled selectable striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Reservationsnr.</Table.HeaderCell>
-            <Table.HeaderCell>Standort</Table.HeaderCell>
-            <Table.HeaderCell>Start</Table.HeaderCell>
-            <Table.HeaderCell>Ende</Table.HeaderCell>
-            <Table.HeaderCell>Maschine</Table.HeaderCell>
-            <Table.HeaderCell>Kunde</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {_.map(
-            rentalData,
-            ({
-              id, standort, startdatum, enddatum, maschinenId, kundenId,
-            }, index) => (
-              <Table.Row key={index}>
-                {props.editItem ? (
-                  <Table.Cell
-                    onClick={() => props.editItem && props.editItem(id, 'rental', rentalData[index])}
-                    className="Hover-effect link"
-                  >
-                    <Icon name="external" size="tiny" className="Inline-icon" />
-                    &nbsp;
-                    {id}
-                  </Table.Cell>
-                ) : (
-                  <Table.Cell>{id}</Table.Cell>
-                )}
+      {isLoading || rentalData.length > 0 ? (
+        <Table celled selectable striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Reservationsnr.</Table.HeaderCell>
+              <Table.HeaderCell>Standort</Table.HeaderCell>
+              <Table.HeaderCell>Start</Table.HeaderCell>
+              <Table.HeaderCell>Ende</Table.HeaderCell>
+              <Table.HeaderCell>Maschine</Table.HeaderCell>
+              <Table.HeaderCell>Kunde</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {_.map(
+              rentalData,
+              ({
+                id, standort, startdatum, enddatum, maschinenId, kundenId,
+              }, index) => (
+                <Table.Row key={index}>
+                  {props.editItem ? (
+                    <Table.Cell
+                      onClick={() => props.editItem && props.editItem(id, 'rental', rentalData[index])
+                      }
+                      className="Hover-effect link"
+                    >
+                      <Icon name="external" size="tiny" className="Inline-icon" />
+                      &nbsp;
+                      {id}
+                    </Table.Cell>
+                  ) : (
+                    <Table.Cell>{id}</Table.Cell>
+                  )}
 
-                <Table.Cell>{standort}</Table.Cell>
-                <Table.Cell>{startdatum}</Table.Cell>
-                <Table.Cell>{enddatum}</Table.Cell>
-                <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
-                <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
-              </Table.Row>
-            ),
-          )}
-        </Table.Body>
-      </Table>
+                  <Table.Cell>{standort}</Table.Cell>
+                  <Table.Cell>{startdatum}</Table.Cell>
+                  <Table.Cell>{enddatum}</Table.Cell>
+                  <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
+                  <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
+                </Table.Row>
+              ),
+            )}
+          </Table.Body>
+        </Table>
+      ) : (
+        <div className="ui visible message">
+          <p>Keine Reservationen gefunden</p>
+        </div>
+      )}
 
       {isLoading && (
         <Segment>

@@ -42,39 +42,45 @@ function TransactionSearchList(props: Props) {
         {props.title}
       </Header>
 
-      <Table celled selectable striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Transaktionsnr.</Table.HeaderCell>
-            <Table.HeaderCell>Preis</Table.HeaderCell>
-            <Table.HeaderCell>Ankauf/Verkauf</Table.HeaderCell>
-            <Table.HeaderCell>Datum</Table.HeaderCell>
-            <Table.HeaderCell>Kunde</Table.HeaderCell>
-            <Table.HeaderCell>Maschine</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {_.map(transactionData, ({
-            id, preis, typ, datum, maschinenId, kundenId,
-          }, index) => (
-            <Table.Row key={index}>
-              <Table.Cell
-                onClick={() => props.editItem(id, 'transaction', transactionData[index])}
-                className="Hover-effect link"
-              >
-                <Icon name="external" size="tiny" className="Inline-icon" />
-                &nbsp;
-                {id}
-              </Table.Cell>
-              <Table.Cell>{preis}</Table.Cell>
-              <Table.Cell>{typ}</Table.Cell>
-              <Table.Cell>{datum || ''}</Table.Cell>
-              <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
-              <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
+      {isLoading || transactionData.length > 0 ? (
+        <Table celled selectable striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Transaktionsnr.</Table.HeaderCell>
+              <Table.HeaderCell>Preis</Table.HeaderCell>
+              <Table.HeaderCell>Ankauf/Verkauf</Table.HeaderCell>
+              <Table.HeaderCell>Datum</Table.HeaderCell>
+              <Table.HeaderCell>Kunde</Table.HeaderCell>
+              <Table.HeaderCell>Maschine</Table.HeaderCell>
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+          </Table.Header>
+          <Table.Body>
+            {_.map(transactionData, ({
+              id, preis, typ, datum, maschinenId, kundenId,
+            }, index) => (
+              <Table.Row key={index}>
+                <Table.Cell
+                  onClick={() => props.editItem(id, 'transaction', transactionData[index])}
+                  className="Hover-effect link"
+                >
+                  <Icon name="external" size="tiny" className="Inline-icon" />
+                  &nbsp;
+                  {id}
+                </Table.Cell>
+                <Table.Cell>{preis}</Table.Cell>
+                <Table.Cell>{typ}</Table.Cell>
+                <Table.Cell>{datum || ''}</Table.Cell>
+                <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
+                <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      ) : (
+        <div className="ui visible message">
+          <p>Keine Transaktionen gefunden</p>
+        </div>
+      )}
 
       {isLoading && (
         <Segment>

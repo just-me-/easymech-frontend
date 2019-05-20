@@ -45,48 +45,55 @@ function ServiceSearchList(props: Props) {
         </Header>
       )}
 
-      <Table celled selectable striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Servicenr.</Table.HeaderCell>
-            <Table.HeaderCell>Bezeichnung</Table.HeaderCell>
-            <Table.HeaderCell>Beginn</Table.HeaderCell>
-            <Table.HeaderCell>Ende</Table.HeaderCell>
-            <Table.HeaderCell>Status</Table.HeaderCell>
-            <Table.HeaderCell>Kunde</Table.HeaderCell>
-            <Table.HeaderCell>Maschine</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {_.map(
-            serviceData,
-            ({
-              id, bezeichnung, beginn, ende, status, maschinenId, kundenId,
-            }, index) => (
-              <Table.Row key={index}>
-                {props.editItem ? (
-                  <Table.Cell
-                    onClick={() => props.editItem && props.editItem(id, 'service', serviceData[index])}
-                    className="Hover-effect link"
-                  >
-                    <Icon name="external" size="tiny" className="Inline-icon" />
-                    &nbsp;
-                    {id}
-                  </Table.Cell>
-                ) : (
-                  <Table.Cell>{id}</Table.Cell>
-                )}
-                <Table.Cell>{bezeichnung}</Table.Cell>
-                <Table.Cell>{beginn || ''}</Table.Cell>
-                <Table.Cell>{ende || ''}</Table.Cell>
-                <Table.Cell>{status || ''}</Table.Cell>
-                <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
-                <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
-              </Table.Row>
-            ),
-          )}
-        </Table.Body>
-      </Table>
+      {isLoading || serviceData.length > 0 ? (
+        <Table celled selectable striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Servicenr.</Table.HeaderCell>
+              <Table.HeaderCell>Bezeichnung</Table.HeaderCell>
+              <Table.HeaderCell>Beginn</Table.HeaderCell>
+              <Table.HeaderCell>Ende</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell>Kunde</Table.HeaderCell>
+              <Table.HeaderCell>Maschine</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {_.map(
+              serviceData,
+              ({
+                id, bezeichnung, beginn, ende, status, maschinenId, kundenId,
+              }, index) => (
+                <Table.Row key={index}>
+                  {props.editItem ? (
+                    <Table.Cell
+                      onClick={() => props.editItem && props.editItem(id, 'service', serviceData[index])
+                      }
+                      className="Hover-effect link"
+                    >
+                      <Icon name="external" size="tiny" className="Inline-icon" />
+                      &nbsp;
+                      {id}
+                    </Table.Cell>
+                  ) : (
+                    <Table.Cell>{id}</Table.Cell>
+                  )}
+                  <Table.Cell>{bezeichnung}</Table.Cell>
+                  <Table.Cell>{beginn || ''}</Table.Cell>
+                  <Table.Cell>{ende || ''}</Table.Cell>
+                  <Table.Cell>{status || ''}</Table.Cell>
+                  <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
+                  <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
+                </Table.Row>
+              ),
+            )}
+          </Table.Body>
+        </Table>
+      ) : (
+        <div className="ui visible message">
+          <p>Keine Services gefunden</p>
+        </div>
+      )}
 
       {isLoading && (
         <Segment>
