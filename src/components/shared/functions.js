@@ -172,7 +172,7 @@ function succesfulChange(result, setViewState) {
     );
 }
 
-export function saveEntry(formIsValid, setViewState, editType,editData) {
+export function saveEntry(formIsValid: boolean, setViewState: string => void, editType: any,editData: any) {
     if (formIsValid) {
         setViewState('loader');
         if(editType === 'service'){
