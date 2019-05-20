@@ -18,6 +18,7 @@ export function checkResponse(response) {
       201: 'Noch in Verwendung',
       202: 'Inkonsistente IDs',
       203: 'Nicht vermietbar',
+      204: 'Überschneidung',
     };
     const errorCode = errorCodes
       ? errorCodes[response.errorCode]
