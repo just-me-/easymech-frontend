@@ -106,6 +106,9 @@ function ServiceFields(props: Props) {
   }
 
   function rowValidation(value, validate) {
+    if (validate === 'number') {
+      value = validation.toNumber(value);
+    }
     if (validate === 'float') {
       value = validation.toFloat(value);
     }
@@ -326,7 +329,7 @@ function ServiceFields(props: Props) {
                   id="preis"
                   value={materialAddRow.preis}
                   onChange={handleMaterial}
-                  validate="currency"
+                  validate="number"
                 />
               </Table.Cell>
               <Table.Cell>
@@ -334,7 +337,7 @@ function ServiceFields(props: Props) {
                   id="anzahl"
                   value={materialAddRow.anzahl}
                   onChange={handleMaterial}
-                  validate="float"
+                  validate="number"
                 />
               </Table.Cell>
               <Table.Cell />
@@ -388,7 +391,7 @@ function ServiceFields(props: Props) {
                   id="stundensatz"
                   value={workStepAddRow.stundensatz}
                   onChange={handleWorkStep}
-                  validate="currency"
+                  validate="number"
                 />
               </Table.Cell>
               <Table.Cell>
@@ -396,7 +399,7 @@ function ServiceFields(props: Props) {
                   id="dauer"
                   value={workStepAddRow.dauer}
                   onChange={handleWorkStep}
-                  validate="float"
+                  validate="number"
                 />
               </Table.Cell>
               <Table.Cell />

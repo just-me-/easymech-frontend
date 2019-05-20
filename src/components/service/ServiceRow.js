@@ -35,6 +35,9 @@ function ServiceRow(props: Props) {
 
   function handleChange(element, { validate }) {
     let value = element.target.value;
+    if (validate && validate === 'number') {
+      value = validation.toNumber(value);
+    }
     if (validate && validate === 'float') {
       value = validation.toFloat(value);
     }
@@ -71,10 +74,10 @@ function ServiceRow(props: Props) {
         <Input id="desc" value={rowData.desc} onChange={handleChange} />
       </Table.Cell>
       <Table.Cell width="3">
-        <Input id="price" value={rowData.price} onChange={handleChange} validate="currency" />
+        <Input id="price" value={rowData.price} onChange={handleChange} validate="number" />
       </Table.Cell>
       <Table.Cell width="2">
-        <Input id="unit" value={rowData.unit} onChange={handleChange} validate="float" />
+        <Input id="unit" value={rowData.unit} onChange={handleChange} validate="number" />
       </Table.Cell>
       <Table.Cell width="3">
         {validation.toCurrency(parseFloat(rowData.price) * parseInt(rowData.unit))}
