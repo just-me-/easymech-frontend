@@ -31,6 +31,12 @@ function prepareDto(serviceObject: Service) {
   const dateTypes = ['beginn', 'ende'];
   let service = JSON.parse(JSON.stringify(serviceObject));
   service = helper.convertToDatabaseDates(service, dateTypes);
+  service.materialposten.forEach(el => {
+    console.log("material", el);
+  })
+  service.arbeitsschritte.forEach(el => {
+    console.log("schritt", el); 
+  })
   return service;
 }
 

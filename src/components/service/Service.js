@@ -15,6 +15,7 @@ function Service() {
 
   function addService() {
     if (formIsValid) {
+      console.log("Adden", serviceData); 
       api
         .addService(serviceData)
         .then((result) => {

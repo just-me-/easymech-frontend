@@ -52,14 +52,14 @@ function ServiceRow(props: Props) {
       if (props.setData) {
         const data = props.type === 'workstep'
           ? {
-            desc: rowData.bezeichnung,
-            price: rowData.stundensatz,
-            unit: rowData.dauer,
+            bezeichnung: rowData.desc,
+            stundensatz: rowData.price,
+            dauer: rowData.unit,
           }
           : {
-            desc: rowData.bezeichnung,
-            price: rowData.preis,
-            unit: rowData.anzahl,
+            bezeichnung: rowData.desc,
+            preis: rowData.price,
+            anzahl: rowData.unit,
           };
         props.setData(props.index, data);
       }
