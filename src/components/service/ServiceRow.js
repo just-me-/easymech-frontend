@@ -27,7 +27,7 @@ function ServiceRow(props: Props) {
     }
     : {
       desc: (props.data && props.data.bezeichnung) || '',
-      price: (props.data && props.data.preis || "0") || '',
+      price: (props.data && props.data.stueckpreis || "0") || '',
       unit: (props.data && props.data.anzahl || "0") || '',
     };
 
@@ -58,7 +58,7 @@ function ServiceRow(props: Props) {
           }
           : {
             bezeichnung: rowData.desc,
-            preis: rowData.price,
+            stueckpreis: rowData.price,
             anzahl: rowData.unit,
           };
         props.setData(props.index, data);

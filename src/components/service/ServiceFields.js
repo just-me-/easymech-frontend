@@ -38,7 +38,7 @@ function ServiceFields(props: Props) {
     arbeitsschritte: (props.data && props.data.arbeitsschritte) || [],
   };
   const initialMaterial = {
-    preis: '',
+    stueckpreis: '',
     anzahl: '',
     bezeichnung: '',
   };
@@ -150,7 +150,7 @@ function ServiceFields(props: Props) {
   function addMaterial() {
     if (
       materialAddRow.bezeichnung.length > 0
-      && materialAddRow.preis.length > 0
+      && materialAddRow.stueckpreis.length > 0
       && materialAddRow.anzahl.length > 0
     ) {
       setMaterialList(_.concat(materialList, materialAddRow));
@@ -329,8 +329,8 @@ function ServiceFields(props: Props) {
               </Table.Cell>
               <Table.Cell>
                 <Form.Input
-                  id="preis"
-                  value={materialAddRow.preis}
+                  id="stueckpreis"
+                  value={materialAddRow.stueckpreis}
                   onChange={handleMaterial}
                   validate="number"
                 />

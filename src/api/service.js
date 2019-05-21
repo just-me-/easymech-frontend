@@ -5,7 +5,7 @@ export const checkResponse = helper.checkResponse;
 
 export type Material = {
   bezeichnung?: string,
-  preis?: number,
+  stueckpreis?: number,
   anzahl?: number,
 };
 
@@ -32,7 +32,7 @@ function prepareDto(serviceObject: Service) {
   let service = JSON.parse(JSON.stringify(serviceObject));
   service = helper.convertToDatabaseDates(service, dateTypes);
   service.materialposten.forEach((el, index) => {
-    service.materialposten[index] = helper.convertToNumbers(el, ['preis', 'anzahl']);
+    service.materialposten[index] = helper.convertToNumbers(el, ['stueckpreis', 'anzahl']);
   })
   service.arbeitsschritte.forEach((el, index) => {
     service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundensatz', 'dauer']);
