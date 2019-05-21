@@ -37,7 +37,6 @@ function prepareDto(serviceObject: Service) {
   service.arbeitsschritte.forEach((el, index) => {
     service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundenansatz', 'dauer']);
   })
-  console.log("Converted", service);
   return service;
 }
 

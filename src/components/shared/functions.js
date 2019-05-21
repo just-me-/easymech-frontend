@@ -207,8 +207,6 @@ export function saveEntry(
           errorHandler(error, setViewState);
         });
     } else if (editType === 'rental') {
-      console.log('Reservationsobejkt');
-      console.log(editData);
       rentalApi
         .updateRental(editData)
         .then((result) => {

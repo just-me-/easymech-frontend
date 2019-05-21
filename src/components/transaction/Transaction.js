@@ -29,10 +29,8 @@ function Transaction() {
             'Bitte erneut versuchen!',
           );
         });
-      console.log(transactionData);
     } else {
       NotificationManager.info('Bitte überprüfen Sie Ihre Eingaben!');
-      console.log(transactionData);
     }
   }
 

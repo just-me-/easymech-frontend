@@ -64,7 +64,8 @@ function ServiceList(props: Props) {
     setEditData(data);
     setViewState('edit');
     setKey(Math.random());
-    console.log(data);
+
+    console.log(data); // 2Do
   }
 
   return (
@@ -150,7 +151,7 @@ function ServiceList(props: Props) {
           labelPosition="left"
           floated="right"
           onClick={() => {
-              console.log(editData);
+              console.log(editData); // 2Do
               serviceCalls.saveEntry(formIsValid, setViewState, editType, editData);
           }}
         />

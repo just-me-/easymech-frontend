@@ -81,7 +81,6 @@ class App extends React.Component<Props, State> {
               email: userInfo.email,
               id: userInfo.sub,
             });
-            console.log(userInfo.name + userInfo.email + userInfo.sub);
           });
         }
       }
