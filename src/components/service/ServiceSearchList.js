@@ -21,6 +21,17 @@ function ServiceSearchList(props: Props) {
   const [serviceData, setServiceData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  function mapStatus(status) {
+    if (status === 0) {
+      return 'geplant';
+    } if (status === 1) {
+      return 'wird bearbeitet';
+    } if (status === 2) {
+      return 'abgeschlossen';
+    }
+    return '';
+  }
+
   useEffect(() => {
     const baseParameters = {
       state: props.searchState || 'all',
@@ -50,7 +61,6 @@ function ServiceSearchList(props: Props) {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Servicenr.</Table.HeaderCell>
-              <Table.HeaderCell>Bezeichnung</Table.HeaderCell>
               <Table.HeaderCell>Beginn</Table.HeaderCell>
               <Table.HeaderCell>Ende</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
@@ -78,10 +88,9 @@ function ServiceSearchList(props: Props) {
                   ) : (
                     <Table.Cell>{id}</Table.Cell>
                   )}
-                  <Table.Cell>{bezeichnung}</Table.Cell>
                   <Table.Cell>{serviceCalls.parseIsoDate(beginn)}</Table.Cell>
                   <Table.Cell>{serviceCalls.parseIsoDate(ende)}</Table.Cell>
-                  <Table.Cell>{status || ''}</Table.Cell>
+                  <Table.Cell>{mapStatus(status)}</Table.Cell>
                   <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
                   <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
                 </Table.Row>

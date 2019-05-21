@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react';
 
 import * as serviceCalls from '../shared/functions';
+import * as validation from '../shared/validation';
 
 export type Props = {
   editItem: (id: string, type: string, data: any) => void,
@@ -19,6 +20,15 @@ export type Props = {
 function TransactionSearchList(props: Props) {
   const [transactionData, setTransactionData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  function mapType(type) {
+    if (type === 0) {
+      return 'Verkauf';
+    } if (type === 1) {
+      return 'Ankauf';
+    }
+    return '';
+  }
 
   useEffect(() => {
     const baseParameters = {
@@ -67,8 +77,8 @@ function TransactionSearchList(props: Props) {
                   &nbsp;
                   {id}
                 </Table.Cell>
-                <Table.Cell>{preis}</Table.Cell>
-                <Table.Cell>{typ}</Table.Cell>
+                <Table.Cell>{validation.toCurrency(preis)}</Table.Cell>
+                <Table.Cell>{mapType(typ)}</Table.Cell>
                 <Table.Cell>{serviceCalls.parseIsoDate(datum)}</Table.Cell>
                 <Table.Cell>{props.resolveCustomer(kundenId)}</Table.Cell>
                 <Table.Cell>{props.resolveMachine(maschinenId)}</Table.Cell>
