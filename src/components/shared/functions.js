@@ -130,6 +130,7 @@ export function getServices({
   }
   action(state, filterData)
     .then((result) => {
+      console.log("GetService", result);
       result = apiServiceSearch.checkResponse(result);
       if (loadingSetter) loadingSetter(false);
       if (dataSetter) dataSetter(result);
