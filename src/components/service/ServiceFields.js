@@ -12,11 +12,10 @@ import ServiceTableWork from './ServiceTableWork';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
+import type { Service } from '../../api/service';
 
 import '../shared/Fields.css';
 import './ServiceFields.css';
-
-import type { Service } from '../../api/service';
 
 export type Props = {
   data?: Service,
@@ -52,9 +51,7 @@ function ServiceFields(props: Props) {
   const [machineData, setMachineData] = useState();
 
   const [materialList, setMaterialList] = useState((props.data && props.data.materialposten) || []);
-  const [workStepList, setWorkStepList] = useState(
-    (props.data && props.data.arbeitsschritte) || [],
-  );
+  const [workStepList, setWorkStepList] = useState((props.data && props.data.arbeitsschritte) || []);
 
   const [materialAddRow, setMaterialAddRow] = useState(initialMaterial);
   const [workStepAddRow, setWorkStepAddRow] = useState(initialWorkStep);
@@ -107,12 +104,6 @@ function ServiceFields(props: Props) {
   function rowValidation(value, validate) {
     if (validate === 'number') {
       value = validation.toNumber(value);
-    }
-    if (validate === 'float') {
-      value = validation.toFloat(value);
-    }
-    if (validate === 'currency') {
-      value = validation.toCurrency(value);
     }
     return value;
   }
@@ -203,12 +194,10 @@ function ServiceFields(props: Props) {
 
   useEffect(() => {
     sharedCalls.getCustomers({
-      deletedToo: true,
-      dataSetter: setCustomerData,
+      deletedToo: true, dataSetter: setCustomerData,
     });
     sharedCalls.getMachines({
-      deletedToo: true,
-      dataSetter: setMachineData,
+      deletedToo: true, dataSetter: setMachineData,
     });
   }, []);
 
@@ -286,7 +275,6 @@ function ServiceFields(props: Props) {
           </Form.Field>
         </Form.Group>
       </div>
-
       <ServiceTableMaterial
         materialList={materialList}
         removeMaterial={removeMaterial}
@@ -295,7 +283,6 @@ function ServiceFields(props: Props) {
         handleMaterial={handleMaterial}
         addMaterial={addMaterial}
       />
-
       <ServiceTableWork
         workStepList={workStepList}
         removeWorkStep={removeWorkStep}
