@@ -51,10 +51,9 @@ export function getTransactions(
   return getAllTypesOfServices('transaktionen', state, serviceSearchObject);
 }
 
-// 2Do: Type Services adden
 export function getServices(
   state: string,
   serviceSearchObject: ServiceSearchObject,
-): Promise<{ result: Array<any> }> {
+): Promise<{ result: Array<Service> }> {
   return getAllTypesOfServices('services', state, serviceSearchObject);
 }
