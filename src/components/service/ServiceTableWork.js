@@ -13,9 +13,12 @@ import type { WorkStep } from '../../api/service';
 export type Props = {
   workStepList: Array<WorkStep>,
   workStepAddRow: WorkStep,
-  removeWorkStep: (number) => void,
+  removeWorkStep: number => void,
   editWorkStep: (number, WorkStep) => void,
-  handleWorkStep: ({ target: { value: string, id: string } }, { validate?: string }) => void,
+  handleWorkStep: (
+    { target: { value: string, id: string } },
+    { validate: string, value: string },
+  ) => void,
   addWorkStep: () => void,
 };
 

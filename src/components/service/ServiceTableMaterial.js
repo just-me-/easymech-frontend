@@ -13,9 +13,12 @@ import type { Material } from '../../api/service';
 export type Props = {
   materialList: Array<Material>,
   materialAddRow: Material,
-  removeMaterial: (number) => void,
+  removeMaterial: number => void,
   editMaterial: (number, Material) => void,
-  handleMaterial: ({ target: { value: string, id: string } }, { validate?: string }) => void,
+  handleMaterial: (
+    { target: { value: string, id: string } },
+    { validate: string, value: string },
+  ) => void,
   addMaterial: () => void,
 };
 
