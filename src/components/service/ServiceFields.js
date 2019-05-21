@@ -2,14 +2,11 @@
 
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import {
-  Header, Form, Table, Button, Icon, Radio,
-} from 'semantic-ui-react';
+import { Form, Radio } from 'semantic-ui-react';
 import { NotificationManager } from 'react-notifications';
 
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
-import ServiceRow from './ServiceRow';
 import ServiceTableMaterial from './ServiceTableMaterial';
 import ServiceTableWork from './ServiceTableWork';
 

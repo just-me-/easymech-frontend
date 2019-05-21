@@ -1,9 +1,9 @@
 // @flow
 
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Header, Form, Table, Button, Icon, Radio,
+  Header, Form, Table, Button, Icon,
 } from 'semantic-ui-react';
 
 import ServiceRow from './ServiceRow';
