@@ -105,7 +105,7 @@ function RentalFields(props: Props) {
   function datePicked(value, id) {
     setDatesAreValid({
       ...datesAreValid,
-      id: validation.checkDate(value),
+      [id]: validation.checkDate(value),
     });
     const id_arr = id.split('__');
     if (id_arr && id_arr[1]) {

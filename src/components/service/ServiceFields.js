@@ -179,7 +179,7 @@ function ServiceFields(props: Props) {
   function datePicked(value, id) {
     setDatesAreValid({
       ...datesAreValid,
-      id: validation.checkDate(value),
+      [id]: validation.checkDate(value),
     });
     setServiceData({ ...serviceData, [id]: value });
   }
