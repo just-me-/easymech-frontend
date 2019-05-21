@@ -31,13 +31,11 @@ function prepareDto(serviceObject: Service) {
   const dateTypes = ['beginn', 'ende'];
   let service = JSON.parse(JSON.stringify(serviceObject));
   service = helper.convertToDatabaseDates(service, dateTypes);
-  service.materialposten.forEach(el => {
-    console.log("material", el);
-    el = helper.convertToNumbers(el, ['preis', 'anzahl']); // 2do
+  service.materialposten.forEach((el, index) => {
+    service.materialposten[index] = helper.convertToNumbers(el, ['preis', 'anzahl']);
   })
-  service.arbeitsschritte.forEach(el => {
-    console.log("schritt", el);
-    el = helper.convertToNumbers(el, ['stundensatz', 'dauer']); // 2do
+  service.arbeitsschritte.forEach((el, index) => {
+    service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundensatz', 'dauer']);
   })
   console.log("Converted", service);
   return service;
