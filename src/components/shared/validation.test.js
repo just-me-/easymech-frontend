@@ -28,6 +28,9 @@ test('Required string undef', () => {
 test('Required string empty', () => {
   expect(validation.checkRequired('')).toBe(false);
 });
+test('Required handles numbers', () => {
+  expect(validation.checkRequired(123)).toBe(true);
+});
 test('Required string exists', () => {
   expect(validation.checkRequired('b')).toBe(true);
 });

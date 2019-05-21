@@ -2,7 +2,7 @@ export function checkMail(mail) {
   return !!mail && /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(mail);
 }
 export function checkRequired(str) {
-  return !!str && str.length > 0;
+  return !!str && str.toString().length > 0;
 }
 // year range ist limited from 1900 to 2099
 export function checkYear(str) {
