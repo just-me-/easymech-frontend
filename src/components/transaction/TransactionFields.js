@@ -175,14 +175,14 @@ function TransactionFields(props: Props) {
         <Form.Group widths="equal">
           <Form.Field>
             <Radio
-              label="Verkauf einer Maschine erfassen"
+              label="Verkauf einer Maschine"
               checked={transactionData.typ === 0}
               onChange={handleRadio}
             />
           </Form.Field>
           <Form.Field>
             <Radio
-              label="Ankauf einer Maschine erfassen"
+              label="Ankauf einer Maschine"
               checked={transactionData.typ === 1}
               onChange={handleRadio}
             />
