@@ -86,22 +86,22 @@ test('To big is invalid', () => {
 
 // check float
 test('Valid Float - 1', () => {
-    expect(validation.checkFloat('1.50')).toBe(true);
+  expect(validation.checkFloat('1.50')).toBe(true);
 });
 test('Valid Float - 2', () => {
-    expect(validation.checkFloat('1.9')).toBe(true);
+  expect(validation.checkFloat('1.9')).toBe(true);
 });
 test('Valid Float - 3', () => {
-    expect(validation.checkFloat('1.99')).toBe(true);
+  expect(validation.checkFloat('1.99')).toBe(true);
 });
-test('Invalid Float - 1', () =>{
-    expect(validation.checkFloat('1ead123')).toBe(false);
+test('Invalid Float - 1', () => {
+  expect(validation.checkFloat('1ead123')).toBe(false);
 });
-test('Invalid Float - 2', () =>{
-    expect(validation.checkFloat('eawdA')).toBe(false);
+test('Invalid Float - 2', () => {
+  expect(validation.checkFloat('eawdA')).toBe(false);
 });
-test('Invalid Float - 3', () =>{
-    expect(validation.checkFloat('1.999')).toBe(false);
+test('Invalid Float - 3', () => {
+  expect(validation.checkFloat('1.999')).toBe(false);
 });
 
 test('Delete to empty string', () => {
@@ -124,38 +124,38 @@ test('Can handle 0 (as number)', () => {
 });
 
 test('Delete to empty string', () => {
-    expect(validation.toFloat('bjnejkr')).toBe('');
+  expect(validation.toFloat('bjnejkr')).toBe('');
 });
 test('Convert to number', () => {
-    expect(validation.toFloat('m!vf3efv-12efv3M?l')).toBe('3123.00');
+  expect(validation.toFloat('m!vf3efv-12efv3M?l')).toBe('3123.00');
 });
 test('Convert to number - 2', () => {
-    expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.90');
+  expect(validation.toFloat('m!vf3efv12efv3M?l.9')).toBe('3123.90');
 });
 test('Dont change number', () => {
-    expect(validation.toFloat('1234.3')).toBe('1234.30');
+  expect(validation.toFloat('1234.3')).toBe('1234.30');
 });
 test('Dont change empty string', () => {
-    expect(validation.toFloat('')).toBe('');
+  expect(validation.toFloat('')).toBe('');
 });
 test('Can handle numbers', () => {
-    expect(validation.toFloat(123)).toBe('123.00');
+  expect(validation.toFloat(123)).toBe('123.00');
 });
 test('Can handle 0 (as number)', () => {
-    expect(validation.toFloat(0)).toBe('0.00');
+  expect(validation.toFloat(0)).toBe('0.00');
 });
 
 test('Currency 0', () => {
-    expect(validation.toCurrency('0')).toBe('0.00');
+  expect(validation.toCurrency('0')).toBe('0.00');
 });
-test('Currency 1\'000', () => {
-    expect(validation.toCurrency('1000')).toBe('1\'000.00');
+test("Currency 1'000", () => {
+  expect(validation.toCurrency('1000')).toBe("1'000.00");
 });
-test('Currency 1\'000\'000', () => {
-    expect(validation.toCurrency('1000000')).toBe('1\'000\'000.00');
+test("Currency 1'000'000", () => {
+  expect(validation.toCurrency('1000000')).toBe("1'000'000.00");
 });
 test('Currency - Multiple Dots', () => {
-    expect(validation.toCurrency('3.3.3')).toBe('');
+  expect(validation.toCurrency('3.3.3')).toBe('');
 });
 
 test('Delete to empty string', () => {

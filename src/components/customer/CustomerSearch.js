@@ -35,7 +35,7 @@ function CustomerSearch(props: Props) {
       formIsValid,
       keySetter: setKey,
       setViewState,
-      exists: true
+      exists: true,
     });
   }
 

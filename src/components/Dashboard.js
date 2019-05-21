@@ -58,7 +58,7 @@ function Dashboard() {
 
       <Header as="h2">Anstehende Reparaturen und Servicearbeiten</Header>
       <ServiceSearchList
-        filterData={{...dateFilter, searchService: true}}
+        filterData={{ ...dateFilter, searchService: true }}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="pending"
@@ -66,7 +66,7 @@ function Dashboard() {
 
       <Header as="h2">Laufende Reparaturen und Servicearbeiten</Header>
       <ServiceSearchList
-        filterData={{...dateFilter, searchService: true}}
+        filterData={{ ...dateFilter, searchService: true }}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="running"
@@ -74,7 +74,7 @@ function Dashboard() {
 
       <Header as="h2">Aktuelle Vermietungen - ausgehende Maschinen</Header>
       <RentalSearchList
-        filterData={{...dateFilter, searchRental: true}}
+        filterData={{ ...dateFilter, searchRental: true }}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="pending"
@@ -82,7 +82,7 @@ function Dashboard() {
 
       <Header as="h2">Aktuelle Vermitungen - eingehende Maschinen</Header>
       <RentalSearchList
-        filterData={{...dateFilter, searchRental: true}}
+        filterData={{ ...dateFilter, searchRental: true }}
         resolveCustomer={getCustomerText}
         resolveMachine={getMachineText}
         searchState="running"

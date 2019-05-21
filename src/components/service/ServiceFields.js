@@ -213,10 +213,6 @@ function ServiceFields(props: Props) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("Debug", materialList, workStepList);
-  }, [materialList, workStepList]);
-
   return (
     <div>
       <div className="Form-section">

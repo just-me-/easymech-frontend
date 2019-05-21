@@ -1,5 +1,5 @@
 import * as helper from './helper';
-import type {Rental} from "./rental";
+import type { Rental } from './rental';
 
 export const checkResponse = helper.checkResponse;
 
@@ -33,10 +33,10 @@ function prepareDto(serviceObject: Service) {
   service = helper.convertToDatabaseDates(service, dateTypes);
   service.materialposten.forEach((el, index) => {
     service.materialposten[index] = helper.convertToNumbers(el, ['stueckpreis', 'anzahl']);
-  })
+  });
   service.arbeitsschritte.forEach((el, index) => {
     service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundenansatz', 'dauer']);
-  })
+  });
   return service;
 }
 
@@ -51,9 +51,9 @@ export function updateService(serviceObject: Service): Promise<SaveResult> {
 }
 
 export function updateRental(rentalObject: Rental): Promise<SaveResult> {
-    return helper
-        .postJson(`/reservationen/${rentalObject.id}`, prepareDto(rentalObject), 'PUT')
-        .then(helper.parseJSON);
+  return helper
+    .postJson(`/reservationen/${rentalObject.id}`, prepareDto(rentalObject), 'PUT')
+    .then(helper.parseJSON);
 }
 
 export function deleteService(id: string): Promise<SaveResult> {

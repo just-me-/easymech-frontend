@@ -6,11 +6,11 @@ import { NotificationManager } from 'react-notifications';
 
 import * as api from '../../api/machine';
 import MachineFields from './MachineFields';
-import type {MachineType} from "../../api/machine";
+import type { MachineType } from '../../api/machine';
 
 export type Props = {
   isIncluded?: boolean,
-  includerCallback?: (MachineType) => void,
+  includerCallback?: MachineType => void,
 };
 
 function Machine(props: Props) {

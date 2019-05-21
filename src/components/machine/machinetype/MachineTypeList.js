@@ -2,7 +2,9 @@
 
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Table, Loader, Dimmer, Segment, Icon } from 'semantic-ui-react';
+import {
+  Table, Loader, Dimmer, Segment, Icon,
+} from 'semantic-ui-react';
 
 import * as machinetypeCalls from '../../shared/functions';
 
@@ -63,7 +65,9 @@ function MachineTypeList(props: Props) {
             ) => (
               <Table.Row key={index}>
                 <Table.Cell onClick={() => props.editMachineType(id)} className="Hover-effect link">
-                  <Icon name="external" size="tiny" className="Inline-icon" />&nbsp;{fabrikat}
+                  <Icon name="external" size="tiny" className="Inline-icon" />
+                  &nbsp;
+                  {fabrikat}
                 </Table.Cell>
                 <Table.Cell>{motortyp}</Table.Cell>
                 <Table.Cell>{maschinenhoehe || ''}</Table.Cell>
