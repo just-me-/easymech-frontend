@@ -80,7 +80,7 @@ function Dashboard() {
         searchState="pending"
       />
 
-      <Header as="h2">Aktuelle Vermitungen - eingehende Maschinen</Header>
+      <Header as="h2">Aktuelle Vermietungen - eingehende Maschinen</Header>
       <RentalSearchList
         filterData={{ ...dateFilter, searchRental: true }}
         resolveCustomer={getCustomerText}
