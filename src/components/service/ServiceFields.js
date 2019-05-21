@@ -10,6 +10,8 @@ import { NotificationManager } from 'react-notifications';
 import SmartInput from '../shared/SmartInput';
 import DatePicker from '../shared/DatePicker';
 import ServiceRow from './ServiceRow';
+import ServiceTableMaterial from './ServiceTableMaterial';
+import ServiceTableWork from './ServiceTableWork';
 
 import * as validation from '../shared/validation';
 import * as sharedCalls from '../shared/functions';
@@ -288,129 +290,23 @@ function ServiceFields(props: Props) {
         </Form.Group>
       </div>
 
-      <Header as="h2">Material</Header>
-      <div className="Form-section">
-        <Table basic="very">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Pos</Table.HeaderCell>
-              <Table.HeaderCell>Beschreibung</Table.HeaderCell>
-              <Table.HeaderCell>Stückpreis</Table.HeaderCell>
-              <Table.HeaderCell>Anzahl</Table.HeaderCell>
-              <Table.HeaderCell>Total</Table.HeaderCell>
-              <Table.HeaderCell>Löschen</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+      <ServiceTableMaterial
+        materialList={materialList}
+        removeMaterial={removeMaterial}
+        editMaterial={editMaterial}
+        materialAddRow={materialAddRow}
+        handleMaterial={handleMaterial}
+        addMaterial={addMaterial}
+      />
 
-          <Table.Body>
-            {_.map(materialList, (row, index) => (
-              <ServiceRow
-                index={index}
-                key={index}
-                data={row}
-                rmCall={removeMaterial}
-                setData={editMaterial}
-                type="material"
-              />
-            ))}
-
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell>
-                <Form.Input
-                  id="bezeichnung"
-                  value={materialAddRow.bezeichnung}
-                  onChange={handleMaterial}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  id="stueckpreis"
-                  value={materialAddRow.stueckpreis}
-                  onChange={handleMaterial}
-                  validate="number"
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  id="anzahl"
-                  value={materialAddRow.anzahl}
-                  onChange={handleMaterial}
-                  validate="number"
-                />
-              </Table.Cell>
-              <Table.Cell />
-              <Table.Cell>
-                <Button icon onClick={addMaterial}>
-                  <Icon name="add" />
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
-
-      <Header as="h2">Arbeit</Header>
-      <div className="Form-section">
-        <Table basic="very">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Pos</Table.HeaderCell>
-              <Table.HeaderCell>Beschreibung</Table.HeaderCell>
-              <Table.HeaderCell>stundensatz</Table.HeaderCell>
-              <Table.HeaderCell>Stunden</Table.HeaderCell>
-              <Table.HeaderCell>Total</Table.HeaderCell>
-              <Table.HeaderCell>Löschen</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            {_.map(workStepList, (row, index) => (
-              <ServiceRow
-                index={index}
-                key={index}
-                data={row}
-                rmCall={removeWorkStep}
-                setData={editWorkStep}
-                type="workstep"
-              />
-            ))}
-
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell>
-                <Form.Input
-                  id="bezeichnung"
-                  value={workStepAddRow.bezeichnung}
-                  onChange={handleWorkStep}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  id="stundenansatz"
-                  value={workStepAddRow.stundenansatz}
-                  onChange={handleWorkStep}
-                  validate="number"
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  id="arbeitsstunden"
-                  value={workStepAddRow.arbeitsstunden}
-                  onChange={handleWorkStep}
-                  validate="number"
-                />
-              </Table.Cell>
-              <Table.Cell />
-              <Table.Cell>
-                <Button icon onClick={addWorkStep}>
-                  <Icon name="add" />
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
+      <ServiceTableWork
+        workStepList={workStepList}
+        removeWorkStep={removeWorkStep}
+        editWorkStep={editWorkStep}
+        workStepAddRow={workStepAddRow}
+        handleWorkStep={handleWorkStep}
+        addWorkStep={addWorkStep}
+      />
     </div>
   );
 }
