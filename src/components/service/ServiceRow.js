@@ -22,13 +22,13 @@ function ServiceRow(props: Props) {
   const initialData = props.type === 'workstep'
     ? {
       desc: (props.data && props.data.bezeichnung) || '',
-      price: (props.data && props.data.stundensatz || "0") || '',
-      unit: (props.data && props.data.arbeitsstunden || "0") || '',
+      price: (props.data && props.data.stundensatz) || '0',
+      unit: (props.data && props.data.arbeitsstunden) || '0',
     }
     : {
       desc: (props.data && props.data.bezeichnung) || '',
-      price: (props.data && props.data.preis || "0") || '',
-      unit: (props.data && props.data.anzahl || "0") || '',
+      price: (props.data && props.data.preis) || '0',
+      unit: (props.data && props.data.anzahl) || '0',
     };
 
   const [rowData, setRowData] = useState(initialData);
