@@ -12,7 +12,7 @@ export type Material = {
 export type WorkStep = {
   bezeichnung?: string,
   stundensatz?: number,
-  dauer?: number,
+  arbeitsstunden?: number,
 };
 
 export type Service = {

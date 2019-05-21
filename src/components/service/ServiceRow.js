@@ -23,7 +23,7 @@ function ServiceRow(props: Props) {
     ? {
       desc: (props.data && props.data.bezeichnung) || '',
       price: (props.data && props.data.stundensatz || "0") || '',
-      unit: (props.data && props.data.dauer || "0") || '',
+      unit: (props.data && props.data.arbeitsstunden || "0") || '',
     }
     : {
       desc: (props.data && props.data.bezeichnung) || '',
@@ -54,7 +54,7 @@ function ServiceRow(props: Props) {
           ? {
             bezeichnung: rowData.desc,
             stundensatz: rowData.price,
-            dauer: rowData.unit,
+            arbeitsstunden: rowData.unit,
           }
           : {
             bezeichnung: rowData.desc,

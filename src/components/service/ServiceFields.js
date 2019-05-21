@@ -45,7 +45,7 @@ function ServiceFields(props: Props) {
   const initialWorkStep = {
     bezeichnung: '',
     stundensatz: '',
-    dauer: '',
+    arbeitsstunden: '',
   };
 
   const [serviceData, setServiceData] = useState(initialData);
@@ -122,7 +122,7 @@ function ServiceFields(props: Props) {
     if (
       workStepAddRow.bezeichnung.length > 0
       && workStepAddRow.stundensatz.length > 0
-      && workStepAddRow.dauer.length > 0
+      && workStepAddRow.arbeitsstunden.length > 0
     ) {
       setWorkStepList(_.concat(workStepList, workStepAddRow));
       setWorkStepAddRow(initialWorkStep);
@@ -399,8 +399,8 @@ function ServiceFields(props: Props) {
               </Table.Cell>
               <Table.Cell>
                 <Form.Input
-                  id="dauer"
-                  value={workStepAddRow.dauer}
+                  id="arbeitsstunden"
+                  value={workStepAddRow.arbeitsstunden}
                   onChange={handleWorkStep}
                   validate="number"
                 />
