@@ -11,7 +11,7 @@ export type Material = {
 
 export type WorkStep = {
   bezeichnung?: string,
-  stundensatz?: number,
+  stundenansatz?: number,
   arbeitsstunden?: number,
 };
 
@@ -35,7 +35,7 @@ function prepareDto(serviceObject: Service) {
     service.materialposten[index] = helper.convertToNumbers(el, ['stueckpreis', 'anzahl']);
   })
   service.arbeitsschritte.forEach((el, index) => {
-    service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundensatz', 'dauer']);
+    service.arbeitsschritte[index] = helper.convertToNumbers(el, ['stundenansatz', 'dauer']);
   })
   console.log("Converted", service);
   return service;
