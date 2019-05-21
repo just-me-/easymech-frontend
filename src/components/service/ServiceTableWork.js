@@ -8,7 +8,16 @@ import {
 
 import ServiceRow from './ServiceRow';
 
-export type Props = {};
+import type { WorkStep } from '../../api/service';
+
+export type Props = {
+  workStepList: Array<WorkStep>,
+  workStepAddRow: WorkStep,
+  removeWorkStep: (number) => void,
+  editWorkStep: (number, WorkStep) => void,
+  handleWorkStep: ({ target: { value: string, id: string } }, { validate?: string }) => void,
+  addWorkStep: () => void,
+};
 
 function ServiceTableWork(props: Props) {
   return (

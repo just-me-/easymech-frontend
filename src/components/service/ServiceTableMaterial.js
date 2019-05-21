@@ -8,7 +8,16 @@ import {
 
 import ServiceRow from './ServiceRow';
 
-export type Props = {};
+import type { Material } from '../../api/service';
+
+export type Props = {
+  materialList: Array<Material>,
+  materialAddRow: Material,
+  removeMaterial: (number) => void,
+  editMaterial: (number, Material) => void,
+  handleMaterial: ({ target: { value: string, id: string } }, { validate?: string }) => void,
+  addMaterial: () => void,
+};
 
 function ServiceTableMaterial(props: Props) {
   return (
