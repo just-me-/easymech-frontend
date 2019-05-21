@@ -14,6 +14,7 @@ import TransactionFields from '../transaction/TransactionFields';
 
 export type Props = {
   filterData: any,
+  setChildsViewState?: string => void, 
 };
 
 function ServiceList(props: Props) {
@@ -36,6 +37,12 @@ function ServiceList(props: Props) {
       dataSetter: setMachineData,
     });
   }, []);
+
+  useEffect(() => {
+    if(props.setChildsViewState) {
+      props.setChildsViewState(viewState);
+    }
+  }, [viewState]);
 
   function getCustomerText(id: number) {
     if (id) {
@@ -142,16 +149,24 @@ function ServiceList(props: Props) {
       )}
 
       {viewState === 'edit' && (
-        <Button
-          primary
-          content="Speichern"
-          icon="save"
-          labelPosition="left"
-          floated="right"
-          onClick={() => {
-            serviceCalls.saveEntry(formIsValid, setViewState, editType, editData);
-          }}
-        />
+        <React.Fragment>
+          <Button
+            content="Zurück"
+            icon="arrow left"
+            labelPosition="left"
+            onClick={() => setViewState('list')}
+          />
+          <Button
+            primary
+            content="Speichern"
+            icon="save"
+            labelPosition="left"
+            floated="right"
+            onClick={() => {
+              serviceCalls.saveEntry(formIsValid, setViewState, editType, editData);
+            }}
+          />
+        </React.Fragment>
       )}
     </div>
   );

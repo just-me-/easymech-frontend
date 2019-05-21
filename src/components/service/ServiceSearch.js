@@ -18,6 +18,7 @@ export type Props = {
 function ServiceSearch(props: Props) {
   const initState = props.location.state && props.location.state.listRedirect ? 'list' : 'search';
   const [viewState, setViewState] = useState(initState);
+  const [childViewState, setChildViewState] = useState('list');
   const [searchData, setSearchData] = useState(
     initState === 'list'
       ? { searchService: true, searchRental: true, searchTransaction: true }
@@ -61,13 +62,18 @@ function ServiceSearch(props: Props) {
 
       {viewState === 'list' && (
         <div>
-          <ServiceList filterData={searchData} />
-          <Button
-            content="Zurück"
-            icon="arrow left"
-            labelPosition="left"
-            onClick={() => setViewState('search')}
+          <ServiceList
+            filterData={searchData}
+            setChildsViewState={view => setChildViewState(view)}
           />
+          {childViewState === 'list' && (
+            <Button
+              content="Zurück"
+              icon="arrow left"
+              labelPosition="left"
+              onClick={() => setViewState('search')}
+            />
+          )}
         </div>
       )}
     </div>
