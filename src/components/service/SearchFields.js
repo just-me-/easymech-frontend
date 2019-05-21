@@ -27,8 +27,8 @@ function SearchFields(props: Props) {
     kundenId: (props.data && props.data.kundenId) || '',
     maschinenId: (props.data && props.data.maschinenId) || '',
     maschinentypId: (props.data && props.data.maschinentypId) || '',
-    beginn: (props.data && props.data.beginn) || '',
-    ende: (props.data && props.data.ende) || '',
+    von: (props.data && props.data.von) || '',
+    bis: (props.data && props.data.bis) || '',
     searchTransaction: (props.data && props.data.searchTransaction) || true,
     searchRental: (props.data && props.data.searchRental) || true,
     searchService: (props.data && props.data.searchService) || true,
@@ -40,8 +40,8 @@ function SearchFields(props: Props) {
   const [machineTypeData, setMachineTypeData] = useState();
 
   const [datesAreValid, setDatesAreValid] = useState({
-    beginn: true,
-    ende: true,
+    von: true,
+    bis: true,
   });
 
   function handleMachineSelect(result) {
@@ -150,19 +150,19 @@ function SearchFields(props: Props) {
 
         <Form.Group widths="equal">
           <DatePicker
-            id="beginn"
+            id="von"
             label="Von"
-            value={searchData.beginn}
+            value={searchData.von}
             handleChange={handleChange}
-            error={!datesAreValid.beginn}
+            error={!datesAreValid.von}
             callbackSetter={datePicked}
           />
           <DatePicker
-            id="ende"
+            id="bis"
             label="Bis"
-            value={searchData.ende}
+            value={searchData.bis}
             handleChange={handleChange}
-            error={!datesAreValid.ende}
+            error={!datesAreValid.bis}
             callbackSetter={datePicked}
           />
         </Form.Group>
